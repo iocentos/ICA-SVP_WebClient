@@ -1,7 +1,7 @@
 'use strict';
 
 
-angular.module('myApp.controllers', [])
+angular.module('rvsp.controllers', [])
 .controller('MainWordController' , ['$scope' , 'MainWordService' , function($scope , MainWordService){
 
     $scope.word = 'Welcome';

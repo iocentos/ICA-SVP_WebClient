@@ -28,3 +28,52 @@
   content: "";
   padding: 0;
 }
+
+/**RSVP Main**/
+
+body, html {
+    height: 100%;
+    width: 100%;
+    font-family: "HelveticaNeue","Helvetica-Neue", "Helvetica", "Arial", sans-serif;
+}
+
+.main{
+    position:relative;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    margin: 0 auto;
+}
+
+#div_cursor{
+    border:1px solid black;
+    padding: 10px;
+}
+
+#div_wrapper{
+    position: relative;
+    border:1px solid gray;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    box-shadow: 2px 3px 11px #888888;
+    padding:10px;
+}
+
+#div_word{
+    position: relative;
+    border-top:2px solid black;
+    border-bottom:2px solid black;
+    padding: 10px;
+    text-align: center;
+    font-size: 55pt;
+    color: #333333;
+    min-width: 600px;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

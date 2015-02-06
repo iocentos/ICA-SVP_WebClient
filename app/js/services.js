@@ -1,7 +1,7 @@
 'use strict';
 
 
-var serviceModule = angular.module('myApp.services', []);
+var serviceModule = angular.module('rvsp.services', []);
 
 /*
  *  Service that will handle all the timing of the words. It will have
