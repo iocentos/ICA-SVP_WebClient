@@ -1,13 +1,14 @@
 'use strict';
 
 
+
 var serviceModule = angular.module('rvsp.services', []);
 
 /*
  *  Service that will handle all the timing of the words. It will have
  *  several kinds of callbacks that the called need to provide.
  */
-serviceModule.factory('MainWordService', ['$rootScope' , '$interval' , function($rootScope, $interval){
+serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval' , function($rootScope, $timeout , $interval){
 
     var functions = {};
     functions.callbacks = {};
@@ -16,8 +17,6 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$interval' , function(
 
     functions.callbacks.onWordDisplayed = function(){};
     functions.callbacks.onWordDissapeard = function(){};
-    functions.callbacks.onDelayStarted = function(){};
-    functions.callbacks.onDelayStopped = function(){};
     functions.callbacks.onServiceStarted = function(){};
     functions.callbacks.onServiceStopped = function(){};
     functions.callbacks.onServicePaused = function(){};
@@ -36,100 +35,83 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$interval' , function(
      * **************************/
 
     functions.start = function(){
-
-        if( !functions.isRunning() ){
+        if( !functions.isFinished() && !functions.isRunning() ){
+            console.log('Starting main service... ');
             functions.callbacks.onServiceStarted();
-
-            if(functions.isFinished())
-                functions.restart();
-            else{
-                privateFunctions.start();
-            }
+            functions.setRunningState(true);
+            privateFunctions.tick();
         }
     }
 
     functions.stop = function(){
-
-        if( functions.isRunning && ! functions.isFinished()){
+        if( !functions.isFinished() && functions.isRunning() ){
+            console.log('Stopping main service... ');
             functions.callbacks.onServiceStopped();
-            privateFunctions.stop();
+            $interval.cancel(parameters.promise);
+            functions.setRunningState(false);
+            parameters.index = 0;
         }
     }
 
     functions.pause = function(){
-        if( functions.isRunning() && !functions.isFinished() ){
+        if( !functions.isFinished() && functions.isRunning() ){
+            console.log('Calling pause on main service... ');
             functions.callbacks.onServicePaused();
-            privateFunctions.pause(); 
+            $interval.cancel(parameters.promise);
+            functions.setRunningState(false);
         }
+    }
+
+    functions.restart = function(){
+        functions.stop();
+        functions.start();
     }
 
     functions.isFinished = function(){
         return parameters.index == parameters.words.length;
     }
 
-    functions.restart = function(){
-        privateFunctions.restart();
-        functions.stop();
-        functions.start();
-    }
-
     functions.isRunning = function(){
         return parameters.isRunning;
     }
 
+    functions.setRunningState = function(state){
+        parameters.isRunning = state;
+    }
 
     /*****************************
      * PRIVATE METHODS
      * **************************/
 
-    privateFunctions.restart = function(){
-        parameters.index = 0; 
-        parameters.isRunning = false;
-    }
-
-
-    privateFunctions.start = function(){
-        parameters.isRunning = true;
-        privateFunctions.setTimer();
-    }
-
-    privateFunctions.setTimer = function(){
-        parameters.promise = $interval(function(){
-            if( !functions.isFinished() ){
-                var word = parameters.words[parameters.index];
-                parameters.index++;
-                privateFunctions.updateWord(word);
-            }else{
-                privateFunctions.stop();
+    //this and the next method are calling each other in a recursive way,
+    privateFunctions.tick = function(){
+        //odd number is contetnt. even numbers are blanks
+        if( !functions.isFinished() && functions.isRunning() ){
+        console.log("pr tick");
+            var delay = 0;
+            if( parameters.index % 2 ){//blank
+                delay = parameters.delayBtnWords;
+                functions.callbacks.onWordDissapeard();
+            }else{//content
+                //make the callback and update also
+                functions.callbacks.onWordDisplayed(parameters.words[parameters.index]);
+                delay = parameters.wordDisplayTimeMs;
             }
-        }, parameters.wordDisplayTimeMs)
-          
-    }
 
-    privateFunctions.stop = function(){
-        if( parameters.isRunning ){
-            $interval.cancel(parameters.promise);
-            parameters.isRunning = false;
+            parameters.index++;
+
+            privateFunctions.startTimer(delay);
         }
     }
+
+    privateFunctions.startTimer = function(delay){
+        parameters.promise = $interval(function(){
+                privateFunctions.tick();
+        }, delay, 1);
+    }
+
+
     
-    privateFunctions.pause = function(){
-        if( parameters.isRunning )
-            privateFunctions.stop();
-        else
-            privateFunctions.start();
-    }
-
-    privateFunctions.updateWord = function(word){
-        functions.callbacks.onWordDisplayed(word);
-    }
-
-    privateFunctions.restart = function(){
-        parameters.isRunning = false;
-        parameters.index = 0;
-    }
-
-
     /*
      * Initialization method.
      * Params 
@@ -144,6 +126,18 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$interval' , function(
             parameters.words = words;
             parameters.index = 0;
             parameters.isRunning = false;
+
+            var newContent = [];
+
+            //copy all words to a new array. odd numbers will be blanks. even numbers are content
+            var j = 0;
+            for( var i = 0 ; i < parameters.words.length ; i++){
+                newContent[j++] = parameters.words[i];
+                newContent[j++] = {'type':'blank' , 'value':'blank'};
+            }
+
+            parameters.words = newContent;
+
         },
         getPramaters : function(){
             return parameters;
