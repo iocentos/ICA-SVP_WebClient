@@ -1,8 +1,9 @@
+<button type="button" ng-click="start()" class="btn btn-success">Start</button>
+<button type="button" ng-click="stop()" class="btn btn-danger">Stop</button>
+<button type="button" ng-click="pause()" class="btn btn-warning">Pause</button>
+<button type="button" ng-click="restart()" class="btn btn-success">Restart</button>
+
 <div id="div_cursor" class="centered">
-    <button type="button" ng-click="start()">Start</button>
-    <button type="button" ng-click="stop()">Stop</button>
-    <button type="button" ng-click="pause()">Pause</button>
-    <button type="button" ng-click="restart()">Restart</button>
 	<div id="div_wrapper">
 		<div id="div_word">
 			{{word}}
@@ -13,12 +14,187 @@
 <!--Config modal-->
 
 <div id="config_modal" class="reveal-modal">
-	<h1>Test</h1>
-	<a class="close-reveal-modal">Start &#215;</a>
+	<div class="form-horizontal">
+		<div class="form-group">
+ 			<label class="col-sm-4 control-label">Trial</label>
+   			<div class="col-sm-8">
+      			<input type="text" class="form-control" placeholder="Insert trial name" ng-model="trial">
+    		</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Name</label>
+   			<div class="col-sm-8">
+      			<input type="text" class="form-control" placeholder="Insert subject's name" ng-model="user_name">
+    		</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Age</label>
+   			<div class="col-sm-8">
+      			<input type="text" class="form-control"  placeholder="Insert subjet's age" ng-model="user_age">
+    		</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Filename (json)</label>
+   			<div class="col-sm-8">
+      			<input type="text" class="form-control"  placeholder="Filename content" ng-model="file_name">
+    		</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Item time (ms)</label>
+   			<div class="col-sm-8">
+      			<input type="text" class="form-control"  placeholder="Item display duration" ng-model="item_time">
+    		</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Delay time (ms)</label>
+   			<div class="col-sm-8">
+      			<input type="text" class="form-control"  placeholder="Delay between items" ng-model="delay_time">
+    		</div>
+		</div>
+
+		<!-- Font -->
+
+		<span class="col-sm-12 label label-info">Font</span></br>
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Size (pt)</label>
+   			<div class="col-sm-8">
+      			<input id="font_size" type="text" class="form-control"  placeholder="Text size" ng-model="font_size">
+    		</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Color (#)</label>
+   			<div class="col-sm-8">
+      			<input id="font_color" type="text" class="form-control"  placeholder="Font color" ng-model="font_color">
+    		</div>
+		</div>
+		<!-- Backgraound colors -->
+
+		<span class="col-sm-12 label label-info">Background colors</span></br>
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Box (#)</label>
+   			<div class="col-sm-8">
+      			<input id="box_color" type="text" class="form-control"  placeholder="Word wrapper background" ng-model="box_bg">
+    		</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Application (#)</label>
+   			<div class="col-sm-8">
+      			<input id="app_color" type="text" class="form-control"  placeholder="Application background" ng-model="app_bg">
+    		</div>
+		</div>
+
+		<!-- Eye tracker -->
+		<span class="col-sm-12 label label-info">Eye tracker</span></br>
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Window (ms)</label>
+   			<div class="col-sm-8">
+      			<input id="window" type="text" class="form-control"  placeholder="Allowed leave/enter box">
+    		</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Padding (px)</label>
+	   			<div class="col-sm-8">
+	      			<input id="padding" type="text" class="form-control"  placeholder="Box for pointer">
+	    		</div>
+			</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Threshold (123)</label>
+   			<div class="col-sm-8">
+      			<input id="threshold" type="text" class="form-control" placeholder="Minimum no. of leave/enter detections on the box before is recognized">
+    		</div>
+		</div>
+
+		<!-- Save results-->
+
+		<div class="checkbox">
+      		<label>
+        		<input type="checkbox" checked="true" ng-model="save_log"> Save results
+      		</label>
+    	</div>
+
+	</div>
+	<button type="button" class="btn btn-primary pull-right close-reveal-modal">Start</button>
 </div>
 
 <script>
+
+var font_color;
+var box_bgcolor;
+var app_bgcolor;
+
 $(document).ready(function(){
+
+	//Set default values
+
+	font_color = defaults.font_color;
+	box_bgcolor = defaults.box_color;
+	app_bgcolor = defaults.app_color;
+
+	//Setup plugins
+
+	$("#font_color").spectrum({
+		preferredFormat: "hex",
+    	showInput: true,
+    	color: font_color,
+    	change: setColor
+	});
+
+	$("#box_color").spectrum({
+		preferredFormat: "hex",
+    	showInput: true,
+    	color: box_bgcolor,
+    	change: setColor
+	});
+
+	$("#app_color").spectrum({
+		preferredFormat: "hex",
+    	showInput: true,
+    	color: app_bgcolor,
+    	change: setColor
+	});
+
+	//Show modal
+
 	$('#config_modal').reveal();
 });
+
+function setColor(color){
+	if(this.id === "font_color") font_color = color;
+	else if(this.id ==="box_color") box_bgcolor = color;
+	else if(this.id === "app_color") app_bgcolor = color;
+}
+
+function setupVisual(){
+	$('body').css("background-color", app_bgcolor);
+	$('#div_wrapper').css("background-color", box_bgcolor);
+	$('#div_word').css("background-color", box_bgcolor);
+	$('#div_word').css("color", font_color);
+
+	var font_size = $('#font_size').val();
+	var cursor_padding = $('#padding').val();
+
+	if($.isNumeric(font_size)){
+		$('#div_word').css("font-size", font_size + "pt");
+	}else{
+		$('#div_word').css("font-size", defaults.font_size + "pt");
+	}
+
+	if($.isNumeric(cursor_padding)){
+		$('#div_cursor').css("padding", cursor_padding + "px");
+	}else{
+		$('#div_cursor').css("padding", defaults.padding + "px");
+	}
+}
+
+function closeCallback(){
+	var scp = angular.element('.main').scope();
+	setupVisual();
+	scp.start();
+}
+
 </script>

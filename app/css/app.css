@@ -44,11 +44,13 @@ body, html {
     top:0px;
     left:0px;
     margin: 0 auto;
+    padding:10px;
 }
 
 #div_cursor{
     border:1px solid black;
     padding: 10px;
+    cursor: none;
 }
 
 #div_wrapper{

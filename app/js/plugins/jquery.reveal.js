@@ -115,7 +115,10 @@
 			
 			//Close Modal Listeners
 			var closeButton = $('.' + options.dismissmodalclass).bind('click.modalEvent', function () {
-			  modal.trigger('reveal:close')
+			  modal.trigger('reveal:close');
+			  if (typeof closeCallback == 'function') { 
+  				closeCallback(); 
+			  }
 			});
 			
 			if(options.closeonbackgroundclick) {
