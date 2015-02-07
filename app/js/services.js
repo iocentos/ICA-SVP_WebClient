@@ -90,7 +90,10 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$interval' , function(
 
     privateFunctions.start = function(){
         parameters.isRunning = true;
+        privateFunctions.setTimer();
+    }
 
+    privateFunctions.setTimer = function(){
         parameters.promise = $interval(function(){
             if( !functions.isFinished() ){
                 var word = parameters.words[parameters.index];
@@ -100,6 +103,7 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$interval' , function(
                 privateFunctions.stop();
             }
         }, parameters.wordDisplayTimeMs)
+          
     }
 
     privateFunctions.stop = function(){
@@ -110,11 +114,19 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$interval' , function(
     }
     
     privateFunctions.pause = function(){
-        
+        if( parameters.isRunning )
+            privateFunctions.stop();
+        else
+            privateFunctions.start();
     }
 
     privateFunctions.updateWord = function(word){
         functions.callbacks.onWordDisplayed(word);
+    }
+
+    privateFunctions.restart = function(){
+        parameters.isRunning = false;
+        parameters.index = 0;
     }
 
 

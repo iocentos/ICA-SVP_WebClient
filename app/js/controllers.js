@@ -6,9 +6,10 @@ angular.module('rvsp.controllers', [])
 
     $scope.word = 'Welcome';
 
-    var words = ['one' , 'two' , 'three' , 'four' , 'five' , 'six' , 'seven' , 'eight' , 'nine' , 'ten'];
+    var words = ['one' , 'two' , 'three' , 'four' , 'five' , 'six' , 'seven' , 'eight' , 'nine' , 'ten' , '11' , '12' , '13' , '14' , '15' , '16' , '18' , 'skata' , 
+            'yo', 'ua' , '1' , '2 ' , '3' ];
 
-    MainWordService.init(0 , 1000 , words);
+    MainWordService.init(0 , 2000 , words);
 
     var wordFunctions = MainWordService.getFunctions();
 
@@ -16,7 +17,23 @@ angular.module('rvsp.controllers', [])
         $scope.word = word;
     }
 
-    wordFunctions.start();
+
+
+    $scope.start = function(){
+        wordFunctions.start();
+    }
+
+    $scope.stop = function(){
+        wordFunctions.stop();
+    }
+
+    $scope.pause = function(){
+        wordFunctions.pause();
+    }
+
+    $scope.restart = function(){
+        wordFunctions.restart();
+    }
 
 
 }]);
