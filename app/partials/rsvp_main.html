@@ -38,20 +38,20 @@
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Filename (json)</label>
    			<div class="col-sm-8">
-      			<input type="text" class="form-control"  placeholder="Filename content" ng-model="file_name">
+      			<input id="file_name" type="text" class="form-control"  placeholder="Filename content" ng-model="file_name">
     		</div>
 		</div>
 
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Item time (ms)</label>
    			<div class="col-sm-8">
-      			<input type="text" class="form-control"  placeholder="Item display duration" ng-model="item_time">
+      			<input id="item_time" type="text" class="form-control"  placeholder="Item display duration" ng-model="item_time">
     		</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Delay time (ms)</label>
    			<div class="col-sm-8">
-      			<input type="text" class="form-control"  placeholder="Delay between items" ng-model="delay_time">
+      			<input id="delay_time" type="text" class="form-control"  placeholder="Delay between items" ng-model="delay_time">
     		</div>
 		</div>
 
@@ -102,19 +102,13 @@
 	   			<div class="col-sm-8">
 	      			<input id="padding" type="text" class="form-control"  placeholder="Box for pointer">
 	    		</div>
-			</div>
-		<div class="form-group">
-			<label class="col-sm-4 control-label">Threshold (123)</label>
-   			<div class="col-sm-8">
-      			<input id="threshold" type="text" class="form-control" placeholder="Minimum no. of leave/enter detections on the box before is recognized">
-    		</div>
 		</div>
 
 		<!-- Save results-->
 
 		<div class="checkbox">
       		<label>
-        		<input type="checkbox" checked="true" ng-model="save_log"> Save results
+        		<input type="checkbox" ng-model="save_log" checked="checked"> Save results
       		</label>
     	</div>
 
@@ -122,80 +116,5 @@
 	<button type="button" class="btn btn-primary pull-right close-reveal-modal">Start</button>
 </div>
 
-<script>
-
-var font_color;
-var box_bgcolor;
-var app_bgcolor;
-
-$(document).ready(function(){
-
-	//Set default values
-
-	font_color = defaults.font_color;
-	box_bgcolor = defaults.box_color;
-	app_bgcolor = defaults.app_color;
-
-	//Setup plugins
-
-	$("#font_color").spectrum({
-		preferredFormat: "hex",
-    	showInput: true,
-    	color: font_color,
-    	change: setColor
-	});
-
-	$("#box_color").spectrum({
-		preferredFormat: "hex",
-    	showInput: true,
-    	color: box_bgcolor,
-    	change: setColor
-	});
-
-	$("#app_color").spectrum({
-		preferredFormat: "hex",
-    	showInput: true,
-    	color: app_bgcolor,
-    	change: setColor
-	});
-
-	//Show modal
-
-	$('#config_modal').reveal();
-});
-
-function setColor(color){
-	if(this.id === "font_color") font_color = color;
-	else if(this.id ==="box_color") box_bgcolor = color;
-	else if(this.id === "app_color") app_bgcolor = color;
-}
-
-function setupVisual(){
-	$('body').css("background-color", app_bgcolor);
-	$('#div_wrapper').css("background-color", box_bgcolor);
-	$('#div_word').css("background-color", box_bgcolor);
-	$('#div_word').css("color", font_color);
-
-	var font_size = $('#font_size').val();
-	var cursor_padding = $('#padding').val();
-
-	if($.isNumeric(font_size)){
-		$('#div_word').css("font-size", font_size + "pt");
-	}else{
-		$('#div_word').css("font-size", defaults.font_size + "pt");
-	}
-
-	if($.isNumeric(cursor_padding)){
-		$('#div_cursor').css("padding", cursor_padding + "px");
-	}else{
-		$('#div_cursor').css("padding", defaults.padding + "px");
-	}
-}
-
-function closeCallback(){
-	var scp = angular.element('.main').scope();
-	setupVisual();
-	scp.start();
-}
-
-</script>
+<!-- View script-->
+<script src="js/partials/rsvp_main.js"></script>

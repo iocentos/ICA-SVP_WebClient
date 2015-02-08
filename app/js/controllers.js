@@ -1,7 +1,6 @@
 'use strict';
 
-
-angular.module('rvsp.controllers', [])
+angular.module('rsvp.controllers', [])
 .controller('MainWordController' , ['$scope' , 'MainWordService' , 'NetworkService' , function($scope , MainWordService, NetworkService){
 
     $scope.word = 'Welcome';
@@ -27,7 +26,7 @@ angular.module('rvsp.controllers', [])
     }, function(){
         netFunctions.log("Connection failed!");
         netParams.isConnected = false;
-    }); 
+    });
 
     //TODO make the callbacks to the server
     wordFunctions.callbacks.onWordDisplayed = function(item){
@@ -42,7 +41,6 @@ angular.module('rvsp.controllers', [])
     }
 
     $scope.start = function(){
-
         var file;
         if( $scope.file_name ) 
             file = $scope.file_name
@@ -50,7 +48,7 @@ angular.module('rvsp.controllers', [])
             file = 'content/default.json';
 
         $.getJSON(file , function(data){
-            console.log('Loaded content from ' + $scope.file_name);
+            console.log('Content loaded from ' + $scope.file_name);
             MainWordService.init($scope.delay_time , $scope.item_time , data);
             wordFunctions.start();
         });
@@ -72,6 +70,8 @@ angular.module('rvsp.controllers', [])
         wordFunctions.resume();
     }
 
+    $scope.isRunning = function(){
+        return wordFunctions.isRunning();
+    }
+
 }]);
-
-

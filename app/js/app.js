@@ -1,12 +1,12 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('rvsp', [
+angular.module('rsvp', [
   'ngRoute',
-  'rvsp.controllers',
-  'rvsp.services'
+  'rsvp.controllers',
+  'rsvp.services'
 ])
 .config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/rvsp', {templateUrl: 'partials/rvsp_main.html', controller: 'MainWordController'});
-    $routeProvider.otherwise( {redirectTo: '/rvsp'} );
+    $routeProvider.when('/rsvp', {templateUrl: 'partials/rsvp_main.html', controller: 'MainWordController'});
+    $routeProvider.otherwise( {redirectTo: '/rsvp'} );
 }]);

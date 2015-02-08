@@ -2,7 +2,7 @@
 
 
 
-var serviceModule = angular.module('rvsp.services', []);
+var serviceModule = angular.module('rsvp.services', []);
 
 /*
  *  Service that will handle all the timing of the words. It will have
