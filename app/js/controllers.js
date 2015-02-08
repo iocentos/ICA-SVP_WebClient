@@ -2,7 +2,7 @@
 
 
 angular.module('rvsp.controllers', [])
-.controller('MainWordController' , ['$scope' , 'MainWordService' , function($scope , MainWordService){
+.controller('MainWordController' , ['$scope' , 'MainWordService' , 'NetworkService' , function($scope , MainWordService, NetworkService){
 
     $scope.word = 'Welcome';
     $scope.trial;
@@ -17,12 +17,20 @@ angular.module('rvsp.controllers', [])
     $scope.app_bg;
     $scope.save_log;
 
-    var content = [ {"type":"word" , "value":"one"} , {"type":"word" , "value":"two"} , {"type":"word" , "value":"three"} , {"type":"word" , "value":"four"} , {"type":"word" , "value":"five"} , {"type":"word" , "value":"six"} , {"type":"word" , "value":"seven"} , {"type":"word" , "value":"eight"} , {"type":"word" , "value":"nine"} , {"type":"word" , "value":"ten"} ];
-
     var wordFunctions = MainWordService.getFunctions();
+    var netFunctions = NetworkService.getNetworkFunctions();
+    var netParams = NetworkService.getNetworkParams();
 
+    netFunctions.connect( function(){
+        netFunctions.log("Connected to server!");
+        netParams.isConnected = true;
+    }, function(){
+        netFunctions.log("Connection failed!");
+        netParams.isConnected = false;
+    }); 
+
+    //TODO make the callbacks to the server
     wordFunctions.callbacks.onWordDisplayed = function(item){
-
         console.log('onWordDisplayed');
         if( item.type === 'word' )
             $scope.word = item.value;
@@ -34,8 +42,18 @@ angular.module('rvsp.controllers', [])
     }
 
     $scope.start = function(){
-    	 MainWordService.init($scope.delay_time , $scope.item_time , content);
-        wordFunctions.start();
+
+        var file;
+        if( $scope.file_name ) 
+            file = $scope.file_name
+        else
+            file = 'content/default.json';
+
+        $.getJSON(file , function(data){
+            console.log('Loaded content from ' + $scope.file_name);
+            MainWordService.init($scope.delay_time , $scope.item_time , data);
+            wordFunctions.start();
+        });
     }
 
     $scope.stop = function(){

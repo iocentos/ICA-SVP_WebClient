@@ -64,7 +64,7 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
     }
 
     functions.resume = function(){
-        if( !functions.isFinished() && ! functions.isRunning() ){
+        if( !functions.isFinished() && !functions.isRunning() ){
             console.log('Calling resume on main service...')
             functions.callbacks.onServiceResumed();
             functions.setRunningState(true);
@@ -165,7 +165,7 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
  *  Network service that will use web sockets.
  *  Every request to the server should be done through this service. 
  */
-serviceModule.factory('networkService', ['$rootScope', 'spritzService', 'loggingService', function($rootScope, spritzService, loggingService) {
+serviceModule.factory('NetworkService', ['$rootScope', function($rootScope) {
 
     var netParams = {};
     var netFunctions = {};
