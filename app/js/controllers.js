@@ -50,6 +50,9 @@ angular.module('rvsp.controllers', [])
         wordFunctions.restart();
     }
 
+    $scope.resume = function(){
+        wordFunctions.resume();
+    }
 
 }]);
 

@@ -20,6 +20,7 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
     functions.callbacks.onServiceStarted = function(){};
     functions.callbacks.onServiceStopped = function(){};
     functions.callbacks.onServicePaused = function(){};
+    functions.callbacks.onServiceResumed = function(){};
 
 
     parameters.delayBtnWords = 0;
@@ -55,10 +56,19 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
 
     functions.pause = function(){
         if( !functions.isFinished() && functions.isRunning() ){
-            console.log('Calling pause on main service... ');
+            console.log('Calling pause on main service...');
             functions.callbacks.onServicePaused();
             $interval.cancel(parameters.promise);
             functions.setRunningState(false);
+        }
+    }
+
+    functions.resume = function(){
+        if( !functions.isFinished() && ! functions.isRunning() ){
+            console.log('Calling resume on main service...')
+            functions.callbacks.onServiceResumed();
+            functions.setRunningState(true);
+            privateFunctions.tick();
         }
     }
 
