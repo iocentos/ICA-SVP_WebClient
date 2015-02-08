@@ -118,20 +118,19 @@ function validate(){
 	var font_size = $('#font_size').val();
 	if($.isNumeric(font_size))
 		$('#div_word').css("font-size", font_size + "pt");
-	else
+	else{
 		$('#div_word').css("font-size", defaults.font_size + "pt");
-	$('#font_size').trigger('input');
-
+		$('#font_size').val(defaults.font_size);
+		$('#font_size').trigger('input');
+	}
+	
 	var cursor_padding = $('#padding').val();
 	if($.isNumeric(cursor_padding))
 		$('#div_cursor').css("padding", cursor_padding + "px");
 	else
 		$('#div_cursor').css("padding", defaults.cursor_padding + "px");
-	$('#div_cursor').trigger('input');
-	
+
 	cursor_window = $('#window').val();
-	if(!$.isNumeric(cursor_window)){
+	if(!$.isNumeric(cursor_window))
 		cursor_window = defaults.cursor_window;
-		$('#window').trigger('input');
-	}
 }
