@@ -121,6 +121,8 @@ angular.module('rsvp.controllers', [])
 
     // $scope.list_of_trials = [{'name':'one'} , {'name':'two'} ,{'name':'three'} ,{'name':'four'} ,{'name':'five'} ,{'name':'fuck you daniel'}];
 
+    $scope.list_of_trials = {};
+
     var netFunctions = NetworkService.getNetworkFunctions();
     var netParams = NetworkService.getNetworkParams();
 
@@ -151,7 +153,7 @@ angular.module('rsvp.controllers', [])
     netFunctions.onReceive = function(data){
         if( data.type === TYPE_TRIALS ){
             $scope.list_of_trials = data.trials;
-            //TODO
+            $scope.$apply();
         }
     };
 
