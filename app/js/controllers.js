@@ -1,5 +1,10 @@
 'use strict';
 
+var TYPE_STREAM = 'stream';
+var TYPE_TRIALS = 'trials';
+var TYPE_SINGLE_TRIAL = 'trial';
+var TYPE_TRIAL_CONFIG = 'config';
+
 angular.module('rsvp.controllers', [])
 .controller('MainWordController' , ['$scope' , 'MainWordService' , 'NetworkService' , function($scope , MainWordService, NetworkService){
 
@@ -24,19 +29,20 @@ angular.module('rsvp.controllers', [])
     //global to keep the start time of the word
     var appearTime = 0;
 
-    // networkService.init( 8181 , "192.168.150.2", "/api");
+    if( !netParams.isConnected ){
+        console.log('main controller net is not connected');
+        NetworkService.init( 8181 , "192.168.150.4", "/api");
 
-    netFunctions.connect( function(){
-        netFunctions.log("Connected to server!");
-        netParams.isConnected = true;
-    }, function(){
-        netFunctions.log("Connection failed!");
-        netParams.isConnected = false;
-    });
+        netFunctions.connect( function(){
+            netFunctions.log("Connected to server!");
+            netParams.isConnected = true;
+        }, function(){
+            netFunctions.log("Connection failed!");
+            netParams.isConnected = false;
+        });
+    }
 
-    //TODO make the callbacks to the server
     wordFunctions.callbacks.onWordDisplayed = function(item){
-        console.log('onWordDisplayed');
         if( item.type === 'word' )
             $scope.word = item.value;
 
@@ -45,26 +51,21 @@ angular.module('rsvp.controllers', [])
     }
 
     wordFunctions.callbacks.onWordDissapeard = function(item){
-        console.log('onWordDissapeard');
         //required not to resize the rectangle in the view. empty space
 
         $scope.word = String.fromCharCode(160);
-
 
         var data = {};
         data.Timestamp = new Date().getTime();
         data.Value = item;
         data.Duration = new Date().getTime() - appearTime;
-        console.log(item);
 
         var wrapper = {};
-        //TODO move this constant somewhere else
-        wrapper.type = 'displayItem';
+        wrapper.type = TYPE_STREAM;
         wrapper.content = data;
 
-        if( netParams.isCConnected )
-            $scope.netFunctions.sendData(wrapper);
-
+        if( netParams.isConnected )
+            netFunctions.sendData(wrapper);
     }
 
     $scope.start = function(){
@@ -108,28 +109,35 @@ angular.module('rsvp.controllers', [])
     var saveTrial = function(){
 
         var wrapper = {};
-        //TODO move this constant somewhere else
-        wrapper.type = 'configuration';
+        wrapper.type = TYPE_TRIAL_CONFIG;
         wrapper.content = $scope.trial;
 
-        $scope.netFunctions.sendData(wrapper);
+        netFunctions.sendData(wrapper);
     }
 
 }])
 
-
 .controller( 'LogController' , ['$scope' , 'NetworkService' , function( $scope , NetworkService ){
 
-    $scope.list_of_trials = [{'name':'one'} , {'name':'two'} ,{'name':'three'} ,{'name':'four'} ,{'name':'five'} ,{'name':'fuck you daniel'}];
+    // $scope.list_of_trials = [{'name':'one'} , {'name':'two'} ,{'name':'three'} ,{'name':'four'} ,{'name':'five'} ,{'name':'fuck you daniel'}];
 
     var netFunctions = NetworkService.getNetworkFunctions();
     var netParams = NetworkService.getNetworkParams();
-    // TODO check if the init is required again here
-    NetworkService.init( 8181 , "192.168.150.2", "/api");
+
+    var makeRequest = function(){
+        var trialsRequest = {};
+        trialsRequest.type = TYPE_TRIALS;
+        trialsRequest.content = {};
+        netFunctions.sendData(trialsRequest);
+    };
 
     if( netParams.isConnected ){
+        console.log('log controller net is  connected');
         makeRequest();
     }else{
+        console.log('log controller net is not connected');
+        //TODO remove the hardcoded ip
+        NetworkService.init( 8181 , "192.168.150.4", "/api");
         netFunctions.connect( function(){
             netFunctions.log("Connected to server!");
             netParams.isConnected = true;
@@ -141,17 +149,12 @@ angular.module('rsvp.controllers', [])
     }
 
     netFunctions.onReceive = function(data){
-        //TODO check with the server about the format of the message
-        if( data.type === 'trials' )
+        if( data.type === TYPE_TRIALS ){
             $scope.list_of_trials = data.trials;
+            //TODO
+        }
     };
 
-    var makeRequest = function(){
-        var trialsRequest = {};
-        trialsRequest.type = 'trials';
-        trialsRequest.content = {};
-        $scope.netFunctions.sendData(trialsRequest);
-    };
 }])
 
 .controller( 'TrialController' , ['$scope' , '$routeParams', 'NetworkService' , function( $scope , $routeParams , NetworkService ){
@@ -160,16 +163,26 @@ angular.module('rsvp.controllers', [])
 
     var netFunctions = NetworkService.getNetworkFunctions();
     var netParams = NetworkService.getNetworkParams();
-    // TODO check if the init is required again here
-    NetworkService.init( 8181 , "192.168.150.2", "/api");
 
+    var makeRequest = function(){
+        var trialRequest = {};
+        trialRequest.type = TYPE_SINGLE_TRIAL;
+        trialRequest.content = {'name':$routeParams.displayTrial};
+        netFunctions.sendData(trialRequest);
+    };
 
-    if( netParams.isConnected )
+    if( netParams.isConnected ){
+        console.log('trial controller net is  connected');
         makeRequest();
+    }
     else{
+        console.log('trial controller net is  not connected');
+        //TODO remove the hardcoded ip
+        NetworkService.init( 8181 , "192.168.150.4", "/api");
         netFunctions.connect( function(){
             netFunctions.log("Connected to server!");
             netParams.isConnected = true;
+            makeRequest();
         }, function(){
             netFunctions.log("Connection failed!");
             netParams.isConnected = false;
@@ -177,16 +190,9 @@ angular.module('rsvp.controllers', [])
     }
 
     netFunctions.onReceive = function(data){
-        //TODO check with the server about the format of the message
-        if( data.type === 'trial' )
+        if( data.type === TYPE_SINGLE_TRIAL )
             $scope.trial = data.trial;
     }
 
-    var makeRequest = function(){
-        var trialRequest = {};
-        trialRequest.type = 'trial';
-        trialRequest.content = {'name':$routeParams.displayTrial};
-        $scope.netFunctions.sendData(trialRequest);
-    }
 }]);
 

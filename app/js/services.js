@@ -97,11 +97,11 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
     privateFunctions.tick = function(){
         //odd number is contetnt. even numbers are blanks
         if( !functions.isFinished() && functions.isRunning() ){
-        console.log("pr tick");
             var delay = 0;
             if( parameters.index % 2 ){//blank
                 delay = parameters.delayBtnWords;
-                functions.callbacks.onWordDissapeard();
+                //subtract one because the index has already been incremented
+                functions.callbacks.onWordDissapeard(parameters.words[parameters.index - 1].value);
             }else{//content
                 //make the callback and update also
                 functions.callbacks.onWordDisplayed(parameters.words[parameters.index]);
