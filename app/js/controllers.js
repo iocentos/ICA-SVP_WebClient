@@ -69,7 +69,7 @@ angular.module('rsvp.controllers', [])
 
     $scope.start = function(){
         var file;
-        if( $scope.trial.file_name ) 
+        if( $scope.file_name ) 
             file = $scope.trial.file_name
         else
             file = 'content/default.json';
@@ -120,9 +120,7 @@ angular.module('rsvp.controllers', [])
 
 .controller( 'LogController' , ['$scope' , 'NetworkService' , function( $scope , NetworkService ){
 
-    var trials = [{'name':'one'} , {'name':'two'} ,{'name':'three'} ,{'name':'four'} ,{'name':'five'} ,{'name':'six'} ];
-
-    $scope.list_of_trials = trials;
+    $scope.list_of_trials = [{'name':'one'} , {'name':'two'} ,{'name':'three'} ,{'name':'four'} ,{'name':'five'} ,{'name':'fuck you daniel'}];
 
     var netFunctions = NetworkService.getNetworkFunctions();
     var netParams = NetworkService.getNetworkParams();
@@ -145,7 +143,7 @@ angular.module('rsvp.controllers', [])
     netFunctions.onReceive = function(data){
         //TODO check with the server about the format of the message
         if( data.type === 'trials' )
-            $scope.trials = data.trials;
+            $scope.list_of_trials = data.trials;
     };
 
     var makeRequest = function(){
