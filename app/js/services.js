@@ -159,8 +159,6 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
 
 }]);
 
-
-
 /*
  *  Network service that will use web sockets.
  *  Every request to the server should be done through this service. 

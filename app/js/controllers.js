@@ -21,6 +21,8 @@ angular.module('rsvp.controllers', [])
     var netParams = NetworkService.getNetworkParams();
     var appearTime = 0;
 
+    // networkService.init( 8181 , "192.168.150.2", "/api");
+
     netFunctions.connect( function(){
         netFunctions.log("Connected to server!");
         netParams.isConnected = true;
@@ -130,6 +132,70 @@ angular.module('rsvp.controllers', [])
 
 .controller( 'LogController' , ['$scope' , 'NetworkService' , function( $scope , NetworkService ){
     
-    //TODO implement all the logic for all the logs
+    var trials = [{'url':'something' , 'name':'one'} , {'url':'something2' , 'name':'two'}];
 
+    $scope.trials = trials;
+
+    var netFunctions = NetworkService.getNetworkFunctions();
+    var netParams = NetworkService.getNetworkParams();
+    // TODO check if the init is required again here
+    NetworkService.init( 8181 , "192.168.150.2", "/api");
+
+    netFunctions.connect( function(){
+        netFunctions.log("Connected to server!");
+        netParams.isConnected = true;
+    }, function(){
+        netFunctions.log("Connection failed!");
+        netParams.isConnected = false;
+    });
+
+    netFunctions.onReceive = function(data){
+        //TODO check with the server about the format of the message
+        if( data.type === 'trials' )
+            $scope.trials = data.trials;
+    }
+
+    var trialsRequest = {};
+    trialsRequest.type = 'trials';
+    trialsRequest.content = {};
+
+
+    if( netParams.isCConnected )
+        $scope.netFunctions.sendData(trialsRequest);
+
+}])
+
+.controller( 'TrialController' , ['$scope' , '$routeParams', 'NetworkService' , function( $scope , $routeParams , NetworkService ){
+    
+    $scope.trial = {};
+
+    var netFunctions = NetworkService.getNetworkFunctions();
+    var netParams = NetworkService.getNetworkParams();
+    // TODO check if the init is required again here
+    NetworkService.init( 8181 , "192.168.150.2", "/api");
+
+    netFunctions.connect( function(){
+        netFunctions.log("Connected to server!");
+        netParams.isConnected = true;
+    }, function(){
+        netFunctions.log("Connection failed!");
+        netParams.isConnected = false;
+    });
+
+    netFunctions.onReceive = function(data){
+        //TODO check with the server about the format of the message
+        if( data.type === 'trial' )
+            $scope.trial = data.trial;
+    }
+
+    var trialName = $routeParams.displayTrial;
+
+
+    var trialRequest = {};
+    trialRequest.type = 'trial';
+    trialRequest.content = {'name':trialName};
+
+    if( netParams.isCConnected )
+        $scope.netFunctions.sendData(trialRequest);
 }]);
+
