@@ -19,39 +19,39 @@
 		<div class="form-group">
  			<label class="col-sm-4 control-label">Trial</label>
    			<div class="col-sm-8">
-      			<input type="text" class="form-control" placeholder="Insert trial name" ng-model="trial">
+      			<input type="text" class="form-control" placeholder="Insert trial name" ng-model="trial.trial">
     		</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Name</label>
    			<div class="col-sm-8">
-      			<input type="text" class="form-control" placeholder="Insert subject's name" ng-model="user_name">
+      			<input type="text" class="form-control" placeholder="Insert subject's name" ng-model="trial.user_name">
     		</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Age</label>
    			<div class="col-sm-8">
-      			<input type="text" class="form-control"  placeholder="Insert subjet's age" ng-model="user_age">
+      			<input type="text" class="form-control"  placeholder="Insert subjet's age" ng-model="trial.user_age">
     		</div>
 		</div>
 
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Filename (json)</label>
    			<div class="col-sm-8">
-      			<input id="file_name" type="text" class="form-control"  placeholder="Filename content" ng-model="file_name">
+      			<input id="file_name" type="text" class="form-control"  placeholder="Filename content" ng-model="trial.file_name">
     		</div>
 		</div>
 
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Item time (ms)</label>
    			<div class="col-sm-8">
-      			<input id="item_time" type="text" class="form-control"  placeholder="Item display duration" ng-model="item_time">
+      			<input id="item_time" type="text" class="form-control"  placeholder="Item display duration" ng-model="trial.item_time">
     		</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Delay time (ms)</label>
    			<div class="col-sm-8">
-      			<input id="delay_time" type="text" class="form-control"  placeholder="Delay between items" ng-model="delay_time">
+      			<input id="delay_time" type="text" class="form-control"  placeholder="Delay between items" ng-model="trial.delay_time">
     		</div>
 		</div>
 
@@ -62,13 +62,13 @@
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Size (pt)</label>
    			<div class="col-sm-8">
-      			<input id="font_size" type="text" class="form-control"  placeholder="Text size" ng-model="font_size">
+      			<input id="font_size" type="text" class="form-control"  placeholder="Text size" ng-model="trial.font_size">
     		</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Color (#)</label>
    			<div class="col-sm-8">
-      			<input id="font_color" type="text" class="form-control"  placeholder="Font color" ng-model="font_color">
+      			<input id="font_color" type="text" class="form-control"  placeholder="Font color" ng-model="trial.font_color">
     		</div>
 		</div>
 		<!-- Backgraound colors -->
@@ -78,13 +78,13 @@
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Box (#)</label>
    			<div class="col-sm-8">
-      			<input id="box_color" type="text" class="form-control"  placeholder="Word wrapper background" ng-model="box_bg">
+      			<input id="box_color" type="text" class="form-control"  placeholder="Word wrapper background" ng-model="trial.box_bg">
     		</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Application (#)</label>
    			<div class="col-sm-8">
-      			<input id="app_color" type="text" class="form-control"  placeholder="Application background" ng-model="app_bg">
+      			<input id="app_color" type="text" class="form-control"  placeholder="Application background" ng-model="trial.app_bg">
     		</div>
 		</div>
 
@@ -108,7 +108,7 @@
 
 		<div class="checkbox">
       		<label>
-        		<input type="checkbox" ng-model="save_log" checked="checked"> Save results
+        		<input type="checkbox" ng-model="trial.save_log" checked="checked"> Save results
       		</label>
     	</div>
 
