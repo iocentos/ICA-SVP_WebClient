@@ -95,6 +95,13 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
 
     //this and the next method are calling each other in a recursive way,
     privateFunctions.tick = function(){
+        
+        if( functions.isFinished() ){
+            functions.callbacks.onServiceStopped();
+            return ;
+        }
+
+
         //odd number is contetnt. even numbers are blanks
         if( !functions.isFinished() && functions.isRunning() ){
             var delay = 0;

@@ -1,9 +1,19 @@
 'use strict';
 
-var TYPE_STREAM = 'stream';
-var TYPE_TRIALS = 'trials';
-var TYPE_SINGLE_TRIAL = 'trial';
-var TYPE_TRIAL_CONFIG = 'config';
+//network message types
+var NET_TYPE_STREAM = 'stream';
+var NET_TYPE_TRIALS = 'trials';
+var NET_TYPE_SINGLE_TRIAL = 'trial';
+var NET_TYPE_TRIAL_CONFIG = 'config';
+
+var SERVER_HOST = "192.168.150.4";
+var SERVER_PORT = 8181;
+var SERVER_URL = "/api";
+
+var DSPL_ITEM_WORD = 'word';
+var DSPL_ITEM_IMG = 'img';
+
+
 
 angular.module('rsvp.controllers', [])
 .controller('MainWordController' , ['$scope' , 'MainWordService' , 'NetworkService' , function($scope , MainWordService, NetworkService){
@@ -30,8 +40,9 @@ angular.module('rsvp.controllers', [])
     var appearTime = 0;
 
     if( !netParams.isConnected ){
+        //TODO removed hardcoded ip
         console.log('main controller net is not connected');
-        NetworkService.init( 8181 , "192.168.150.4", "/api");
+        NetworkService.init( SERVER_PORT ,SERVER_HOST,SERVER_URL);
 
         netFunctions.connect( function(){
             netFunctions.log("Connected to server!");
@@ -43,8 +54,16 @@ angular.module('rsvp.controllers', [])
     }
 
     wordFunctions.callbacks.onWordDisplayed = function(item){
-        if( item.type === 'word' )
+        if( item.type === DSPL_ITEM_WORD ){
             $scope.word = item.value;
+            //call this to check if a digest is already in progress
+            if(!$scope.$$phase) {
+                $scope.$apply();
+            }
+        }
+        else if( item.type === DSPL_ITEM_IMG ){
+            //TODO
+        }
 
         //whatever it is save the duration
         appearTime = new Date().getTime();
@@ -52,7 +71,6 @@ angular.module('rsvp.controllers', [])
 
     wordFunctions.callbacks.onWordDissapeard = function(item){
         //required not to resize the rectangle in the view. empty space
-
         $scope.word = String.fromCharCode(160);
 
         var data = {};
@@ -61,11 +79,27 @@ angular.module('rsvp.controllers', [])
         data.Duration = new Date().getTime() - appearTime;
 
         var wrapper = {};
-        wrapper.type = TYPE_STREAM;
+        wrapper.type = NET_TYPE_STREAM;
         wrapper.content = data;
 
         if( netParams.isConnected )
             netFunctions.sendData(wrapper);
+    }
+
+    wordFunctions.callbacks.onServiceStarted = function(){
+        console.log('Display service started');
+    }
+
+    wordFunctions.callbacks.onServiceStopped = function(){
+        console.log('Display service stopped');
+    }
+
+    wordFunctions.callbacks.onServicePaused = function(){
+        console.log('Display service paused');
+    }
+    
+    wordFunctions.callbacks.onServiceResumed = function(){
+        console.log('Display service resumed');
     }
 
     $scope.start = function(){
@@ -109,7 +143,7 @@ angular.module('rsvp.controllers', [])
     var saveTrial = function(){
 
         var wrapper = {};
-        wrapper.type = TYPE_TRIAL_CONFIG;
+        wrapper.type = NET_TYPE_TRIAL_CONFIG;
         wrapper.content = $scope.trial;
 
         netFunctions.sendData(wrapper);
@@ -128,7 +162,7 @@ angular.module('rsvp.controllers', [])
 
     var makeRequest = function(){
         var trialsRequest = {};
-        trialsRequest.type = TYPE_TRIALS;
+        trialsRequest.type = NET_TYPE_TRIALS;
         trialsRequest.content = {};
         netFunctions.sendData(trialsRequest);
     };
@@ -139,7 +173,7 @@ angular.module('rsvp.controllers', [])
     }else{
         console.log('log controller net is not connected');
         //TODO remove the hardcoded ip
-        NetworkService.init( 8181 , "192.168.150.4", "/api");
+        NetworkService.init( SERVER_PORT ,SERVER_HOST,SERVER_URL);
         netFunctions.connect( function(){
             netFunctions.log("Connected to server!");
             netParams.isConnected = true;
@@ -151,7 +185,7 @@ angular.module('rsvp.controllers', [])
     }
 
     netFunctions.onReceive = function(data){
-        if( data.type === TYPE_TRIALS ){
+        if( data.type === NET_TYPE_TRIALS ){
             $scope.list_of_trials = data.trials;
             $scope.$apply();
         }
@@ -168,7 +202,7 @@ angular.module('rsvp.controllers', [])
 
     var makeRequest = function(){
         var trialRequest = {};
-        trialRequest.type = TYPE_SINGLE_TRIAL;
+        trialRequest.type = NET_TYPE_SINGLE_TRIAL;
         trialRequest.content = {'name':$routeParams.displayTrial};
         netFunctions.sendData(trialRequest);
     };
@@ -180,7 +214,7 @@ angular.module('rsvp.controllers', [])
     else{
         console.log('trial controller net is  not connected');
         //TODO remove the hardcoded ip
-        NetworkService.init( 8181 , "192.168.150.4", "/api");
+        NetworkService.init( SERVER_PORT ,SERVER_HOST,SERVER_URL);
         netFunctions.connect( function(){
             netFunctions.log("Connected to server!");
             netParams.isConnected = true;
@@ -192,7 +226,7 @@ angular.module('rsvp.controllers', [])
     }
 
     netFunctions.onReceive = function(data){
-        if( data.type === TYPE_SINGLE_TRIAL )
+        if( data.type === NET_TYPE_SINGLE_TRIAL )
             $scope.trial = data.trial;
     }
 
