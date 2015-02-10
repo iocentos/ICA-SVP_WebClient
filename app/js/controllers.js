@@ -19,6 +19,7 @@ angular.module('rsvp.controllers', [])
     var wordFunctions = MainWordService.getFunctions();
     var netFunctions = NetworkService.getNetworkFunctions();
     var netParams = NetworkService.getNetworkParams();
+    var appearTime = 0;
 
     netFunctions.connect( function(){
         netFunctions.log("Connected to server!");
@@ -33,11 +34,32 @@ angular.module('rsvp.controllers', [])
         console.log('onWordDisplayed');
         if( item.type === 'word' )
             $scope.word = item.value;
+
+        //whatever it is save the duration
+        appearTime = new Date().getTime();
     }
 
     wordFunctions.callbacks.onWordDissapeard = function(item){
         console.log('onWordDissapeard');
+        //required not to resize the rectangle in the view. empty space
+        
         $scope.word = String.fromCharCode(160);
+
+         
+        var data = {};
+        data.Timestamp = new Date().getTime();
+        data.Value = item;
+        data.Duration = new Date().getTime() - appearTime;
+        console.log(item);
+
+        var wrapper = {};
+        //TODO move this constant somewhere else
+        wrapper.type = 'displayItem';
+        wrapper.content = data;
+
+        if( netParams.isCConnected )
+            $scope.netFunctions.sendData(wrapper);
+
     }
 
     $scope.start = function(){
@@ -50,6 +72,9 @@ angular.module('rsvp.controllers', [])
         $.getJSON(file , function(data){
             console.log('Content loaded from ' + $scope.file_name);
             MainWordService.init($scope.delay_time , $scope.item_time , data);
+            if( netParams.isConnected )
+                saveTrial();
+
             wordFunctions.start();
         });
     }
@@ -73,5 +98,38 @@ angular.module('rsvp.controllers', [])
     $scope.isRunning = function(){
         return wordFunctions.isRunning();
     }
+
+
+    var saveTrial = function(){
+
+        var trial = {};
+
+        trial.trial = $scope.trial;
+        trial.user_name = $scope.user_name;
+        trial.user_age = $scope.user_age;
+        trial.file_name = $scope.file_name; 
+        trial.item_time = $scope.item_time; 
+        trial.delay_time = $scope.delay_time; 
+        trial.font_size = $scope.font_size; 
+        trial.font_color = $scope.font_color; 
+        trial.box_bg = $scope.box_bg; 
+        trial.app_bg = $scope.app_bg; 
+        trial.save_log = $scope.save_log; 
+
+        var wrapper = {};
+        //TODO move this constant somewhere else
+        wrapper.type = 'configuration';
+        wrapper.content = trial;
+
+        $scope.netFunctions.sendData(wrapper);
+
+    }
+
+}])
+
+
+.controller( 'LogController' , ['$scope' , 'NetworkService' , function( $scope , NetworkService ){
+    
+    //TODO implement all the logic for all the logs
 
 }]);
