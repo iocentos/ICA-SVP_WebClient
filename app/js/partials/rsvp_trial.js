@@ -1,7 +1,15 @@
-$(function () {
-    $('#container').highcharts({
+var scp;
+
+angular.element(document).ready(function () {
+        
+});
+
+$(document).ready(function(){
+    scp = angular.element('.main').scope();
+
+      $('#container').highcharts({
         title: {
-            text: 'Monthly Average Temperature',
+            text: 'Weather',
             x: -20 //center
         },
         subtitle: {
