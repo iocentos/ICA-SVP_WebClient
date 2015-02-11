@@ -203,7 +203,7 @@ angular.module('rsvp.controllers', [])
     var makeRequest = function(){
         var trialRequest = {};
         trialRequest.type = NET_TYPE_SINGLE_TRIAL;
-        trialRequest.content = {'name':$routeParams.displayTrial};
+        trialRequest.content =$routeParams.displayTrial;
         netFunctions.sendData(trialRequest);
     };
 
