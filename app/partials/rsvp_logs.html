@@ -1,7 +1,7 @@
 <h2>Available logs</h2>
-<div>
+<div class="list-group">
+	<input ng-model="searchText" placeholder="Filter..." class="form-control">
 </div>
-</br>
 <div class="list-group">
     <a ng-repeat="trial in list_of_trials | filter:searchText" href="#/logs/{{trial.file_name}}" class="list-group-item">{{trial.file_name}}</a>
     <span ng-show="!list_of_trials.length" class="list-group-item">No logs to display...</span>
