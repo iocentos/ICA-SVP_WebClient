@@ -226,8 +226,10 @@ angular.module('rsvp.controllers', [])
     }
 
     netFunctions.onReceive = function(data){
-        if( data.type === NET_TYPE_SINGLE_TRIAL )
+        if( data.type === NET_TYPE_SINGLE_TRIAL ){
             $scope.trial = data.trial;
+            $scope.$apply();
+        }
     }
 
 }]);
