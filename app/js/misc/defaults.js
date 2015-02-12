@@ -7,5 +7,6 @@ var defaults = {
     "box_color": "#ffffff",
     "app_color": "#ffffff",
     "window": "1000",
-	"padding": "100"
+	"padding": "100",
+	"marker_url": "images/marker.png"
 };

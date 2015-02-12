@@ -5,6 +5,7 @@ var app_bgcolor;
 var timeout = null;
 var leaves_count = 0;
 var cursor_window;
+var is_first_time;
 
 $(document).ready(function(){
 
@@ -13,6 +14,10 @@ $(document).ready(function(){
 	String.prototype.isEmpty = function() {
     	return (this.length === 0 || !this.trim());
 	}
+
+	$('#cb_controls').change(function() {
+           $("#controls").toggle();
+    });
 
 	//Set default values
 	font_color = defaults.font_color;
@@ -43,7 +48,13 @@ $(document).ready(function(){
 	});
 
 	//Show modal
+	$('.reveal-modal').css('max-height', $('html').height() - 110 + 'px');
 	$('#config_modal').reveal();
+});
+
+// Reset max-height after window resize
+$(window).resize(function() {
+    $('.reveal-modal').css('max-height', $('html').height() - 110 + 'px');
 });
 
 function setColor(color){
@@ -76,7 +87,7 @@ function setup(){
 function closeCallback(){
 	//Configuration modal close callback
 	setup();
-	scp.start();
+	is_first_time = true;
 }
 
 function onMouseLeave(){
@@ -86,12 +97,17 @@ function onMouseLeave(){
 }
 
 function onMouseEnter(){
-	if(timeout != null){
-		clearTimeout(timeout);
-		timeout = null;
+	if(is_first_time){
+		is_first_time = false;
+		scp.start();
+	}else{
+		if(timeout != null){
+			clearTimeout(timeout);
+			timeout = null;
+		}
+		if(!scp.isRunning())
+			scp.resume();
 	}
-	if(!scp.isRunning())
-		scp.resume();
 }
 
 function validate(){

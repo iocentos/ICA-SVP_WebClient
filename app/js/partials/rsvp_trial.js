@@ -1,30 +1,79 @@
 $(document).ready(function(){
 
-        var title = "Trial name"
-        var url = "url(http://www.highcharts.com/demo/gfx/snow.png)";
+		var img_url = "url(" + defaults.marker_url + ")";
 
-        var left_data =  [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        //var left_data = [[10000,5],[10001,5],[10002,5],[10003,5],[10004,5],[10005,5]];
-        var right_data =  [{y: 3.9,marker: {symbol: url}}, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        //var right_data = [{x:10000,y: 3.9,marker: {symbol: 'url(http://www.highcharts.com/demo/gfx/snow.png)'}},[10001,3],[10002,4],[10003,5],[10004,5],[10005,8]];
+		//TODO Fake data
+		var trial = {"configuration":{"trial":"trial 0","user_name":"name","user_age":"age","file_name":"file_name","item_time":"item_time","delay_time":"delay_time","font_size":"font_size","font_color":"font_color","box_bg":"box_bg","app_bg":"app_bg","save_log":true},"data":[{"item":{"timestamp":346,"duration":1000,"value":null},"eyes":[{"timestamp":346,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":1287,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":1346,"duration":1000,"value":"test"},"eyes":[{"timestamp":1930,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":2346,"duration":941,"value":null},"eyes":[{"timestamp":2582,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":2621,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":2679,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":3287,"duration":1000,"value":"test"},"eyes":[{"timestamp":3497,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":4121,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":4262,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":4930,"duration":1000,"value":"test"},"eyes":[{"timestamp":4983,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":5301,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":5930,"duration":652,"value":null},"eyes":[{"timestamp":6239,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":6582,"duration":1000,"value":"test"},"eyes":[{"timestamp":7085,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":7113,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":7192,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":7532,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":7620,"duration":1000,"value":"test"},"eyes":[{"timestamp":8046,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":8677,"duration":1000,"value":"test"},"eyes":[{"timestamp":9030,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":9553,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":9677,"duration":818,"value":null},"eyes":[{"timestamp":10352,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":10495,"duration":1000,"value":"test"},"eyes":[{"timestamp":11059,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":11495,"duration":624,"value":null},"eyes":[{"timestamp":11631,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":12119,"duration":1000,"value":"test"},"eyes":[{"timestamp":12400,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":12879,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":13259,"duration":1000,"value":"test"},"eyes":[{"timestamp":13457,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":14116,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":14259,"duration":720,"value":null},"eyes":[{"timestamp":14788,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":14979,"duration":1000,"value":"test"},"eyes":[{"timestamp":15552,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":15978,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":16297,"duration":1000,"value":"test"},"eyes":[{"timestamp":16875,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":17297,"duration":938,"value":null},"eyes":[{"timestamp":17850,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":18235,"duration":1000,"value":"test"},"eyes":[{"timestamp":18397,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":18824,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}},{"timestamp":19087,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]},{"item":{"timestamp":19235,"duration":846,"value":null},"eyes":[{"timestamp":19636,"left_eye":{"diameter":5.0},"right_eye":{"diameter":5.0}}]}]};
 
+		var left_data = [];
+		var right_data = [];
+
+        $.each(trial.data, function( index, value ){
+    		
+    		var item = value.item;
+
+    		if(item.value == null){
+    			item["value"] = "Delay";
+    			console.log (item.value);
+    		}
+
+			$.each($(value.eyes), function( index, eyes ){
+				
+				var left_eye = eyes.left_eye;
+				var right_eye = eyes.right_eye;    
+
+				if(index == 0){
+					var marker = {};
+					marker['symbol'] = img_url;
+					//Left eye
+					var obj = {};
+					obj["x"] = eyes.timestamp;
+					obj["y"] = left_eye.diameter;
+					obj["name"] = item.value;
+					obj["marker"] = marker;
+					left_data.push(obj);
+					
+					//Right eye
+					var obj = {};
+					obj["x"] = eyes.timestamp;
+					obj["y"] = right_eye.diameter;
+					obj["name"] = item.value;
+					obj["marker"] = marker;
+					right_data.push(obj);
+
+				}else{
+					//Left eye
+					var xy = [];
+					xy[0] = eyes.timestamp;
+					xy[1] = left_eye.diameter;
+					left_data.push(xy);
+					//Right eye
+					var xy = [];
+					xy[0] = eyes.timestamp;
+					xy[1] = right_eye.diameter;
+					right_data.push(xy);
+				}
+			});
+		});
+
+       
       $('#container').highcharts({
         chart:{
             zoomType: "x"
         },
         title: {
-            text: title, x: -20 //center
+            text: trial.configuration.trial, x: -20 //center
         },
         tooltip: {
             valueSuffix: 'mm',
             crosshairs: true,
-            shared: true
+           	shared: true
         },
         plotOptions: {
             series: {
                 marker: {
                     enabled: true,
-                    radius: 0
+                    radius: 0,
                 }
             }
         },

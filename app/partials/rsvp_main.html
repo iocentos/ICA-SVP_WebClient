@@ -1,8 +1,10 @@
-<button type="button" ng-click="start()" class="btn btn-success">Start</button>
-<button type="button" ng-click="stop()" class="btn btn-danger">Stop</button>
-<button type="button" ng-click="pause()" class="btn btn-warning">Pause</button>
-<button type="button" ng-click="restart()" class="btn btn-success">Restart</button>
-<button type="button" ng-click="resume()" class="btn btn-success">Resume</button>
+<div id="controls">
+	<button type="button" ng-click="start()" class="btn btn-success">Start</button>
+	<button type="button" ng-click="stop()" class="btn btn-danger">Stop</button>
+	<button type="button" ng-click="pause()" class="btn btn-warning">Pause</button>
+	<button type="button" ng-click="restart()" class="btn btn-success">Restart</button>
+	<button type="button" ng-click="resume()" class="btn btn-success">Resume</button>
+</div>
 
 <div id="div_cursor" class="centered">
 	<div id="div_wrapper">
@@ -14,10 +16,11 @@
 
 <!--Config modal-->
 
-<div id="config_modal" class="reveal-modal">
+<div id="config_modal" class="reveal-modal xlarge">
 	<div class="form-horizontal">
 		<div class="form-group">
- 			<label class="col-sm-4 control-label">Trial</label>
+			<button type="button" class="col-sm-1 btn btn-primary close-reveal-modal">Start</button>
+ 			<label class="col-sm-3 control-label">Trial</label>
    			<div class="col-sm-8">
       			<input type="text" class="form-control" placeholder="Insert trial name" ng-model="trial.trial">
     		</div>
@@ -108,12 +111,21 @@
 
 		<div class="checkbox">
       		<label>
-        		<input type="checkbox" ng-model="trial.save_log" checked="checked"> Save results
+        		<input type="checkbox" ng-model="trial.save_log"> Save results
+      		</label>
+    	</div>
+
+    	<button type="button" class="btn btn-primary pull-right close-reveal-modal">Start</button>
+
+    	<!-- Show controls on experiment-->
+    	<div class="checkbox">
+      		<label>
+        		<input id="cb_controls" type="checkbox" checked> Show controls
       		</label>
     	</div>
 
 	</div>
-	<button type="button" class="btn btn-primary pull-right close-reveal-modal">Start</button>
+	
 </div>
 
 <!-- View script-->

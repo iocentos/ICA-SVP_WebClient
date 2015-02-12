@@ -6,7 +6,7 @@ var NET_TYPE_TRIALS = 'trials';
 var NET_TYPE_SINGLE_TRIAL = 'trial';
 var NET_TYPE_TRIAL_CONFIG = 'config';
 
-var SERVER_HOST = "192.168.150.4";
+var SERVER_HOST = "127.0.0.1";
 var SERVER_PORT = 8181;
 var SERVER_URL = "/api";
 
@@ -31,7 +31,7 @@ angular.module('rsvp.controllers', [])
     $scope.trial.font_color;
     $scope.trial.box_bg;
     $scope.trial.app_bg;
-    $scope.trial.save_log;
+    $scope.trial.save_log = true;
 
     var wordFunctions = MainWordService.getFunctions();
     var netFunctions = NetworkService.getNetworkFunctions();

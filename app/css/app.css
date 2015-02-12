@@ -83,3 +83,26 @@ body, html {
 .input-group-addon{
   width: 50%;
 }
+
+.reveal-modal {
+    margin-top: -50px;
+    overflow-y: auto;
+}
+
+.panel-body{
+   box-shadow: 2px 3px 11px #888888;
+}
+
+.logs_container{
+  height: 85%;
+}
+
+.logs_body{
+  height:100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#container{
+  min-width: 310px; height: 400px; margin: 0 auto
+}
