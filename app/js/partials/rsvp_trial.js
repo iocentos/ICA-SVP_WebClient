@@ -68,6 +68,7 @@ function Graph(trial){
     //Show line chart
     $('#container').highcharts({
         chart:{
+            type: 'spline',
             zoomType: "x"
         },
         title: {

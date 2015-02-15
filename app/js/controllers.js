@@ -5,6 +5,11 @@ var NET_TYPE_STREAM = 'stream';
 var NET_TYPE_TRIALS = 'trials';
 var NET_TYPE_SINGLE_TRIAL = 'trial';
 var NET_TYPE_TRIAL_CONFIG = 'config';
+var NET_TYPE_SERVICE_STARTED = 'serviceStarted';
+var NET_TYPE_SERVICE_STOPPED = 'serviceStopped';
+var NET_TYPE_SERVICE_PAUSED = 'servicePaused';
+var NET_TYPE_SERVICE_RESUMED = 'serviceResumed';
+
 
 var SERVER_HOST = "127.0.0.1";
 var SERVER_PORT = 8181;
@@ -88,18 +93,33 @@ angular.module('rsvp.controllers', [])
 
     wordFunctions.callbacks.onServiceStarted = function(){
         console.log('Display service started');
+        //the config message is the start message for the server
+        //notifyServer(NET_TYPE_SERVICE_STARTED);
     }
 
     wordFunctions.callbacks.onServiceStopped = function(){
         console.log('Display service stopped');
+        notifyServer(NET_TYPE_SERVICE_STOPPED);
     }
 
     wordFunctions.callbacks.onServicePaused = function(){
         console.log('Display service paused');
+        //notifyServer(NET_TYPE_SERVICE_PAUSED);
     }
     
     wordFunctions.callbacks.onServiceResumed = function(){
         console.log('Display service resumed');
+        //notifyServer(NET_TYPE_SERVICE_RESUMED);
+    }
+
+    var notifyServer = function(type){ 
+        var wrapper = {};
+        wrapper.type = type;
+        var timestamp = new Date().getTime();
+        wrapper.content = {'timestamp' : timestamp};
+
+        if( netParams.isConnected )
+            netFunctions.sendData(wrapper);
     }
 
     $scope.start = function(){
