@@ -59,7 +59,7 @@ body, html {
     -moz-border-radius: 15px;
     border-radius: 15px;
     box-shadow: 2px 3px 11px #888888;
-    padding:10px;
+    padding-right:10px;
 }
 
 #div_word{
@@ -105,4 +105,48 @@ body, html {
 
 #container{
   min-width: 310px; height: 400px; margin: 0 auto
+}
+
+/**Home**/
+
+.buttons_home{
+  display: block;
+  margin-top: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.buttons_home a, a:link, a:visited, a:active, a:hover{
+  text-decoration: none;
+  color: inherit; 
+}
+
+.button_bg{
+  height: 160px;
+  width: 160px;
+  background-size: 130px 130px;
+  background-repeat: no-repeat;
+  background-position: center;  
+}
+
+.icon_text{
+  height: 20px;
+  width: 160px;
+  text-align: center;
+}
+
+#calibrateEyeTribe {
+  background-image: url(../images/eyetracker.png);
+}
+
+#calibrateSystem {
+  background-image: url(../images/calibrate.png);
+}
+
+#experiment {
+  background-image: url(../images/experiment.png);
+}
+
+#resultList {
+  background-image: url(../images/results.png);
 }
