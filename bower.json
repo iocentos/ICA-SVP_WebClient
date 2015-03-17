@@ -12,6 +12,7 @@
     "angular-mocks": "~1.2.x",
     "html5-boilerplate": "~4.3.0",
     "jquery": "2.1.x",
-    "bootstrap": "3.3.x"
+    "bootstrap": "3.3.x",
+    "tinycolor": "0.9.18"
   }
 }
