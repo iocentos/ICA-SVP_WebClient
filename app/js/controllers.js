@@ -67,13 +67,12 @@ angular.module('rsvp.controllers', [])
     wordFunctions.callbacks.onWordDisplayed = function(item){
         if( item.type === DSPL_ITEM_WORD ){
             $scope.word = item.value;
-            //call this to check if a digest is already in progress
-            if(!$scope.$$phase) {
-                $scope.$apply();
-            }
         }
         else if( item.type === DSPL_ITEM_IMG ){
-            //TODO
+            $scope.image = item.value;
+        }
+        if(!$scope.$$phase) {
+            $scope.$apply();
         }
 
         //whatever it is save the duration
@@ -83,6 +82,7 @@ angular.module('rsvp.controllers', [])
     wordFunctions.callbacks.onWordDissapeard = function(item){
         //required not to resize the rectangle in the view. empty space
         $scope.word = String.fromCharCode(160);
+        $scope.image = "";
 
         var data = {};
         data.Timestamp = new Date().getTime();

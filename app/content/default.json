@@ -1,1 +1,13 @@
-[ {"type":"word" , "value":"one"} , {"type":"word" , "value":"two"} , {"type":"word" , "value":"three"} , {"type":"word" , "value":"four"} , {"type":"word" , "value":"five"} , {"type":"word" , "value":"six"} , {"type":"word" , "value":"seven"} , {"type":"word" , "value":"eight"} , {"type":"word" , "value":"nine"} , {"type":"word" , "value":"ten"} ]
+[
+  {"type":"img" ,  "value":"content/images/3_1_pipes_and_filters.png"},
+  {"type":"word" , "value":"one"} ,
+  {"type":"word" , "value":"two"} ,
+  {"type":"word" , "value":"three"} ,
+  {"type":"word" , "value":"four"} ,
+  {"type":"word" , "value":"five"} ,
+  {"type":"word" , "value":"six"} ,
+  {"type":"word" , "value":"seven"} ,
+  {"type":"word" , "value":"eight"} ,
+  {"type":"word" , "value":"nine"} ,
+  {"type":"word" , "value":"ten"} 
+]
