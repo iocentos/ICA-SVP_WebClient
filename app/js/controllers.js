@@ -9,6 +9,13 @@ var NET_TYPE_SERVICE_STARTED = 'serviceStarted';
 var NET_TYPE_SERVICE_STOPPED = 'serviceStopped';
 var NET_TYPE_SERVICE_PAUSED = 'servicePaused';
 var NET_TYPE_SERVICE_RESUMED = 'serviceResumed';
+var NET_TYPE_CALIBRATION = "calibration";
+
+
+var TYPE_CALIBRATION_FINISHED = "calbrationFinished";
+var TYPE_CALIBRATION_STARTED = "calbrationStarted";
+var TYPE_EYETRIBE_CALIBRATION = "eyetribe";
+var TYPE_SYSTEM_CALIBRATION = "system";
 
 
 var SERVER_HOST = "127.0.0.1";
@@ -45,7 +52,6 @@ angular.module('rsvp.controllers', [])
     var appearTime = 0;
 
     if( !netParams.isConnected ){
-        //TODO removed hardcoded ip
         console.log('main controller net is not connected');
         NetworkService.init( SERVER_PORT ,SERVER_HOST,SERVER_URL);
 
@@ -173,8 +179,6 @@ angular.module('rsvp.controllers', [])
 
 .controller( 'LogController' , ['$scope' , 'NetworkService' , function( $scope , NetworkService ){
 
-    // $scope.list_of_trials = [{'name':'one'} , {'name':'two'} ,{'name':'three'} ,{'name':'four'} ,{'name':'five'} ,{'name':'fuck you daniel'}];
-
     $scope.list_of_trials = {};
 
     var netFunctions = NetworkService.getNetworkFunctions();
@@ -192,7 +196,6 @@ angular.module('rsvp.controllers', [])
         makeRequest();
     }else{
         console.log('log controller net is not connected');
-        //TODO remove the hardcoded ip
         NetworkService.init( SERVER_PORT ,SERVER_HOST,SERVER_URL);
         netFunctions.connect( function(){
             netFunctions.log("Connected to server!");
@@ -211,6 +214,54 @@ angular.module('rsvp.controllers', [])
         }
     };
 
+}])
+
+.controller( 'CalibrationController', ['$scope' ,'$location','$routeParams', 'NetworkService', function($scope, $location, $routeParams, NetworkService){
+
+    var netFunctions = NetworkService.getNetworkFunctions();
+    var netParams = NetworkService.getNetworkParams();
+
+    var makeRequest = function(){
+        var calibrationRequest = {};
+        calibrationRequest.type = NET_TYPE_CALIBRATION;
+        calibrationRequest.content = $routeParams.device;
+        netFunctions.sendData(calibrationRequest);
+    };
+
+    var onCalibrationFinished = function(){
+        $location.path("home")
+    };
+
+    var onCalibrationStarted = function(){
+
+    }
+
+    if( netParams.isConnected ){
+        console.log('trial controller net is  connected');
+        makeRequest();
+    }
+    else{
+        console.log('trial controller net is  not connected');
+        NetworkService.init( SERVER_PORT ,SERVER_HOST,SERVER_URL);
+        netFunctions.connect( function(){
+            netFunctions.log("Connected to server!");
+            netParams.isConnected = true;
+            makeRequest();
+        }, function(){
+            netFunctions.log("Connection failed!");
+            netParams.isConnected = false;
+        });
+
+    }
+
+    netFunctions.onReceive = function(data){
+        if( data.type === NET_TYPE_CALIBRATION ){
+            if( data.content === TYPE_CALIBRATION_STARTED )
+                onCalibrationStarted();
+            else if( data.content === TYPE_CALIBRATION_FINISHED )
+                onCalibrationFinished();
+        }
+    }
 }])
 
 .controller( 'TrialController' , ['$scope' , '$routeParams', 'NetworkService' , function( $scope , $routeParams , NetworkService ){
