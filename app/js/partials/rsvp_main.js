@@ -1,6 +1,5 @@
 var scp;
 var font_color;
-var box_bgcolor;
 var app_bgcolor;
 var timeout = null;
 var leaves_count = 0;
@@ -10,6 +9,7 @@ var is_first_time;
 $(document).ready(function(){
 
 	scp = angular.element('.main').scope();
+	$('body').css("background-color","#FFFFFF");
 
 	String.prototype.isEmpty = function() {
     	return (this.length === 0 || !this.trim());
@@ -21,7 +21,6 @@ $(document).ready(function(){
 
 	//Set default values
 	font_color = defaults.font_color;
-	box_bgcolor = defaults.box_color;
 	app_bgcolor = defaults.app_color;
 
 	//Setup plugins
@@ -30,13 +29,6 @@ $(document).ready(function(){
 		preferredFormat: "hex",
     	showInput: true,
     	color: font_color,
-    	change: setColor
-	});
-
-	$("#box_color").spectrum({
-		preferredFormat: "hex",
-    	showInput: true,
-    	color: box_bgcolor,
     	change: setColor
 	});
 
@@ -60,20 +52,16 @@ $(window).resize(function() {
 function setColor(color){
 	//Color picker callback
 	if(this.id === "font_color") font_color = color;
-	else if(this.id ==="box_color") box_bgcolor = color;
 	else if(this.id === "app_color") app_bgcolor = color;
 }
 
 function setup(){
 	//Setup environment before start
-	$('body').css("background-color", app_bgcolor);
-	$('#div_wrapper').css("background-color", box_bgcolor);
-	$('#div_word').css("background-color", box_bgcolor);
+	updateBgColor(app_bgcolor)
 	$('#div_word').css("color", font_color);
 
 	//Update model
 	$('#font_color').trigger('input');
-	$('#box_color').trigger('input');
 	$('#app_color').trigger('input');
 
 	//Check if values are set, otherwise set default
@@ -110,12 +98,18 @@ function onMouseEnter(){
 	}
 }
 
+function updateBgColor(color){
+	//Update background color
+	$('body').css("background-color", color);
+}
+
 function validate(){
 	//If not valid input, set defaults
+	//TODO add validation for all
 
 	var file_name = $('#file_name').val();
 	if(file_name.isEmpty()){
-		$('#file_name').val(defaults.file_name);
+		$('#file_name').val(defaults.content);
 		$('#file_name').trigger('input');
 	}
 
@@ -149,4 +143,8 @@ function validate(){
 	cursor_window = $('#window').val();
 	if(!$.isNumeric(cursor_window))
 		cursor_window = defaults.cursor_window;
+}
+
+function trialFinished(){
+	location.reload();
 }

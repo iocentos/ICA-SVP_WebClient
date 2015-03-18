@@ -1,1 +1,38 @@
-<h1>YOYO</h1>
+<div id="controls">
+	<div class="pull-right">
+		<button type="button" class="btn btn-primary" onclick="window.history.back()">Back</button>
+	</div>
+</div>
+
+<div class="cal_wrapper centered">
+	<div id="calibration_point">&nbsp;</div>
+	<div id="calibration_text"><h1><span id="text">Look at the target!</span></h1></div>
+</div>
+
+<!--Config modal-->
+
+<div id="config_modal" class="reveal-modal xlarge" style="left:53%">
+	<div class="form-horizontal">
+
+		<h3>Click start to begin the calibration process</h3>
+		
+		<!-- Background -->
+		
+		<span class="col-sm-12 label label-info">Background</span></br>
+		<br/>
+		<div class="form-group">
+   			<div class="col-sm-3">
+   				Pick a color &nbsp;
+      			<input id="cal_color" type="text" placeholder="Background color" ng-model="trial.cal_bg">
+    		</div>
+    		<div class="col-sm-9">
+    			<button type="button" class="btn btn-primary pull-right close-reveal-modal">Start</button>
+    		</div>
+		</div>	
+	</div>
+	
+</div>
+
+<!-- View script-->
+<script src="js/partials/rsvp_cal.js"></script>
+

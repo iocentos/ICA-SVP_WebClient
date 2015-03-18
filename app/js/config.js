@@ -10,9 +10,10 @@ var defaults = {
 	"delay_time": "1000",
 	"font_size": "55",
     "font_color": "#333333",
-    "box_color": "#ffffff",
     "app_color": "#ffffff",
+    "bg_modality":"static",
     "window": "1000",
-	"padding": "100",
-	"marker_url": "images/marker.png"
+	"padding": "10",
+	"marker_url": "images/marker.png",
+	"cal_color": "#ffffff"
 };

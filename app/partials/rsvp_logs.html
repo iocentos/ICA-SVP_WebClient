@@ -1,6 +1,8 @@
 <h2>
 	Available logs
-	
+	<div class="pull-right back">
+		<button type="button" class="btn btn-primary" onclick="window.history.back()">Back</button>	
+	</div>
 	<div class="list-group pull-right">
 		<div class="input-group">
 			<input ng-model="searchText" placeholder="Filter..." class="form-control">
@@ -29,3 +31,9 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function(){
+		$('body').css("background-color","#FFFFFF");
+	});
+</script>
