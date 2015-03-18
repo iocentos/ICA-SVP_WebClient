@@ -30,7 +30,10 @@ var BACKGROUND_OBSCURE = 2;
 angular.module('rsvp.controllers', [])
 
 .controller('HomeController' , ['$rootScope',function($rootScope){
-    $rootScope.calibration = {};
+	if(!$rootScope.calibration){
+    	$rootScope.calibration = {};
+    	$rootScope.calibration.bg_color;
+	}
 }])
 
 .controller('MainWordController' , ['$rootScope', '$scope' ,  '$location', 'MainWordService' , 'NetworkService' ,'BgColorService', function($rootScope, $scope ,$location, MainWordService, NetworkService, BgColorService){
@@ -51,7 +54,7 @@ angular.module('rsvp.controllers', [])
     $scope.trial.window = defaults.window;
     $scope.trial.save_log = true;
 
-    if($rootScope.calibration && $rootScope.calibration.bg_color)
+    if($rootScope.calibration.bg_color)
         $scope.trial.cal_bg = $rootScope.calibration.bg_color;
     else
         $location.path("/calibrate/system");
@@ -123,6 +126,7 @@ angular.module('rsvp.controllers', [])
         console.log('Display service stopped');
         notifyServer(NET_TYPE_SERVICE_STOPPED);
         trialFinished();
+        $location.path("/home");
     }
 
     wordFunctions.callbacks.onServicePaused = function(){
@@ -261,7 +265,8 @@ angular.module('rsvp.controllers', [])
     };
 
     var onCalibrationFinished = function(){
-        calibrationFinished();
+        if(calibrationFinished)
+        	$location.path("/home");
     };
 
     var onCalibrationStarted = function(){
@@ -335,4 +340,3 @@ angular.module('rsvp.controllers', [])
     }
 
 }]);
-

@@ -57,7 +57,7 @@ function calibrationFinished(){
 	$( "#calibration_point" ).fadeOut( "slow", function(){
 		$("#calibration_text" ).fadeIn( "slow", function() {
 			setTimeout(function() {
-      			window.history.back();
+      			return true;
 			}, 2500);
 	  	});
 	});

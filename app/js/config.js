@@ -6,8 +6,8 @@ var server = {
 var defaults = {
 	"message_start":"Welcome",
 	"content":"content/default.json",
-	"item_time": "3000",
-	"delay_time": "1000",
+	"item_time": "500",
+	"delay_time": "100",
 	"font_size": "55",
     "font_color": "#333333",
     "app_color": "#FFFFFF",

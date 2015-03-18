@@ -5,6 +5,7 @@ var timeout = null;
 var leaves_count = 0;
 var cursor_window;
 var is_first_time;
+var canUpdate = true;
 
 $(document).ready(function(){
 
@@ -98,11 +99,6 @@ function onMouseEnter(){
 	}
 }
 
-function updateBgColor(color){
-	//Update background color
-	$('body').css("background-color", color);
-}
-
 function validate(){
 	//If not valid input, set defaults
 
@@ -144,6 +140,12 @@ function validate(){
 		cursor_window = defaults.cursor_window;
 }
 
+function updateBgColor(color){
+	//Update background color
+	if(canUpdate)
+		$('body').css("background-color", color);
+}
+
 function trialFinished(){
-	location.reload();
+	canUpdate = false;
 }
