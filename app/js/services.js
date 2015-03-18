@@ -260,3 +260,130 @@ serviceModule.factory('NetworkService', ['$rootScope', function($rootScope) {
 
 }]);
 
+serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($timeout, $interval) {
+
+
+    var BRIGHT_MODE = true;
+    var OBSCURE_MODE = false;
+
+    var CONSTANT_INTERVAL = 100; //update color every 100ms
+
+    var bgColor = {};
+    bgColor.initialRGBColor = 0;
+    bgColor.currentRGBColor = 0;
+    bgColor.initialHSVColor = 0;
+    bgColor.currentHSVColor = 0;
+
+    bgColor.mode = BRIGHT_MODE;
+    bgColor.totalTime = 0;
+    bgColor.elapsedTime = 0;
+    bgColor.iterations = 0;
+    bgColor.promise = {};
+    bgColor.counter = 0;
+    bgColor.colorInterval = 0;
+
+    var privateFunctions = {};
+    var publicFunctions = {};
+
+    publicFunctions.isRunning = false;
+    publicFunctions.isFinished = false;
+
+    /*
+     * Public functions
+     */
+    publicFunctions.onUpdate = function(color){
+        console.log(color);
+    }
+
+    publicFunctions.start = function(){
+        if( !publicFunctions.isRunning && !publicFunctions.isFinished ){
+            publicFunctions.isRunning = true;
+            privateFunctions.start(CONSTANT_INTERVAL);
+        }
+    }
+
+    publicFunctions.stop = function(){
+        if( publicFunctions.isRunning ){
+            publicFunctions.isRunning = false;
+            $interval.cancel(bgColor.promise);
+        }
+    }
+
+    /*
+     * Private functions
+     */
+    privateFunctions.tick = function(){
+        if(publicFunctions.isRunning && !publicFunctions.isFinished){
+
+            if( bgColor.counter < bgColor.iterations ){
+
+                if( bgColor.mode == BRIGHT_MODE )
+                    bgColor.currentHSVColor.v = parseFloat(bgColor.colorInterval) + parseFloat(bgColor.currentHSVColor.v);
+                else if( bgColor.mode == OBSCURE_MODE )
+                    bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v) -  parseFloat(bgColor.colorInterval);
+
+                if (parseFloat(bgColor.currentHSVColor.v) < 100 ){
+                    var color = tinycolor(bgColor.currentHSVColor);
+                    var rgb = color.toRgb();
+
+                    //console.log( bgColor.currentHSVColor );
+
+                    bgColor.currentRGBColor = rgb;
+
+                    var newColor = '#' + rgb.r + rgb.g + rgb.b;
+
+                    publicFunctions.onUpdate(newColor);
+
+                    bgColor.counter++;
+                    privateFunctions.start(CONSTANT_INTERVAL);
+                }else{
+                    publicFunctions.isFinished = true;
+                    publicFunctions.stop();
+                }
+            }else{
+                publicFunctions.isFinished = true;
+                publicFunctions.stop();
+            }
+        }
+    }
+
+    privateFunctions.start = function(delay){
+        bgColor.promise = $interval(function(){
+            privateFunctions.tick();
+        },delay, 1 );
+    }
+
+
+
+
+    return {
+        init : function(stimuliCount, stimuliTime, delayTime, initialColor, mode){
+            bgColor.initialRGBColor = initialColor;
+            bgColor.currentRGBColor = initialColor;
+            var rgbColor = tinycolor(initialColor);
+            bgColor.initialHSVColor = rgbColor.toHsv();
+            bgColor.currentHSVColor = bgColor.initialHSVColor;
+
+            bgColor.mode = mode;
+
+            bgColor.totalTime = (stimuliCount * stimuliTime) + ((stimuliCount - 1) * delayTime);
+
+            bgColor.iterations = bgColor.totalTime / CONSTANT_INTERVAL;
+
+            var value = bgColor.initialHSVColor.v;
+            if( bgColor.mode == BRIGHT_MODE ){
+                bgColor.colorInterval = (100-parseFloat(value) * 100) / bgColor.iterations;    
+            }else if( bgColor.mode == OBSCURE_MODE ){
+                bgColor.colorInterval = (parseFloat(value) *100) / bgColor.iterations;    
+            }
+
+            bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v) * 100;
+
+            privateFunctions.start(CONSTANT_INTERVAL);
+        },
+        getPublicFunctions : function(){
+            return publicFunctions;
+        }
+    }
+
+}]);
