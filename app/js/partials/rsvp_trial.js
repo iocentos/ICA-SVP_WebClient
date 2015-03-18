@@ -1,6 +1,9 @@
 var scp;
 
 $(document).ready(function(){
+
+    $('body').css("background-color","#FFFFFF");
+
     setTimeout(function(){ 
         scp = angular.element('.main').scope(); 
         Graph(scp.trial);

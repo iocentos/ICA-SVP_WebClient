@@ -29,6 +29,11 @@
   padding: 0;
 }
 
+.back{
+  padding-left: 10px;
+  margin-top:-2px;
+}
+
 /**RSVP Main**/
 
 body, html {
@@ -139,4 +144,22 @@ body, html {
 
 #resultList {
   background-image: url(../images/results.png);
+}
+
+/**Calibration**/
+.cal_wrapper{
+  width: 500px;
+}
+
+#calibration_point{
+  background-image: url(../images/target.png);
+  height: 30px;
+  width: 100%;
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#calibration_text{
+  text-align: center;
 }

@@ -4,6 +4,9 @@
 	<button type="button" ng-click="pause()" class="btn btn-warning">Pause</button>
 	<button type="button" ng-click="restart()" class="btn btn-success">Restart</button>
 	<button type="button" ng-click="resume()" class="btn btn-success">Resume</button>
+	<div class="pull-right">
+		<button type="button" class="btn btn-primary" onclick="window.history.back()">Back</button>
+	</div>
 </div>
 
 <div id="div_cursor" class="centered">
@@ -19,13 +22,40 @@
 
 <div id="config_modal" class="reveal-modal xlarge" style="left:53%">
 	<div class="form-horizontal">
+
+		<!-- Trial config -->
+
+		<span class="col-sm-12 label label-info">Experiment trial</span></br>
+
 		<div class="form-group">
-			<button type="button" class="col-sm-1 btn btn-primary close-reveal-modal">Start</button>
- 			<label class="col-sm-3 control-label">Trial</label>
+ 			<label class="col-sm-4 control-label">Trial name</label>
    			<div class="col-sm-8">
-      			<input type="text" class="form-control" placeholder="Insert trial name" ng-model="trial.trial">
+      			<input type="text" class="form-control" placeholder="Result file name" ng-model="trial.trial">
     		</div>
 		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">File name (json)</label>
+   			<div class="col-sm-8">
+      			<input id="file_name" type="text" class="form-control"  placeholder="Trial content" ng-model="trial.file_name">
+    		</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Item time (ms)</label>
+   			<div class="col-sm-8">
+      			<input id="item_time" type="text" class="form-control"  placeholder="Item exposure duration" ng-model="trial.item_time">
+    		</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Delay time (ms)</label>
+   			<div class="col-sm-8">
+      			<input id="delay_time" type="text" class="form-control"  placeholder="Delay between items" ng-model="trial.delay_time">
+    		</div>
+		</div>
+
+		<!-- Participant information -->
+
+		<span class="col-sm-12 label label-info">Participant information</span></br>
+
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Name</label>
    			<div class="col-sm-8">
@@ -36,26 +66,6 @@
 			<label class="col-sm-4 control-label">Age</label>
    			<div class="col-sm-8">
       			<input type="text" class="form-control"  placeholder="Insert subjet's age" ng-model="trial.user_age">
-    		</div>
-		</div>
-
-		<div class="form-group">
-			<label class="col-sm-4 control-label">Filename (json)</label>
-   			<div class="col-sm-8">
-      			<input id="file_name" type="text" class="form-control"  placeholder="Filename content" ng-model="trial.file_name">
-    		</div>
-		</div>
-
-		<div class="form-group">
-			<label class="col-sm-4 control-label">Item time (ms)</label>
-   			<div class="col-sm-8">
-      			<input id="item_time" type="text" class="form-control"  placeholder="Item display duration" ng-model="trial.item_time">
-    		</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-4 control-label">Delay time (ms)</label>
-   			<div class="col-sm-8">
-      			<input id="delay_time" type="text" class="form-control"  placeholder="Delay between items" ng-model="trial.delay_time">
     		</div>
 		</div>
 
@@ -75,20 +85,19 @@
       			<input id="font_color" type="text" class="form-control"  placeholder="Font color" ng-model="trial.font_color">
     		</div>
 		</div>
-		<!-- Backgraound colors -->
 
-		<span class="col-sm-12 label label-info">Background colors</span></br>
+		<!-- Background -->
+
+		<span class="col-sm-12 label label-info">Background</span></br>
 
 		<div class="form-group">
-			<label class="col-sm-4 control-label">Box (#)</label>
+			<label class="col-sm-4 control-label">Color (#)</label>
    			<div class="col-sm-8">
-      			<input id="box_color" type="text" class="form-control"  placeholder="Word wrapper background" ng-model="trial.box_bg">
-    		</div>
-		</div>
-		<div class="form-group">
-			<label class="col-sm-4 control-label">Application (#)</label>
-   			<div class="col-sm-8">
-      			<input id="app_color" type="text" class="form-control"  placeholder="Application background" ng-model="trial.app_bg">
+      			<input id="app_color" type="text" class="form-control"  placeholder="Experiment background" ng-model="trial.app_bg">
+      			&nbsp;
+      			<input type="radio" name="modality" ng-model="trial.bg_modality" value="static"/> Static
+	      		<input type="radio" name="modality" ng-model="trial.bg_modality" value="bright" /> Bright
+				<input type="radio" name="modality" ng-model="trial.bg_modality" value="obscure" /> Obscure
     		</div>
 		</div>
 
@@ -98,13 +107,13 @@
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Window (ms)</label>
    			<div class="col-sm-8">
-      			<input id="window" type="text" class="form-control"  placeholder="Allowed leave/enter box">
+      			<input id="window" type="text" class="form-control"  placeholder="Allowed leave/enter box" ng-model="trial.window">
     		</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Padding (px)</label>
 	   			<div class="col-sm-8">
-	      			<input id="padding" type="text" class="form-control"  placeholder="Box for pointer">
+	      			<input id="padding" type="text" class="form-control"  placeholder="Box for pointer" ng-model="trial.padding">
 	    		</div>
 		</div>
 

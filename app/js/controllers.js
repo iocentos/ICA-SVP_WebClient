@@ -29,15 +29,17 @@ angular.module('rsvp.controllers', [])
     $scope.trial = {};
     $scope.word = defaults.message_start;
     $scope.trial.trial;
+    $scope.trial.file_name;
+    $scope.trial.item_time = defaults.item_time;
+    $scope.trial.delay_time = defaults.delay_time;
     $scope.trial.user_name;
     $scope.trial.user_age;
-    $scope.trial.file_name;
-    $scope.trial.item_time;
-    $scope.trial.delay_time;
-    $scope.trial.font_size;
-    $scope.trial.font_color;
-    $scope.trial.box_bg;
-    $scope.trial.app_bg;
+    $scope.trial.font_size = defaults.font_size;
+    $scope.trial.font_color = defaults.font_color;
+    $scope.trial.app_bg = defaults.app_color;
+    $scope.trial.bg_modality = defaults.bg_modality;
+    $scope.trial.padding = defaults.padding;
+    $scope.trial.window = defaults.window;
     $scope.trial.save_log = true;
 
     var wordFunctions = MainWordService.getFunctions();
@@ -100,6 +102,7 @@ angular.module('rsvp.controllers', [])
     wordFunctions.callbacks.onServiceStopped = function(){
         console.log('Display service stopped');
         notifyServer(NET_TYPE_SERVICE_STOPPED);
+        trialFinished();
     }
 
     wordFunctions.callbacks.onServicePaused = function(){
