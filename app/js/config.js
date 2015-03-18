@@ -1,5 +1,11 @@
+var server = {
+	"ip":"127.0.0.1",
+	"port":"8181",
+	"url":"/api"
+};
 var defaults = {
-	"content":"default.json",
+	"message_start":"Welcome",
+	"content":"content/default.json",
 	"item_time": "3000",
 	"delay_time": "1000",
 	"font_size": "55",

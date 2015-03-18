@@ -1,5 +1,9 @@
 'use strict';
 
+var SERVER_HOST = server.ip;
+var SERVER_PORT = server.port;
+var SERVER_URL = server.url;
+
 //network message types
 var NET_TYPE_STREAM = 'stream';
 var NET_TYPE_TRIALS = 'trials';
@@ -11,28 +15,19 @@ var NET_TYPE_SERVICE_PAUSED = 'servicePaused';
 var NET_TYPE_SERVICE_RESUMED = 'serviceResumed';
 var NET_TYPE_CALIBRATION = "calibration";
 
-
 var TYPE_CALIBRATION_FINISHED = "calbrationFinished";
 var TYPE_CALIBRATION_STARTED = "calbrationStarted";
 var TYPE_EYETRIBE_CALIBRATION = "eyetribe";
 var TYPE_SYSTEM_CALIBRATION = "system";
 
-
-var SERVER_HOST = "127.0.0.1";
-var SERVER_PORT = 8181;
-var SERVER_URL = "/api";
-
 var DSPL_ITEM_WORD = 'word';
 var DSPL_ITEM_IMG = 'img';
-
-
 
 angular.module('rsvp.controllers', [])
 .controller('MainWordController' , ['$scope' , 'MainWordService' , 'NetworkService' , function($scope , MainWordService, NetworkService){
 
     $scope.trial = {};
-
-    $scope.word = 'Welcome';
+    $scope.word = defaults.message_start;
     $scope.trial.trial;
     $scope.trial.user_name;
     $scope.trial.user_age;
@@ -74,7 +69,6 @@ angular.module('rsvp.controllers', [])
         if(!$scope.$$phase) {
             $scope.$apply();
         }
-
         //whatever it is save the duration
         appearTime = new Date().getTime();
     }
@@ -133,7 +127,7 @@ angular.module('rsvp.controllers', [])
         if( $scope.file_name ) 
             file = $scope.trial.file_name
         else
-            file = 'content/default.json';
+            file = defaults.content;
 
         $.getJSON(file , function(data){
             console.log('Content loaded from ' + file);
@@ -165,16 +159,12 @@ angular.module('rsvp.controllers', [])
         return wordFunctions.isRunning();
     }
 
-
     var saveTrial = function(){
-
         var wrapper = {};
         wrapper.type = NET_TYPE_TRIAL_CONFIG;
         wrapper.content = $scope.trial;
-
         netFunctions.sendData(wrapper);
     }
-
 }])
 
 .controller( 'LogController' , ['$scope' , 'NetworkService' , function( $scope , NetworkService ){
@@ -284,7 +274,6 @@ angular.module('rsvp.controllers', [])
     }
     else{
         console.log('trial controller net is  not connected');
-        //TODO remove the hardcoded ip
         NetworkService.init( SERVER_PORT ,SERVER_HOST,SERVER_URL);
         netFunctions.connect( function(){
             netFunctions.log("Connected to server!");

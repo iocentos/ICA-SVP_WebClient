@@ -7,14 +7,11 @@
 </div>
 
 <div id="div_cursor" class="centered">
-	<div id="div_wrapper">
-		<div id="div_word">
-			{{word}}
-		</div>
-		<div id="div_image">
-            <img src={{image}}>
-		</div>
-
+	<div id="div_word" ng-show="!image">
+		<span ng-bind="word"/> 
+	</div>
+	<div id="div_image" ng-show="image">
+        <img ng-src="{{image}}"/>
 	</div>
 </div>
 

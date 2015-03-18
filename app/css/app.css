@@ -48,24 +48,14 @@ body, html {
 }
 
 #div_cursor{
-    border:1px solid black;
     padding: 10px;
     cursor: none;
-}
-
-#div_wrapper{
-    position: relative;
-    border:1px solid gray;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    box-shadow: 2px 3px 11px #888888;
-    padding-right:10px;
+    border-top:2px solid black;
+    border-bottom:2px solid black;
 }
 
 #div_word{
     position: relative;
-    border-top:2px solid black;
-    border-bottom:2px solid black;
     padding: 10px;
     text-align: center;
     font-size: 55pt;
