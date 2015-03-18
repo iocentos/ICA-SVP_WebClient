@@ -28,7 +28,12 @@ var BACKGROUND_BRIGHT = 1;
 var BACKGROUND_OBSCURE = 2;
 
 angular.module('rsvp.controllers', [])
-.controller('MainWordController' , ['$scope' , 'MainWordService' , 'NetworkService' ,'BgColorService', function($scope , MainWordService, NetworkService , BgColorService){
+
+.controller('HomeController' , ['$rootScope',function($rootScope){
+    $rootScope.calibration = {};
+}])
+
+.controller('MainWordController' , ['$rootScope', '$scope' ,  '$location', 'MainWordService' , 'NetworkService' ,'BgColorService', function($rootScope, $scope ,$location, MainWordService, NetworkService, BgColorService){
 
     $scope.trial = {};
     $scope.word = defaults.message_start;
@@ -45,6 +50,11 @@ angular.module('rsvp.controllers', [])
     $scope.trial.padding = defaults.padding;
     $scope.trial.window = defaults.window;
     $scope.trial.save_log = true;
+
+    if($rootScope.calibration && $rootScope.calibration.bg_color)
+        $scope.trial.cal_bg = $rootScope.calibration.bg_color;
+    else
+        $location.path("/calibrate/system");
 
     var wordFunctions = MainWordService.getFunctions();
     var netFunctions = NetworkService.getNetworkFunctions();
@@ -236,10 +246,12 @@ angular.module('rsvp.controllers', [])
 
 }])
 
-.controller( 'CalibrationController', ['$scope' ,'$location','$routeParams', 'NetworkService', function($scope, $location, $routeParams, NetworkService){
+.controller( 'CalibrationController', ['$rootScope','$scope' ,'$location','$routeParams', 'NetworkService', function($rootScope,$scope, $location, $routeParams, NetworkService){
 
     var netFunctions = NetworkService.getNetworkFunctions();
     var netParams = NetworkService.getNetworkParams();
+
+    $rootScope.calibration.bg_color = defaults.cal_color;
 
     var makeRequest = function(){
         var calibrationRequest = {};
@@ -249,7 +261,7 @@ angular.module('rsvp.controllers', [])
     };
 
     var onCalibrationFinished = function(){
-        $location.path("home")
+        calibrationFinished();
     };
 
     var onCalibrationStarted = function(){

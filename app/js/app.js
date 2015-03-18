@@ -7,7 +7,7 @@ angular.module('rsvp', [
   'rsvp.services'
 ])
 .config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/home', {templateUrl: 'partials/rsvp_home.html'});
+    $routeProvider.when('/home', {templateUrl: 'partials/rsvp_home.html', controller: 'HomeController'});
     $routeProvider.when('/rsvp', {templateUrl: 'partials/rsvp_main.html', controller: 'MainWordController'});
     $routeProvider.when('/logs', {templateUrl: 'partials/rsvp_logs.html', controller: 'LogController'});
     $routeProvider.when('/calibrate/:device', {templateUrl: 'partials/rsvp_cal.html', controller: 'CalibrationController'});

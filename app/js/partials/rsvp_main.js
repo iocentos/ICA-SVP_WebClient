@@ -105,7 +105,6 @@ function updateBgColor(color){
 
 function validate(){
 	//If not valid input, set defaults
-	//TODO add validation for all
 
 	var file_name = $('#file_name').val();
 	if(file_name.isEmpty()){

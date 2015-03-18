@@ -39,8 +39,6 @@ function setup(){
 	$('body').css("background-color", cal_color);
 	//Update model
 	$('#cal_color').trigger('input');
-	//Check if values are set, otherwise set default
-	validate();
 	//Animate description and target
 	setTimeout(function() {
       	$("#calibration_text" ).fadeOut( "slow", function() {
@@ -54,13 +52,7 @@ function closeCallback(){
 	setup();
 }
 
-function validate(){
-	//If not valid input, set defaults
-	//TODO add to model cal_color
-}
-
 function calibrationFinished(){
-	//TODO call when calibration is finished
 	$("#text").html("Calibration completed");
 	$( "#calibration_point" ).fadeOut( "slow", function(){
 		$("#calibration_text" ).fadeIn( "slow", function() {
