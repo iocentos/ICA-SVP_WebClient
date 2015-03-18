@@ -23,8 +23,12 @@ var TYPE_SYSTEM_CALIBRATION = "system";
 var DSPL_ITEM_WORD = 'word';
 var DSPL_ITEM_IMG = 'img';
 
+var BACKGROUND_STATIC = 0;
+var BACKGROUND_BRIGHT = 1;
+var BACKGROUND_OBSCURE = 2;
+
 angular.module('rsvp.controllers', [])
-.controller('MainWordController' , ['$scope' , 'MainWordService' , 'NetworkService' , function($scope , MainWordService, NetworkService){
+.controller('MainWordController' , ['$scope' , 'MainWordService' , 'NetworkService' ,'BgColorService', function($scope , MainWordService, NetworkService , BgColorService){
 
     $scope.trial = {};
     $scope.word = defaults.message_start;
@@ -47,6 +51,12 @@ angular.module('rsvp.controllers', [])
     var netParams = NetworkService.getNetworkParams();
     //global to keep the start time of the word
     var appearTime = 0;
+
+    var colorFunctions = BgColorService.getPublicFunctions();
+
+    colorFunctions.onUpdate = function(color){
+        updateBgColor(color);        
+    }
 
     if( !netParams.isConnected ){
         console.log('main controller net is not connected');
@@ -135,10 +145,22 @@ angular.module('rsvp.controllers', [])
         $.getJSON(file , function(data){
             console.log('Content loaded from ' + file);
             MainWordService.init($scope.trial.delay_time , $scope.trial.item_time , data);
+
+            if( $scope.trial.bg_modality == BACKGROUND_BRIGHT){
+                BgColorService.init(data.length, $scope.trial.item_time ,
+                                    $scope.trial.delay_time , $scope.trial.app_bg,
+                                    BACKGROUND_BRIGHT);
+            }else if ( $scope.trial.bg_modality == BACKGROUND_OBSCURE){
+                BgColorService.init(data.length, $scope.trial.item_time ,
+                                    $scope.trial.delay_time , $scope.trial.app_bg,
+                                    BACKGROUND_OBSCURE);
+            }
+
             if( netParams.isConnected )
                 saveTrial();
 
             wordFunctions.start();
+            colorFunctions.start();
         });
     }
 
@@ -148,6 +170,9 @@ angular.module('rsvp.controllers', [])
 
     $scope.pause = function(){
         wordFunctions.pause();
+        if( $scope.trial.bg_modality != BACKGROUND_STATIC)
+            colorFunctions.stop();
+
     }
 
     $scope.restart = function(){
@@ -156,6 +181,8 @@ angular.module('rsvp.controllers', [])
 
     $scope.resume = function(){
         wordFunctions.resume();
+        if( $scope.trial.bg_modality != BACKGROUND_STATIC)
+            colorFunctions.start();
     }
 
     $scope.isRunning = function(){

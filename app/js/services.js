@@ -263,8 +263,8 @@ serviceModule.factory('NetworkService', ['$rootScope', function($rootScope) {
 serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($timeout, $interval) {
 
 
-    var BRIGHT_MODE = true;
-    var OBSCURE_MODE = false;
+    var BRIGHT_MODE = 1;
+    var OBSCURE_MODE = 2;
 
     var CONSTANT_INTERVAL = 100; //update color every 100ms
 
@@ -326,11 +326,21 @@ serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($t
                     var color = tinycolor(bgColor.currentHSVColor);
                     var rgb = color.toRgb();
 
-                    //console.log( bgColor.currentHSVColor );
-
                     bgColor.currentRGBColor = rgb;
 
-                    var newColor = '#' + rgb.r + rgb.g + rgb.b;
+                    var redHex = baseToBase(10,16, rgb.r);
+                    if( rgb.r < 16 )
+                        redHex = '0' + redHex;
+
+                    var greenHex = baseToBase(10,16, rgb.g);
+                    if( rgb.g < 16 )
+                        greenHex = '0' + greenHex;
+
+                    var blueHex = baseToBase(10,16, rgb.b);
+                    if( rgb.b < 16 )
+                        blueHex = '0' + blueHex;
+
+                    var newColor = '#' + redHex + greenHex + blueHex;
 
                     publicFunctions.onUpdate(newColor);
 
@@ -354,6 +364,13 @@ serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($t
     }
 
 
+    function baseToBase (fromBase, toBase, value) {;
+        if(value=="")
+            value = 0;
+        value = parseInt(value, fromBase);
+        return Number(value).toString(toBase).toUpperCase();	
+    }
+
 
 
     return {
@@ -366,7 +383,7 @@ serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($t
 
             bgColor.mode = mode;
 
-            bgColor.totalTime = (stimuliCount * stimuliTime) + ((stimuliCount - 1) * delayTime);
+            bgColor.totalTime = (stimuliCount * stimuliTime) + (stimuliCount * delayTime);
 
             bgColor.iterations = bgColor.totalTime / CONSTANT_INTERVAL;
 
@@ -378,8 +395,6 @@ serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($t
             }
 
             bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v) * 100;
-
-            privateFunctions.start(CONSTANT_INTERVAL);
         },
         getPublicFunctions : function(){
             return publicFunctions;
