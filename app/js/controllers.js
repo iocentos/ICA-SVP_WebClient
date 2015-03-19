@@ -151,31 +151,36 @@ angular.module('rsvp.controllers', [])
 
     $scope.start = function(){
         var file;
-        if( $scope.file_name ) 
+        if( $scope.trial.file_name ) 
             file = $scope.trial.file_name
         else
             file = defaults.content;
 
-        $.getJSON(file , function(data){
-            console.log('Content loaded from ' + file);
-            MainWordService.init($scope.trial.delay_time , $scope.trial.item_time , data);
+        $.getJSON( file, null)
+            .done(function( data ) {
+                console.log('Content loaded from ' + file);
+                MainWordService.init($scope.trial.delay_time , $scope.trial.item_time , data);
 
-            if( $scope.trial.bg_modality == BACKGROUND_BRIGHT){
-                BgColorService.init(data.length, $scope.trial.item_time ,
-                                    $scope.trial.delay_time , $scope.trial.app_bg,
-                                    BACKGROUND_BRIGHT);
-            }else if ( $scope.trial.bg_modality == BACKGROUND_OBSCURE){
-                BgColorService.init(data.length, $scope.trial.item_time ,
-                                    $scope.trial.delay_time , $scope.trial.app_bg,
-                                    BACKGROUND_OBSCURE);
-            }
+                if( $scope.trial.bg_modality == BACKGROUND_BRIGHT){
+                    BgColorService.init(data.length, $scope.trial.item_time ,
+                                        $scope.trial.delay_time , $scope.trial.app_bg,
+                                        BACKGROUND_BRIGHT);
+                }else if ( $scope.trial.bg_modality == BACKGROUND_OBSCURE){
+                    BgColorService.init(data.length, $scope.trial.item_time ,
+                                        $scope.trial.delay_time , $scope.trial.app_bg,
+                                        BACKGROUND_OBSCURE);
+                }
 
-            if( netParams.isConnected )
-                saveTrial();
+                if( netParams.isConnected )
+                    saveTrial();
 
-            wordFunctions.start();
-            colorFunctions.start();
-        });
+                wordFunctions.start();
+                colorFunctions.start();
+            })
+            .fail(function( jqxhr, textStatus, error ) {
+                alert(file + "does not exist");
+                $('#config_modal').reveal();
+            });
     }
 
     $scope.stop = function(){
@@ -186,7 +191,6 @@ angular.module('rsvp.controllers', [])
         wordFunctions.pause();
         if( $scope.trial.bg_modality != BACKGROUND_STATIC)
             colorFunctions.stop();
-
     }
 
     $scope.restart = function(){
@@ -338,5 +342,4 @@ angular.module('rsvp.controllers', [])
             $scope.$apply();
         }
     }
-
 }]);

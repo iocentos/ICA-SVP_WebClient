@@ -28,6 +28,7 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
     parameters.words = [];
     parameters.index = 0;
     parameters.isRunning = false;
+    parameters.isPaused = false;
     parameters.promise = {};
 
 
@@ -40,12 +41,13 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
             console.log('Starting main service... ');
             functions.callbacks.onServiceStarted();
             functions.setRunningState(true);
+            functions.setPausedState(false);
             privateFunctions.tick();
         }
     }
 
     functions.stop = function(){
-        if( !functions.isFinished() && functions.isRunning() ){
+        if( !functions.isFinished() && functions.isRunning() || functions.isPaused()){
             console.log('Stopping main service... ');
             functions.callbacks.onServiceStopped();
             $interval.cancel(parameters.promise);
@@ -60,6 +62,7 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
             functions.callbacks.onServicePaused();
             $interval.cancel(parameters.promise);
             functions.setRunningState(false);
+            functions.setPausedState(true);
         }
     }
 
@@ -68,6 +71,7 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
             console.log('Calling resume on main service...')
             functions.callbacks.onServiceResumed();
             functions.setRunningState(true);
+            functions.setPausedState(false);
             privateFunctions.tick();
         }
     }
@@ -85,8 +89,16 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
         return parameters.isRunning;
     }
 
+    functions.isPaused = function(){
+        return parameters.isPaused;
+    }
+
     functions.setRunningState = function(state){
         parameters.isRunning = state;
+    }
+
+    functions.setPausedState = function(state){
+        parameters.isPaused = state;
     }
 
     /*****************************
@@ -100,7 +112,6 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
             functions.callbacks.onServiceStopped();
             return ;
         }
-
 
         //odd number is contetnt. even numbers are blanks
         if( !functions.isFinished() && functions.isRunning() ){
@@ -126,8 +137,6 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
                 privateFunctions.tick();
         }, delay, 1);
     }
-
-
     
     /*
      * Initialization method.
@@ -154,7 +163,6 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
             }
 
             parameters.words = newContent;
-
         },
         getPramaters : function(){
             return parameters;
@@ -183,8 +191,7 @@ serviceModule.factory('NetworkService', ['$rootScope', function($rootScope) {
     netParams.log = true;
     netParams.isConnected = false;
 
-
-    //    Network functions
+    //Network functions
 
     netFunctions.log =  function(data){
         if(netParams.log){
@@ -223,8 +230,6 @@ serviceModule.factory('NetworkService', ['$rootScope', function($rootScope) {
         netFunctions.log("Received : " + obj.Timestamp + "   Word : " + obj.Value);
     };
 
-
-
     netFunctions.connect = function(onConnected , onConnectionFailed){
         netFunctions.log("Connecting to the server at " + netFunctions.getFullUrl());
         netParams.webSocket = new WebSocket(netFunctions.getFullUrl());
@@ -236,11 +241,8 @@ serviceModule.factory('NetworkService', ['$rootScope', function($rootScope) {
     /*
      * netFunctions.close = function(){
      * 	netParams.webSocket.close();
-
      * };
      */
-
-
 
     return {
         init : function(port , serverUrl , path){
@@ -261,7 +263,6 @@ serviceModule.factory('NetworkService', ['$rootScope', function($rootScope) {
 }]);
 
 serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($timeout, $interval) {
-
 
     var BRIGHT_MODE = 1;
     var OBSCURE_MODE = 2;
@@ -371,8 +372,6 @@ serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($t
         return Number(value).toString(toBase).toUpperCase();	
     }
 
-
-
     return {
         init : function(stimuliCount, stimuliTime, delayTime, initialColor, mode){
             bgColor.initialRGBColor = initialColor;
@@ -400,5 +399,4 @@ serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($t
             return publicFunctions;
         }
     }
-
 }]);

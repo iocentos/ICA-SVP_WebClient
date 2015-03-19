@@ -5,7 +5,7 @@
 	<button type="button" ng-click="restart()" class="btn btn-success">Restart</button>
 	<button type="button" ng-click="resume()" class="btn btn-success">Resume</button>
 	<div class="pull-right">
-		<button type="button" class="btn btn-primary" onclick="window.history.back()">Back</button>
+		<button type="button" class="btn btn-primary" ng-click="stop()">Back</button>
 	</div>
 </div>
 
@@ -92,12 +92,17 @@
 
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Color (#)</label>
-   			<div class="col-sm-8">
+   			<div class="col-sm-2">
       			<input id="app_color" type="text" class="form-control"  placeholder="Experiment background" ng-model="trial.app_bg">
-      			&nbsp;
-      			<input type="radio" name="modality" ng-model="trial.bg_modality" value="0"/> Static
-	      		<input type="radio" name="modality" ng-model="trial.bg_modality" value="1" /> Bright
-				<input type="radio" name="modality" ng-model="trial.bg_modality" value="2" /> Obscure
+    		</div>
+    		<div class="col-sm-2">
+    			<input type="radio" name="modality" ng-model="trial.bg_modality" value="0"/> Static
+    		</div>
+    		 <div class="col-sm-2">
+    		 	<input type="radio" name="modality" ng-model="trial.bg_modality" value="1" /> Bright
+    		</div>
+    		 <div class="col-sm-2">
+    		 	<input type="radio" name="modality" ng-model="trial.bg_modality" value="2" /> Obscure
     		</div>
 		</div>
 

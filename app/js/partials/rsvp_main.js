@@ -132,12 +132,18 @@ function validate(){
 	var cursor_padding = $('#padding').val();
 	if($.isNumeric(cursor_padding))
 		$('#div_cursor').css("padding", cursor_padding + "px");
-	else
-		$('#div_cursor').css("padding", defaults.cursor_padding + "px");
+	else{
+		$('#padding').val(defaults.padding);
+		$('#padding').trigger('input');
+		$('#div_cursor').css("padding", defaults.padding + "px");
+	}
 
 	cursor_window = $('#window').val();
-	if(!$.isNumeric(cursor_window))
-		cursor_window = defaults.cursor_window;
+	if(!$.isNumeric(cursor_window)){
+		$('#window').val(defaults.window);
+		$('#window').trigger('input');
+		cursor_window = defaults.window;
+	}
 }
 
 function updateBgColor(color){
