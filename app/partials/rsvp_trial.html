@@ -25,11 +25,11 @@
 	</div>
 </div>
 
-<div id="gradient" class="text-center">
+<div id="gradient" class="text-center pull-right">
 	<h6>Experiment background</h6>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-default secong_graph">
   	<div class="panel-body">
 	<!--Container for graph-->
 		<div id="processed"></div>
@@ -39,6 +39,17 @@
 <div class="panel panel-default">
   	<div class="panel-body text-center">
   		<h4>Summary</h4>
+  		<!--Draw summary items-->
+  		<table class="table table-striped">
+  			<tr ng-repeat="(key, displayItemAndEyes) in trial.data">
+  				<td>
+  					<strong>{{displayItemAndEyes.item.value}}</strong>
+  				</td>
+				<td ng-repeat="(key, value) in displayItemAndEyes.summary">
+					 <strong>{{key}}: </strong>{{value}}
+				</td>
+			</tr>
+		</table>
 	</div>
 </div>
 
