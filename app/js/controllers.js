@@ -15,8 +15,8 @@ var NET_TYPE_SERVICE_PAUSED = 'servicePaused';
 var NET_TYPE_SERVICE_RESUMED = 'serviceResumed';
 var NET_TYPE_CALIBRATION = "calibration";
 
-var TYPE_CALIBRATION_FINISHED = "calbrationFinished";
-var TYPE_CALIBRATION_STARTED = "calbrationStarted";
+var TYPE_CALIBRATION_FINISHED = "calibrationFinished";
+var TYPE_CALIBRATION_STARTED = "calibrationStarted";
 var TYPE_EYETRIBE_CALIBRATION = 0;
 var TYPE_SYSTEM_CALIBRATION = 1;
 
@@ -302,11 +302,13 @@ angular.module('rsvp.controllers', [])
     };
 
     var onCalibrationFinished = function(){
+        console.log("Calibration finished");
         if(calibrationFinished)
         	$location.path("/home");
     };
 
     var onCalibrationStarted = function(){
+        console.log("Calibration started");
     }
 
     if( netParams.isConnected ){
@@ -327,6 +329,7 @@ angular.module('rsvp.controllers', [])
 
     netFunctions.onReceive = function(data){
         if( data.type === NET_TYPE_CALIBRATION ){
+        console.log(data)
             if( data.content === TYPE_CALIBRATION_STARTED )
                 onCalibrationStarted();
             else if( data.content === TYPE_CALIBRATION_FINISHED )
