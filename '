@@ -17,8 +17,8 @@ var NET_TYPE_CALIBRATION = "calibration";
 
 var TYPE_CALIBRATION_FINISHED = "calbrationFinished";
 var TYPE_CALIBRATION_STARTED = "calbrationStarted";
-var TYPE_EYETRIBE_CALIBRATION = 0;
-var TYPE_SYSTEM_CALIBRATION = 1;
+var TYPE_EYETRIBE_CALIBRATION = "eyetribe";
+var TYPE_SYSTEM_CALIBRATION = "system";
 
 var DSPL_ITEM_WORD = 'word';
 var DSPL_ITEM_IMG = 'img';
@@ -29,44 +29,11 @@ var BACKGROUND_OBSCURE = 2;
 
 angular.module('rsvp.controllers', [])
 
-.controller('HomeController' , ['$rootScope', '$scope', 'NetworkService',function($rootScope, $scope, NetworkService){
+.controller('HomeController' , ['$rootScope',function($rootScope){
 	if(!$rootScope.calibration){
     	$rootScope.calibration = {};
     	$rootScope.calibration.bg_color;
 	}
-
-
-    /*
-     * The code below is handling the request for the eye tribe
-     * calibration. 
-     */
-    var netFunctions = NetworkService.getNetworkFunctions();
-    var netParams = NetworkService.getNetworkParams();
-
-    $scope.makeRequest = function(){
-        if( netParams.isConnected ){
-            var calibrationRequest = {};
-            calibrationRequest.type = NET_TYPE_CALIBRATION;
-            calibrationRequest.content = "{'calibration_type':" + TYPE_EYETRIBE_CALIBRATION + "}";
-
-            netFunctions.sendData(calibrationRequest); 
-        }
-    }
-
-    if( netParams.isConnected ){
-        console.log('trial controller net is  connected');
-    }
-    else{
-        console.log('trial controller net is  not connected');
-        NetworkService.init( SERVER_PORT ,SERVER_HOST,SERVER_URL);
-        netFunctions.connect( function(){
-            netFunctions.log("Connected to server!");
-            netParams.isConnected = true;
-        }, function(){
-            netFunctions.log("Connection failed!");
-            netParams.isConnected = false;
-        });
-    }
 }])
 
 .controller('MainWordController' , ['$rootScope', '$scope' ,  '$location', 'MainWordService' , 'NetworkService' ,'BgColorService', function($rootScope, $scope ,$location, MainWordService, NetworkService, BgColorService){
@@ -287,17 +254,17 @@ angular.module('rsvp.controllers', [])
 
 }])
 
-.controller( 'SystemCalibrationController', ['$rootScope','$scope' ,'$location','$routeParams', 'NetworkService', function($rootScope,$scope, $location, $routeParams, NetworkService){
+.controller( 'CalibrationController', ['$rootScope','$scope' ,'$location','$routeParams', 'NetworkService', function($rootScope,$scope, $location, $routeParams, NetworkService){
 
     var netFunctions = NetworkService.getNetworkFunctions();
     var netParams = NetworkService.getNetworkParams();
 
     $rootScope.calibration.bg_color = defaults.cal_color;
 
-    $scope.makeRequest = function(){
+    var makeRequest = function(){
         var calibrationRequest = {};
         calibrationRequest.type = NET_TYPE_CALIBRATION;
-        calibrationRequest.content = "{'calibration_type':" + TYPE_SYSTEM_CALIBRATION + "}";
+        calibrationRequest.content = $routeParams.device;
         netFunctions.sendData(calibrationRequest);
     };
 
@@ -307,10 +274,17 @@ angular.module('rsvp.controllers', [])
     };
 
     var onCalibrationStarted = function(){
+
     }
+
+
 
     if( netParams.isConnected ){
         console.log('trial controller net is  connected');
+        if( $routeParams.device === 'eyetribe' ){
+                makeRequest();
+            $location.path("/home");
+        }
     }
     else{
         console.log('trial controller net is  not connected');
@@ -318,6 +292,10 @@ angular.module('rsvp.controllers', [])
         netFunctions.connect( function(){
             netFunctions.log("Connected to server!");
             netParams.isConnected = true;
+            if( $routeParams.device === 'eyetribe' ){
+                    makeRequest();
+                $location.path("/home");
+            }
         }, function(){
             netFunctions.log("Connection failed!");
             netParams.isConnected = false;

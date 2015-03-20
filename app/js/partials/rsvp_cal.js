@@ -62,3 +62,7 @@ function calibrationFinished(){
 	  	});
 	});
 }
+
+function startCalibration(){
+    scp.makeRequest();
+}

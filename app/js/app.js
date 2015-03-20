@@ -10,7 +10,7 @@ angular.module('rsvp', [
     $routeProvider.when('/home', {templateUrl: 'partials/rsvp_home.html', controller: 'HomeController'});
     $routeProvider.when('/rsvp', {templateUrl: 'partials/rsvp_main.html', controller: 'MainWordController'});
     $routeProvider.when('/logs', {templateUrl: 'partials/rsvp_logs.html', controller: 'LogController'});
-    $routeProvider.when('/calibrate/:device', {templateUrl: 'partials/rsvp_cal.html', controller: 'CalibrationController'});
+    $routeProvider.when('/calibrate/system', {templateUrl: 'partials/rsvp_cal.html', controller: 'SystemCalibrationController'});
     $routeProvider.when('/logs/:displayTrial', {templateUrl: 'partials/rsvp_trial.html', controller: 'TrialController'});
     $routeProvider.otherwise( {redirectTo: '/home'} );
 }]);
