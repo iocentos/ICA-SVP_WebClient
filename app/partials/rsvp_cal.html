@@ -1,10 +1,3 @@
-//TODO Stop calibration on back
-<div id="controls">
-	<div class="pull-right">
-		<button type="button" class="btn btn-primary" onclick="window.history.back()">Back</button>
-	</div>
-</div>
-
 <div class="cal_wrapper centered">
 	<div id="calibration_point">&nbsp;</div>
 	<div id="calibration_text" class="text-center"><h1><span id="text">Look at the target!</span></h1></div>
@@ -27,7 +20,7 @@
       			<input id="cal_color" type="text" placeholder="Background color" ng-model="calibration.bg_color">
     		</div>
     		<div class="col-sm-9">
-    			<button type="button" onClick="startCalibration()" class="btn btn-primary pull-right close-reveal-modal">Start</button>
+    			<button type="button"  class="btn btn-primary pull-right close-reveal-modal">Start</button>
 
     			<button type="button" onclick="window.history.back()" class="btn btn-danger pull-right cancel">Cancel</button>
     		</div>

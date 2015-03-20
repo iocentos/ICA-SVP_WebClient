@@ -42,7 +42,7 @@ function setup(){
 	//Animate description and target
 	setTimeout(function() {
       	$("#calibration_text" ).fadeOut( "slow", function() {
-    		$( "#calibration_point" ).fadeIn( "slow", null);
+    		$( "#calibration_point" ).fadeIn( "slow", startCalibration);
   		});
 	}, 2000);
 }
@@ -57,7 +57,7 @@ function calibrationFinished(){
 	$( "#calibration_point" ).fadeOut( "slow", function(){
 		$("#calibration_text" ).fadeIn( "slow", function() {
 			setTimeout(function() {
-      			return true;
+      			window.history.back();
 			}, 2500);
 	  	});
 	});

@@ -303,8 +303,7 @@ angular.module('rsvp.controllers', [])
 
     var onCalibrationFinished = function(){
         console.log("Calibration finished");
-        if(calibrationFinished)
-        	$location.path("/home");
+        calibrationFinished()
     };
 
     var onCalibrationStarted = function(){
@@ -329,7 +328,6 @@ angular.module('rsvp.controllers', [])
 
     netFunctions.onReceive = function(data){
         if( data.type === NET_TYPE_CALIBRATION ){
-        console.log(data)
             if( data.content === TYPE_CALIBRATION_STARTED )
                 onCalibrationStarted();
             else if( data.content === TYPE_CALIBRATION_FINISHED )
