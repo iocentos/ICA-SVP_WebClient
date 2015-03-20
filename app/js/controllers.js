@@ -135,10 +135,21 @@ angular.module('rsvp.controllers', [])
         //required not to resize the rectangle in the view. empty space
         $scope.word = String.fromCharCode(160);
         $scope.image = "";
+        
+        //replace full path with only the name of the image
+        if( item.type === DSPL_ITEM_IMG ){
+            //check if it actually containes the charachet '/'
+            if( item.value.indexOf('/') > -1 ){
+                var splits = item.value.split("/");
+                item.value = splits[splits.length-1];
+            }
+        }
+
+        console.log(item.value);
 
         var data = {};
         data.Timestamp = new Date().getTime();
-        data.Value = item;
+        data.Value = item.value;
         data.Duration = new Date().getTime() - appearTime;
 
         var wrapper = {};

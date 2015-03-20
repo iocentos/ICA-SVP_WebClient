@@ -1,6 +1,8 @@
 'use strict';
 
 
+var DSPL_ITEM_WORD = 'word';
+var DSPL_ITEM_IMG = 'img';
 
 var serviceModule = angular.module('rsvp.services', []);
 
@@ -119,7 +121,7 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
             if( parameters.index % 2 ){//blank
                 delay = parameters.delayBtnWords;
                 //subtract one because the index has already been incremented
-                functions.callbacks.onWordDissapeard(parameters.words[parameters.index - 1].value);
+                functions.callbacks.onWordDissapeard(parameters.words[parameters.index - 1]);
             }else{//content
                 //make the callback and update also
                 functions.callbacks.onWordDisplayed(parameters.words[parameters.index]);
