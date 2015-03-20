@@ -270,24 +270,25 @@ serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($t
     var CONSTANT_INTERVAL = 100; //update color every 100ms
 
     var bgColor = {};
-    bgColor.initialRGBColor = 0;
-    bgColor.currentRGBColor = 0;
-    bgColor.initialHSVColor = 0;
-    bgColor.currentHSVColor = 0;
 
-    bgColor.mode = BRIGHT_MODE;
-    bgColor.totalTime = 0;
-    bgColor.elapsedTime = 0;
-    bgColor.iterations = 0;
-    bgColor.promise = {};
-    bgColor.counter = 0;
-    bgColor.colorInterval = 0;
+    // bgColor.initialRGBColor = 0;
+    // bgColor.currentRGBColor = 0;
+    // bgColor.initialHSVColor = 0;
+    // bgColor.currentHSVColor = 0;
+    //
+    // bgColor.mode = BRIGHT_MODE;
+    // bgColor.totalTime = 0;
+    // bgColor.elapsedTime = 0;
+    // bgColor.iterations = 0;
+    // bgColor.promise = {};
+    // bgColor.counter = 0;
+    // bgColor.colorInterval = 0;
 
     var privateFunctions = {};
     var publicFunctions = {};
 
-    publicFunctions.isRunning = false;
-    publicFunctions.isFinished = false;
+    // publicFunctions.isRunning = false;
+    // publicFunctions.isFinished = false;
 
     /*
      * Public functions
@@ -364,6 +365,24 @@ serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($t
         },delay, 1 );
     }
 
+    privateFunctions.setUpService = function(){
+        bgColor.initialRGBColor = 0;
+        bgColor.currentRGBColor = 0;
+        bgColor.initialHSVColor = 0;
+        bgColor.currentHSVColor = 0;
+
+        bgColor.mode = BRIGHT_MODE;
+        bgColor.totalTime = 0;
+        bgColor.elapsedTime = 0;
+        bgColor.iterations = 0;
+        bgColor.promise = {};
+        bgColor.counter = 0;
+        bgColor.colorInterval = 0;
+
+        publicFunctions.isRunning = false;
+        publicFunctions.isFinished = false;
+    }
+
 
     function baseToBase (fromBase, toBase, value) {;
         if(value=="")
@@ -374,6 +393,8 @@ serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($t
 
     return {
         init : function(stimuliCount, stimuliTime, delayTime, initialColor, mode){
+            privateFunctions.setUpService();
+
             bgColor.initialRGBColor = initialColor;
             bgColor.currentRGBColor = initialColor;
             var rgbColor = tinycolor(initialColor);
