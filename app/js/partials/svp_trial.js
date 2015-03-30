@@ -6,7 +6,7 @@ var LABEL_X = "Time(ms)";
 var LABEL_Y = "Dilation(mm)";
 var LABEL_EYE_LEFT = "Left eye";
 var LABEL_EYE_RIGHT = "Right eye";
-var LABEL_DELAY = "Delay";
+var LABEL_DELAY = "DELAY";
 var GRAPH_CONTAINER_ORIGINAL = "original";
 var GRAPH_CONTAINER_PROCESSED = "processed";
 var PARAM_EYES_ORIGINAL = "eyes_original";
@@ -68,24 +68,18 @@ function setGradientBackground(color, modality){
 
 function formatInput(item, timestamp, eye, index){
 	//Prepare data to graph
-	var data;
+	var obj = {};
     //Add item value to the first eyes data in the set
     if(index == 0){
         var marker = {};
         marker['symbol'] = MARKER_IMG;
-        var obj = {};
-        obj["x"] = timestamp;
-        obj["y"] = eye.diameter;
-        obj["name"] = item.value;
         obj["marker"] = marker;
-        data = obj;
-    }else{
-        var xy = [];
-        xy[0] = timestamp;
-        xy[1] = eye.diameter;
-        data = xy;
     }
-	return data;
+
+    obj["x"] = timestamp;
+    obj["y"] = eye.diameter;
+    obj["name"] = item.value + " - " + timestamp;
+	return obj;
 }
 
 function drawGraph(id, title, left_data, right_data){

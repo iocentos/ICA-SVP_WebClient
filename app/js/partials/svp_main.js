@@ -86,6 +86,9 @@ function onMouseLeave(){
 }
 
 function onMouseEnter(){
+
+	$("#config_modal").toggle(); //Remove the modal to avoid scroll appearance
+	
 	if(is_first_time){
 		is_first_time = false;
 		scp.start();
@@ -130,12 +133,14 @@ function validate(){
 	}
 	
 	var cursor_padding = $('#padding').val();
-	if($.isNumeric(cursor_padding))
-		$('#div_cursor').css("padding", cursor_padding + "px");
-	else{
+	if($.isNumeric(cursor_padding)){
+		$('#div_cursor').css("padding-top", cursor_padding + "px");
+		$('#div_cursor').css("padding-bottom", cursor_padding + "px");
+	}else{
 		$('#padding').val(defaults.padding);
 		$('#padding').trigger('input');
-		$('#div_cursor').css("padding", defaults.padding + "px");
+		$('#div_cursor').css("padding-top", defaults.padding + "px");
+		$('#div_cursor').css("padding-bottom", defaults.padding + "px");
 	}
 
 	cursor_window = $('#window').val();
@@ -150,6 +155,11 @@ function updateBgColor(color){
 	//Update background color
 	if(canUpdate)
 		$('body').css("background-color", color);
+}
+
+function setDelayBoxHeight(id){
+	var height = $("#div_" + id).css("height");
+	$("#div_target").css("height",height);
 }
 
 function trialFinished(){

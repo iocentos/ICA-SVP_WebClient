@@ -38,6 +38,31 @@
   margin-right: 10px;
 }
 
+/**Animations**/
+
+@keyframes blink {
+    0% {
+        background-size: 30px 30px;
+    }
+    50% {
+        background-size: 25px 25px;
+    }
+    100% {
+        background-size: 30px 30px;
+    }
+}
+ @-webkit-keyframes blink {
+    0% {
+        background-size: 30px 30px;
+    }
+    50% {
+        background-size: 25px 25px;
+    }
+    100% {
+        background-size: 30px 30px;
+    }
+}
+
 /**RSVP Main**/
 
 body, html {
@@ -57,19 +82,34 @@ body, html {
 }
 
 #div_cursor{
-    padding: 10px;
     cursor: none;
     border-top:2px solid black;
     border-bottom:2px solid black;
+    background-image: url();
+    background: url(../images/red_marker.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 
 #div_word{
     position: relative;
-    padding: 10px;
+    padding-top: 15px;
     text-align: center;
+    padding-bottom: 15px;
     font-size: 55pt;
     color: #333333;
     min-width: 600px;
+}
+
+#div_image{
+    position: relative;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    min-width: 600px;
+}
+
+.visual_item{
+    margin-left:-25px;
 }
 
 .centered {
@@ -104,6 +144,12 @@ body, html {
 
 #container{
   min-width: 310px; height: 400px; margin: 0 auto
+}
+
+#div_target{
+  min-width: 600px;
+  animation: blink 1s infinite;
+  -webkit-animation: blink 1s infinite;
 }
 
 /**Home**/
@@ -155,7 +201,12 @@ body, html {
   width: 500px;
 }
 
-#calibration_point{
+#div_point{
+  animation: blink 1s 1;
+  -webkit-animation: blink 1s 1;
+}
+
+.calibration_point{
   background-image: url(../images/target.png);
   height: 30px;
   width: 100%;

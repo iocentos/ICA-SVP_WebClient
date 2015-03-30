@@ -10,11 +10,14 @@
 </div>
 
 <div id="div_cursor" class="centered">
-	<div id="div_word" ng-show="!image">
+	<div id="div_word" class="visual_item" ng-show="word">
 		<span ng-bind="word"/> 
 	</div>
-	<div id="div_image" ng-show="image">
+	<div id="div_image" class="visual_item" ng-show="image">
         <img ng-src="{{image}}"/>
+	</div>
+	<div id="div_target" ng-show="!image && !word" class="visual_item calibration_point">
+		&nbsp;
 	</div>
 </div>
 
@@ -145,4 +148,4 @@
 </div>
 
 <!-- View script-->
-<script src="js/partials/rsvp_main.js"></script>
+<script src="js/partials/svp_main.js"></script>

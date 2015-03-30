@@ -27,14 +27,13 @@ var BACKGROUND_STATIC = 0;
 var BACKGROUND_BRIGHT = 1;
 var BACKGROUND_OBSCURE = 2;
 
-angular.module('rsvp.controllers', [])
+angular.module('svp.controllers', [])
 
 .controller('HomeController' , ['$rootScope', '$scope', 'NetworkService',function($rootScope, $scope, NetworkService){
 	if(!$rootScope.calibration){
     	$rootScope.calibration = {};
     	$rootScope.calibration.bg_color;
 	}
-
 
     /*
      * The code below is handling the request for the eye tribe
@@ -71,6 +70,10 @@ angular.module('rsvp.controllers', [])
 
 .controller('MainWordController' , ['$rootScope', '$scope' ,  '$location', 'MainWordService' , 'NetworkService' ,'BgColorService', function($rootScope, $scope ,$location, MainWordService, NetworkService, BgColorService){
 
+    //For visualization of delays
+    $scope.current_type;
+
+    //Trial data
     $scope.trial = {};
     $scope.word = defaults.message_start;
     $scope.trial.trial;
@@ -118,11 +121,14 @@ angular.module('rsvp.controllers', [])
     }
 
     wordFunctions.callbacks.onWordDisplayed = function(item){
+        var updated_div;
         if( item.type === DSPL_ITEM_WORD ){
             $scope.word = item.value;
+            $scope.current_type = "word";
         }
         else if( item.type === DSPL_ITEM_IMG ){
             $scope.image = item.value;
+            $scope.current_type = "image";
         }
         if(!$scope.$$phase) {
             $scope.$apply();
@@ -132,8 +138,9 @@ angular.module('rsvp.controllers', [])
     }
 
     wordFunctions.callbacks.onWordDissapeard = function(item){
-        //required not to resize the rectangle in the view. empty space
-        $scope.word = String.fromCharCode(160);
+
+        setDelayBoxHeight($scope.current_type);
+        $scope.word = "";
         $scope.image = "";
         
         //replace full path with only the name of the image
@@ -162,6 +169,9 @@ angular.module('rsvp.controllers', [])
 
     wordFunctions.callbacks.onServiceStarted = function(){
         console.log('Display service started');
+        setDelayBoxHeight($scope.current_type);
+        $scope.word = "";
+        $scope.image = "";
         //the config message is the start message for the server
         //notifyServer(NET_TYPE_SERVICE_STARTED);
     }

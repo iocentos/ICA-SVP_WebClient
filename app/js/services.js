@@ -4,7 +4,7 @@
 var DSPL_ITEM_WORD = 'word';
 var DSPL_ITEM_IMG = 'img';
 
-var serviceModule = angular.module('rsvp.services', []);
+var serviceModule = angular.module('svp.services', []);
 
 /*
  *  Service that will handle all the timing of the words. It will have

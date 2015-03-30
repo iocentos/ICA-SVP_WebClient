@@ -1,5 +1,5 @@
 var server = {
-	"ip":"192.168.53.228",
+	"ip":"127.0.0.1",
 	"port":"8181",
 	"url":"/api"
 };
@@ -13,7 +13,7 @@ var defaults = {
     "app_color": "#FFFFFF",
     "bg_modality":"0",
     "window": "1000",
-	"padding": "10",
+	"padding": "0",
 	"marker_url": "images/marker.png",
 	"cal_color": "#ffffff"
 };

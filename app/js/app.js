@@ -1,17 +1,17 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('rsvp', [
+angular.module('svp', [
   'ngRoute',
-  'rsvp.controllers',
-  'rsvp.services'
+  'svp.controllers',
+  'svp.services'
 ])
 .config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/home', {templateUrl: 'partials/rsvp_home.html', controller: 'HomeController'});
-    $routeProvider.when('/rsvp', {templateUrl: 'partials/rsvp_main.html', controller: 'MainWordController'});
-    $routeProvider.when('/logs', {templateUrl: 'partials/rsvp_logs.html', controller: 'LogController'});
-    $routeProvider.when('/calibrate/system', {templateUrl: 'partials/rsvp_cal.html', controller: 'SystemCalibrationController'});
-    $routeProvider.when('/logs/:displayTrial', {templateUrl: 'partials/rsvp_trial.html', controller: 'TrialController'});
+    $routeProvider.when('/home', {templateUrl: 'partials/svp_home.html', controller: 'HomeController'});
+    $routeProvider.when('/svp', {templateUrl: 'partials/svp_main.html', controller: 'MainWordController'});
+    $routeProvider.when('/logs', {templateUrl: 'partials/svp_logs.html', controller: 'LogController'});
+    $routeProvider.when('/calibrate/system', {templateUrl: 'partials/svp_cal.html', controller: 'SystemCalibrationController'});
+    $routeProvider.when('/logs/:displayTrial', {templateUrl: 'partials/svp_trial.html', controller: 'TrialController'});
     $routeProvider.otherwise( {redirectTo: '/home'} );
 }]);
 

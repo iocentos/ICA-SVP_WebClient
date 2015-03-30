@@ -6,7 +6,7 @@ $(document).ready(function(){
 	scp = angular.element('.main').scope();
 	
 	$('body').css("background-color","#FFFFFF");
-	$("#calibration_point").toggle();
+	$("#div_point").toggle();
 
 	//Set default values
 	cal_color = defaults.cal_color;
@@ -41,8 +41,8 @@ function setup(){
 	$('#cal_color').trigger('input');
 	//Animate description and target
 	setTimeout(function() {
-      	$("#calibration_text" ).fadeOut( "slow", function() {
-    		$( "#calibration_point" ).fadeIn( "slow", startCalibration);
+      	$("#div_text" ).fadeOut( "slow", function() {
+    		$( "#div_point" ).fadeIn( "slow", startCalibration);
   		});
 	}, 2000);
 }
@@ -54,8 +54,8 @@ function closeCallback(){
 
 function calibrationFinished(){
 	$("#text").html("Calibration completed");
-	$( "#calibration_point" ).fadeOut( "slow", function(){
-		$("#calibration_text" ).fadeIn( "slow", function() {
+	$( "#div_point" ).fadeOut( "slow", function(){
+		$("#div_text" ).fadeIn( "slow", function() {
 			setTimeout(function() {
       			window.history.back();
 			}, 2500);
