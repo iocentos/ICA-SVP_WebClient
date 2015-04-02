@@ -9,8 +9,7 @@ var LABEL_EYE_RIGHT = "Right eye";
 var LABEL_DELAY = "DELAY";
 var GRAPH_CONTAINER_ORIGINAL = "original";
 var GRAPH_CONTAINER_PROCESSED = "processed";
-var PARAM_EYES_ORIGINAL = "eyes_original";
-var PARAM_EYES_PROCESSED = "eyes_processed";
+var PARAM_EYES = "eyes";
 var PARAM_VALUE = "value";
 var MARKER_IMG = "url(" + defaults.marker_url + ")";
 var scp;
@@ -37,14 +36,11 @@ function Graph(trial){
         if(item.value == null)
             item[PARAM_VALUE] = LABEL_DELAY;
        	//Format original data to graph
-    	$.each($(value[PARAM_EYES_ORIGINAL]), function( index, eyes ){
+    	$.each($(value[PARAM_EYES]), function( index, eyes ){
     			data_original_left.push(formatInput(item, eyes.timestamp, eyes.left_eye, index));
     			data_original_right.push(formatInput(item, eyes.timestamp, eyes.right_eye, index));
-    	 });
-    	//Format processed data to graph
-    	$.each($(value[PARAM_EYES_PROCESSED]), function( index, eyes ){
-    			data_processed_left.push(formatInput(item, eyes.timestamp, eyes.left_eye, index));
-    			data_processed_right.push(formatInput(item, eyes.timestamp, eyes.right_eye, index));
+    			data_processed_left.push(formatInput(item, eyes.timestamp, eyes.left_eye_processed, index));
+    			data_processed_right.push(formatInput(item, eyes.timestamp, eyes.right_eye_processed, index));
     	 });
     });
 	//Draw graphs
