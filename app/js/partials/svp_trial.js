@@ -121,7 +121,9 @@ function drawGraph(id, title, left_data, right_data){
                 width: 1,
                 color: '#808080'
             }],
-            allowDecimals: true
+            allowDecimals: true,
+            min:0,
+            max:7
         },
         series: [{
             name: LABEL_EYE_LEFT,
