@@ -21,7 +21,6 @@ $(document).ready(function(){
 		//processed graph
 		var chart2;
 
-		$('body').css("background-color","#FFFFFF");
 		setTimeout(function(){ 
 			scp = angular.element('.main').scope(); 
 			Graph(scp.trial);
@@ -170,7 +169,8 @@ function setUpGraphToDraw(containerId, title, left_data , right_data, events){
 				marker: {
 					enabled: true,
 					radius: 0,
-				}
+				},
+				turboThreshold:100000
 			}
 		},
 		xAxis: {
@@ -196,19 +196,21 @@ function setUpGraphToDraw(containerId, title, left_data , right_data, events){
 			}],
 			allowDecimals: true,
 			min:0,
-			max:7
+			max:10
 		},
 		series: [{
-			name: LABEL_EYE_LEFT,
-			data: left_data
-		}, {
-			name: LABEL_EYE_RIGHT,
-			data: right_data
-		}],
+				name: LABEL_EYE_LEFT,
+				data: left_data
+			}, {
+				name: LABEL_EYE_RIGHT,
+				data: right_data
+			}],
+			pointInterval:200
+
 			}, function(chart) { //add this function to the chart definition to get synchronized crosshairs
 				syncronizeCrossHairs(chart);
 
-			});
+	});
 
 
 	return chart;

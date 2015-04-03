@@ -10,7 +10,6 @@ var canUpdate = true;
 $(document).ready(function(){
 
 	scp = angular.element('.main').scope();
-	$('body').css("background-color","#FFFFFF");
 
 	String.prototype.isEmpty = function() {
     	return (this.length === 0 || !this.trim());

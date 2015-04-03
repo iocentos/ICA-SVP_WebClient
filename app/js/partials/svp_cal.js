@@ -5,7 +5,6 @@ $(document).ready(function(){
 
 	scp = angular.element('.main').scope();
 	
-	$('body').css("background-color","#FFFFFF");
 	$("#div_point").toggle();
 
 	//Set default values
