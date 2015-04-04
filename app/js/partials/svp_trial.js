@@ -16,6 +16,8 @@ var scp;
 
 $(document).ready(function(){
 
+		$('body').css("background-color","#FFFFFF");
+
 		//original graph
 		var chart1;
 		//processed graph

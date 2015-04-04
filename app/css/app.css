@@ -85,8 +85,7 @@ body, html {
     cursor: none;
     border-top:2px solid black;
     border-bottom:2px solid black;
-    background-image: url();
-    background: url(../images/red_marker.png);
+    background-image: url(../images/red_marker.png);
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
@@ -208,6 +207,15 @@ body, html {
 
 .calibration_point{
   background-image: url(../images/target.png);
+  height: 30px;
+  width: 100%;
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.calibration_point_transparent{
+  background-image: url(../images/target_transparent.png);
   height: 30px;
   width: 100%;
   background-size: 30px 30px;

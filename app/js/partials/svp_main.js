@@ -21,10 +21,9 @@ $(document).ready(function(){
 
 	//Set default values
 	font_color = defaults.font_color;
-	app_bgcolor = defaults.app_color;
+	app_bgcolor = $('body').css("background-color");
 
 	//Setup plugins
-
 	$("#font_color").spectrum({
 		preferredFormat: "hex",
     	showInput: true,
