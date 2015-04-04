@@ -3,7 +3,8 @@ var TITLE_ORIGINAL = "Original data";
 var TITLE_PROCESSED = "Processed data";
 var UNIT = "mm";
 var LABEL_X = "Time(ms)";
-var LABEL_Y = "Dilation(mm)";
+var LABEL_Y_ORIGINAL = "Dilation(mm)";
+var LABEL_Y_PROCESSED = "Dilation(mm) - Baseline pupil size";
 var LABEL_EYE_LEFT = "Left eye";
 var LABEL_EYE_RIGHT = "Right eye";
 var LABEL_DELAY = "DELAY";
@@ -123,7 +124,7 @@ function drawGraph(id, title, left_data, right_data){
 				}
 			};
 
-		chart1 = setUpGraphToDraw(GRAPH_CONTAINER_ORIGINAL, title, left_data,right_data , chart1Events);
+		chart1 = setUpGraphToDraw(GRAPH_CONTAINER_ORIGINAL, title, left_data,right_data , chart1Events, 10, 0, LABEL_Y_ORIGINAL);
 	}
 	else if(id === GRAPH_CONTAINER_PROCESSED ){
 
@@ -146,12 +147,12 @@ function drawGraph(id, title, left_data, right_data){
 				}
 			};
 
-		chart2 = setUpGraphToDraw(GRAPH_CONTAINER_PROCESSED, title, left_data,right_data , chart2Events);
+		chart2 = setUpGraphToDraw(GRAPH_CONTAINER_PROCESSED, title, left_data,right_data , chart2Events , 10, -10, LABEL_Y_PROCESSED);
 	}
 
 }
 
-function setUpGraphToDraw(containerId, title, left_data , right_data, events){
+function setUpGraphToDraw(containerId, title, left_data , right_data, events, yAxis_max, yAxis_min, yAxis_label){
 	var chart = new Highcharts.Chart({
 		chart:{
 			renderTo: containerId,
@@ -189,7 +190,7 @@ function setUpGraphToDraw(containerId, title, left_data , right_data, events){
 		},
 		yAxis: {
 			title: {
-				text: LABEL_Y
+				text: yAxis_label
 			},
 			plotLines: [{
 				value: 0,
@@ -197,8 +198,8 @@ function setUpGraphToDraw(containerId, title, left_data , right_data, events){
 				color: '#808080'
 			}],
 			allowDecimals: true,
-			min:0,
-			max:10
+			min: yAxis_min,
+			max: yAxis_max
 		},
 		series: [{
 				name: LABEL_EYE_LEFT,
