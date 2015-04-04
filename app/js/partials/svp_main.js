@@ -28,14 +28,16 @@ $(document).ready(function(){
 		preferredFormat: "hex",
     	showInput: true,
     	color: font_color,
-    	change: setColor
+    	change: setColor,
+    	showButtons: false
 	});
 
 	$("#app_color").spectrum({
 		preferredFormat: "hex",
     	showInput: true,
     	color: app_bgcolor,
-    	change: setColor
+    	change: setColor,
+    	showButtons: false
 	});
 
 	//Show modal

@@ -15,7 +15,8 @@ $(document).ready(function(){
 		preferredFormat: "hex",
     	showInput: true,
     	color: cal_color,
-    	change: setColor
+    	change: setColor,
+    	showButtons: false
 	});
 
 	//Show modal
