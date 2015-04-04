@@ -1,6 +1,8 @@
 
-var TITLE_ORIGINAL = "Original data";
+var TITLE_ORIGINAL = "Sampled data after data cleaning";
+var SUBTITLE_ORIGINAL = "Blinks and outliers removed";
 var TITLE_PROCESSED = "Processed data";
+var SUBTITLE_PROCESSED = "Scaled and denoised";
 var UNIT = "mm";
 var LABEL_X = "Time(ms)";
 var LABEL_Y_ORIGINAL = "Dilation(mm)";
@@ -59,8 +61,8 @@ function Graph(trial){
 			});
 		});
 	//Draw graphs
-	drawGraph(GRAPH_CONTAINER_ORIGINAL, TITLE_ORIGINAL, data_original_left, data_original_right);
-	drawGraph(GRAPH_CONTAINER_PROCESSED, TITLE_PROCESSED, data_processed_left, data_processed_right);
+	drawGraph(GRAPH_CONTAINER_ORIGINAL, TITLE_ORIGINAL, SUBTITLE_ORIGINAL, data_original_left, data_original_right);
+	drawGraph(GRAPH_CONTAINER_PROCESSED, TITLE_PROCESSED, SUBTITLE_PROCESSED, data_processed_left, data_processed_right);
 }
 
 function setGradientBackground(color, modality){
@@ -96,7 +98,7 @@ function formatInput(item, timestamp, eye, index){
 
 //Graphs functionality
 
-function drawGraph(id, title, left_data, right_data){
+function drawGraph(id, title, subtitle, left_data, right_data){
 
 	if( id === GRAPH_CONTAINER_ORIGINAL ){
 
@@ -124,7 +126,7 @@ function drawGraph(id, title, left_data, right_data){
 				}
 			};
 
-		chart1 = setUpGraphToDraw(GRAPH_CONTAINER_ORIGINAL, title, left_data,right_data , chart1Events, 10, 0, LABEL_Y_ORIGINAL);
+		chart1 = setUpGraphToDraw(GRAPH_CONTAINER_ORIGINAL, title, subtitle, left_data,right_data , chart1Events, 10, 0, LABEL_Y_ORIGINAL);
 	}
 	else if(id === GRAPH_CONTAINER_PROCESSED ){
 
@@ -147,12 +149,12 @@ function drawGraph(id, title, left_data, right_data){
 				}
 			};
 
-		chart2 = setUpGraphToDraw(GRAPH_CONTAINER_PROCESSED, title, left_data,right_data , chart2Events , 10, -10, LABEL_Y_PROCESSED);
+		chart2 = setUpGraphToDraw(GRAPH_CONTAINER_PROCESSED, title, subtitle, left_data,right_data , chart2Events , 10, -10, LABEL_Y_PROCESSED);
 	}
 
 }
 
-function setUpGraphToDraw(containerId, title, left_data , right_data, events, yAxis_max, yAxis_min, yAxis_label){
+function setUpGraphToDraw(containerId, title, subtitle, left_data , right_data, events, yAxis_max, yAxis_min, yAxis_label){
 	var chart = new Highcharts.Chart({
 		chart:{
 			renderTo: containerId,
@@ -160,8 +162,11 @@ function setUpGraphToDraw(containerId, title, left_data , right_data, events, yA
 			zoomType: "x"
 		},
 		title: {
-		text: title, x: -20 //center
+		text: title
 		},
+		subtitle: {
+            text: subtitle
+        },
 		tooltip: {
 			valueSuffix: UNIT,
 			crosshairs: true,
