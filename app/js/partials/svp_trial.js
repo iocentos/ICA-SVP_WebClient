@@ -14,17 +14,24 @@ var GRAPH_CONTAINER_ORIGINAL = "original";
 var GRAPH_CONTAINER_PROCESSED = "processed";
 var PARAM_EYES = "eyes";
 var PARAM_VALUE = "value";
-var MARKER_IMG = "url(" + defaults.marker_url + ")"
+var MARKER_IMG = "url(" + defaults.marker_url + ")";
+var Y_AXIS_RATIO_ORIGINAL = 6;
+var Y_AXIS_RATIO_PROCESSED = 2;
+
 var scp;
+var chart1;
+var chart2;
 
 $(document).ready(function(){
 
 		$('body').css("background-color","#FFFFFF");
 
-		//original graph
-		var chart1;
+		//original graph	
+		$("#original_y").val(Y_AXIS_RATIO_ORIGINAL);
+		$("#original_y").change(onYaxisChange);
 		//processed graph
-		var chart2;
+		$("#processed_y").val(Y_AXIS_RATIO_PROCESSED);
+		$("#processed_y").change(onYaxisChange);
 
 		setTimeout(function(){ 
 			scp = angular.element('.main').scope(); 
@@ -38,7 +45,24 @@ $(document).ready(function(){
 
 		var defaultTickInterval = 5;
 		var currentTickInterval = defaultTickInterval; 
-	});
+});
+
+function onYaxisChange(){
+
+	//Update y-axis limits when the input text changes
+	var value = $(this).val();
+
+	if(this.id === "original_y"){
+		chart1.yAxis[0].update({
+            max: value
+    	});
+	}else{
+		chart2.yAxis[0].update({
+            max: value,
+            min: -value
+    	});
+	}
+}
 
 function Graph(trial){
 	//Graph data
@@ -126,7 +150,8 @@ function drawGraph(id, title, subtitle, left_data, right_data){
 				}
 			};
 
-		chart1 = setUpGraphToDraw(GRAPH_CONTAINER_ORIGINAL, title, subtitle, left_data,right_data , chart1Events, 10, 0, LABEL_Y_ORIGINAL);
+		chart1 = setUpGraphToDraw(GRAPH_CONTAINER_ORIGINAL, title, subtitle, left_data,right_data , 
+			chart1Events, Y_AXIS_RATIO_ORIGINAL, 0, LABEL_Y_ORIGINAL);
 	}
 	else if(id === GRAPH_CONTAINER_PROCESSED ){
 
@@ -149,7 +174,8 @@ function drawGraph(id, title, subtitle, left_data, right_data){
 				}
 			};
 
-		chart2 = setUpGraphToDraw(GRAPH_CONTAINER_PROCESSED, title, subtitle, left_data,right_data , chart2Events , 10, -10, LABEL_Y_PROCESSED);
+		chart2 = setUpGraphToDraw(GRAPH_CONTAINER_PROCESSED, title, subtitle, left_data,right_data , 
+			chart2Events , Y_AXIS_RATIO_PROCESSED, -Y_AXIS_RATIO_PROCESSED, LABEL_Y_PROCESSED);
 	}
 
 }

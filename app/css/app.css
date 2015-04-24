@@ -82,12 +82,12 @@ body, html {
 }
 
 #div_cursor{
-    cursor: none;
     border-top:2px solid black;
     border-bottom:2px solid black;
     background-image: url(../images/red_marker.png);
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    cursor: none;
 }
 
 #div_word{
@@ -223,6 +223,10 @@ body, html {
   background-position: center;
 }
 
+#middle_div{
+  width: 100%;
+}
+
 #gradient {
   height: 35px;
   width: 92%;
@@ -232,6 +236,15 @@ body, html {
   -webkit-box-shadow: 2px 5px 15px #888888;
   box-shadow: 2px 5px 15px #888888;
   margin-right: 13px;
+}
+
+#y_axis{
+  width: 6%;
+  padding-top: 5px;
+}
+
+#middle_div input{
+  width: 17px;
 }
 
 .panel-default {

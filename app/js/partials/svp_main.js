@@ -91,6 +91,7 @@ function onMouseEnter(){
 	
 	if(is_first_time){
 		is_first_time = false;
+		$(".main").css("cursor","none");
 		scp.start();
 	}else{
 		if(timeout != null){
@@ -164,4 +165,5 @@ function setDelayBoxHeight(id){
 
 function trialFinished(){
 	canUpdate = false;
+	$(".main").css("cursor","pointer");
 }
