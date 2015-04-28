@@ -210,7 +210,7 @@ angular.module('svp.controllers', [])
         else
             file = defaults.content;
 
-        $.getJSON( file, null)
+        $.getJSON( "content/" + file + ".json", null)
             .done(function( data ) {
                 console.log('Content loaded from ' + file);
                 MainWordService.init($scope.trial.delay_time , $scope.trial.item_time , data);
@@ -232,7 +232,7 @@ angular.module('svp.controllers', [])
                 colorFunctions.start();
             })
             .fail(function( jqxhr, textStatus, error ) {
-                alert(file + "does not exist");
+                alert(file + " does not exist");
                 $('#config_modal').reveal();
             });
     }

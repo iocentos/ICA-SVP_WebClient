@@ -1,0 +1,14 @@
+[
+  {"type":"word" , "value":"20+4"},	//easy
+  {"type":"word" , "value":"10*2"},
+  {"type":"word" , "value":"7-3"},
+
+  {"type":"word" , "value":"48/4"},	//medium
+  {"type":"word" , "value":"5*7"},
+  {"type":"word" , "value":"17+9"},
+
+  {"type":"word" , "value":"61-17"}, //hard
+  {"type":"word" , "value":"8*12"},
+  {"type":"word" , "value":"56/8"}
+]
+

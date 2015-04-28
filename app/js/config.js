@@ -5,7 +5,7 @@ var server = {
 };
 var defaults = {
 	"message_start":"Welcome",
-	"content":"content/default.json",
+	"content":"default",
 	"item_time": "2000",
 	"delay_time": "1000",
 	"font_size": "55",
