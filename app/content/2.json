@@ -1,9 +1,14 @@
 [
-  {"type":"word" , "value":"2*9"},
-  {"type":"word" , "value":"12*4"},
-  {"type":"word" , "value":"66/3"},
-  {"type":"word" , "value":"1*0"},
-  {"type":"word" , "value":"4*54"},
-  {"type":"word" , "value":"1"},
-  {"type":"word" , "value":"3*112"}
+  {"type":"word" , "value":"20+4"},
+  {"type":"word" , "value":"10*2"},
+  {"type":"word" , "value":"7-3"},
+
+  {"type":"word" , "value":"48/4"},
+  {"type":"word" , "value":"5*7"},
+  {"type":"word" , "value":"17+9"},
+
+  {"type":"word" , "value":"61-17"},
+  {"type":"word" , "value":"8*12"},
+  {"type":"word" , "value":"56/8"}
 ]
+

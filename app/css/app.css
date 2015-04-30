@@ -105,6 +105,11 @@ body, html {
     padding-top: 15px;
     padding-bottom: 15px;
     min-width: 600px;
+	text-align: center;
+}
+
+#div_image img{
+	height:200px;
 }
 
 .visual_item{
