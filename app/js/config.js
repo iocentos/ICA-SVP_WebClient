@@ -6,14 +6,14 @@ var server = {
 var defaults = {
 	"message_start":"Welcome",
 	"content":"default",
-	"item_time": "2000",
-	"delay_time": "1000",
-	"font_size": "55",
+	"item_time": "5000",
+	"delay_time": "2000",
+	"font_size": "35",
     "font_color": "#333333",
-    "app_color": "#FFFFFF",
+    "app_color": "#888888",
     "bg_modality":"0",
     "window": "1000",
 	"padding": "20",
 	"marker_url": "images/marker.png",
-	"cal_color": "#ffffff"
+	"cal_color": "#888888"
 };

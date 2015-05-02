@@ -1,0 +1,18 @@
+60cm screen-eyes
+58cm eyetribe-eyes
+------------------
+Math 7/3
+Memory 3/2
+Images 4/4
+Words 3/2
+Coding 7/3
+
+
+-Pillow
+-Monitor screen
+-Images/json
+-Words/json
+-Coding/json
+-Send email
+-Write instructions for experiment
+-Threshold
