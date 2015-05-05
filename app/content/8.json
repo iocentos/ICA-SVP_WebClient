@@ -1,8 +1,13 @@
 [
-  {"type":"word" , "value":""},
-  {"type":"word" , "value":""},
-  {"type":"word" , "value":""},
-  {"type":"word" , "value":""},
-  {"type":"word" , "value":""},
-  {"type":"word" , "value":""},
+  {"type":"word" , "value":"you"},
+  {"type":"word" , "value":"no"},
+  {"type":"word" , "value":"dog"},
+
+  {"type":"word" , "value":"sunshine"},
+  {"type":"word" , "value":"monday"},
+  {"type":"word" , "value":"railroad"},
+
+  {"type":"word" , "value":"aquarium"},
+  {"type":"word" , "value":"equilibrium"},
+  {"type":"word" , "value":"interruption"}
 ]

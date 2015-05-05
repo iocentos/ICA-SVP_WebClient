@@ -260,3 +260,7 @@ body, html {
 .secong_graph{
   margin-top: 56px;
 }
+
+#controls{
+	display:none;
+}

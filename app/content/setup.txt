@@ -2,17 +2,14 @@
 58cm eyetribe-eyes
 ------------------
 Math 7/3
-Memory 3/2
-Images 4/4
-Words 3/2
+Memory 2/1
+Images 4/3
+Words 2/1
 Coding 7/3
 
 
+Remember to keep the participant until logs are saved
+
 -Pillow
 -Monitor screen
--Images/json
--Words/json
--Coding/json
--Send email
 -Write instructions for experiment
--Threshold
