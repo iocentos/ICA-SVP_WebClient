@@ -14,6 +14,7 @@ var defaults = {
     "bg_modality":"0",
     "window": "1000",
 	"padding": "20",
-	"marker_url": "images/marker.png",
+	"marker_url_red": "images/marker.png",
+	"marker_url_blue": "images/marker_blue.png",
 	"cal_color": "#888888"
 };

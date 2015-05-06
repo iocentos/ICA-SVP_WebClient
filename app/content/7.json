@@ -1,22 +1,13 @@
 [
-	{"type":"img" , "value":"content/images/N013.bmp"},
-	{"type":"img" , "value":"content/images/N061.bmp"},
-	{"type":"img" , "value":"content/images/N033.bmp"},
+  {"type":"word" , "value":"you"},
+  {"type":"word" , "value":"me"},
+  {"type":"word" , "value":"dog"},
 
-	{"type":"img" , "value":"content/images/A075.bmp"},
-	{"type":"img" , "value":"content/images/A041.bmp"},
-	{"type":"img" , "value":"content/images/H036.bmp"},
+  {"type":"word" , "value":"sunshine"},
+  {"type":"word" , "value":"monday"},
+  {"type":"word" , "value":"railroad"},
 
-	{"type":"img" , "value":"content/images/P123.bmp"},
-	{"type":"img" , "value":"content/images/P039.bmp"},
-	{"type":"img" , "value":"content/images/P064.bmp"}
+  {"type":"word" , "value":"aquarium"},
+  {"type":"word" , "value":"equilibrium"},
+  {"type":"word" , "value":"interruption"}
 ]
-
-
-
-
-
-
-
-
-

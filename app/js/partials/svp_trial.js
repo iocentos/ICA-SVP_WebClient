@@ -14,7 +14,8 @@ var GRAPH_CONTAINER_ORIGINAL = "original";
 var GRAPH_CONTAINER_PROCESSED = "processed";
 var PARAM_EYES = "eyes";
 var PARAM_VALUE = "value";
-var MARKER_IMG = "url(" + defaults.marker_url + ")";
+var MARKER_IMG_RED = "url(" + defaults.marker_url_red + ")";
+var MARKER_IMG_BLUE = "url(" + defaults.marker_url_blue + ")";
 var Y_AXIS_RATIO_ORIGINAL = 6;
 var Y_AXIS_RATIO_PROCESSED = 2;
 
@@ -109,7 +110,12 @@ function formatInput(item, timestamp, eye, index){
 	//Add item value to the first eyes data in the set
 	if(index == 0){
 		var marker = {};
-		marker['symbol'] = MARKER_IMG;
+
+		if(item.value != LABEL_DELAY)
+			marker['symbol'] = MARKER_IMG_RED;
+		else
+			marker['symbol'] = MARKER_IMG_BLUE;
+
 		obj["marker"] = marker;
 	}
 

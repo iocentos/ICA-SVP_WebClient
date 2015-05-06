@@ -10,13 +10,13 @@
 </div>
 
 <div id="div_cursor" class="centered">
-	<div id="div_word" class="visual_item" ng-show="word">
+	<div id="div_word" class="visual_item" ng-show="word && !delay">
 		<span ng-bind="word"/> 
 	</div>
-	<div id="div_image" class="visual_item" ng-show="image">
+	<div id="div_image" class="visual_item" ng-show="image && !delay">
         <img ng-src="{{image}}"/>
 	</div>
-	<div id="div_target" ng-show="!image && !word" class="visual_item calibration_point_transparent">
+	<div id="div_target" ng-show="delay" class="visual_item calibration_point_transparent">
 		&nbsp;
 	</div>
 </div>

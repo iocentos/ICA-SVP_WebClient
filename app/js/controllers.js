@@ -68,7 +68,7 @@ angular.module('svp.controllers', [])
     }
 }])
 
-.controller('MainWordController' , ['$rootScope', '$scope' ,  '$location', 'MainWordService' , 'NetworkService' ,'BgColorService', function($rootScope, $scope ,$location, MainWordService, NetworkService, BgColorService){
+.controller('MainWordController' , ['$rootScope', '$scope' ,  '$location', 'MainWordService' , 'NetworkService' ,'BgColorService', '$timeout', function($rootScope, $scope ,$location, MainWordService, NetworkService, BgColorService, $timeout){
 
     //For visualization of delays
     $scope.current_type;
@@ -76,6 +76,7 @@ angular.module('svp.controllers', [])
     //Trial data
     $scope.trial = {};
     $scope.word = defaults.message_start;
+    $scope.delay = false;
     $scope.trial.trial;
     $scope.trial.file_name;
     $scope.trial.item_time = defaults.item_time;
@@ -133,6 +134,7 @@ angular.module('svp.controllers', [])
         if(!$scope.$$phase) {
             $scope.$apply();
         }
+        $scope.delay = false;
         //whatever it is save the duration
         appearTime = new Date().getTime();
     }
@@ -142,10 +144,11 @@ angular.module('svp.controllers', [])
         setDelayBoxHeight($scope.current_type);
         $scope.word = "";
         $scope.image = "";
+        $scope.delay = true;
         
         //replace full path with only the name of the image
         if( item.type === DSPL_ITEM_IMG ){
-            //check if it actually containes the charachet '/'
+            //check if it actually containes the characher '/'
             if( item.value.indexOf('/') > -1 ){
                 var splits = item.value.split("/");
                 item.value = splits[splits.length-1];
@@ -180,7 +183,7 @@ angular.module('svp.controllers', [])
         console.log('Display service stopped');
         notifyServer(NET_TYPE_SERVICE_STOPPED);
         trialFinished();
-        $location.path("/home");
+        $timeout(function(){$location.path("/home");}, 3000);
     }
 
     wordFunctions.callbacks.onServicePaused = function(){

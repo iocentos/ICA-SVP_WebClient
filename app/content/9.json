@@ -1,13 +1,13 @@
 [
-  {"type":"word" , "value":"R=5+(int)(\"1\");"},
-  {"type":"word" , "value":"R=(int)13/2;"},
-  {"type":"word" , "value":"R=true||false;"},
-  
-  {"type":"word" , "value":"R=((!!true)&&true);"},
-  {"type":"word" , "value":"R=0;R+=R++;"},
-  {"type":"word" , "value":"R=!(!false);"},
-  
-  {"type":"word" , "value":"R=256<<1;"},
-  {"type":"word" , "value":"a=0,R=(a++ + --a);"},
-  {"type":"word" , "value":"R=!(true&&false) || !false;"}
+	{"type":"img" , "value":"content/images/N013.bmp"},
+	{"type":"img" , "value":"content/images/N061.bmp"},
+	{"type":"img" , "value":"content/images/N033.bmp"},
+
+	{"type":"img" , "value":"content/images/A075.bmp"},
+	{"type":"img" , "value":"content/images/A041.bmp"},
+	{"type":"img" , "value":"content/images/H036.bmp"},
+
+	{"type":"img" , "value":"content/images/P123.bmp"},
+	{"type":"img" , "value":"content/images/P039.bmp"},
+	{"type":"img" , "value":"content/images/P064.bmp"}
 ]

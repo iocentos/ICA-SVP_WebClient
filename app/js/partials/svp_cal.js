@@ -49,11 +49,14 @@ function setup(){
 
 function closeCallback(){
 	//Configuration modal close callback
+	$(".main").css("cursor","none");
 	setup();
 }
 
 function calibrationFinished(){
+	$(".main").css("cursor","pointer");
 	$("#text").html("Calibration completed");
+
 	$( "#div_point" ).fadeOut( "slow", function(){
 		$("#div_text" ).fadeIn( "slow", function() {
 			setTimeout(function() {
