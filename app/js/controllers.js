@@ -91,8 +91,10 @@ angular.module('svp.controllers', [])
     $scope.trial.window = defaults.window;
     $scope.trial.save_log = true;
 
-    if($rootScope.calibration.bg_color)
+    if($rootScope.calibration.bg_color){
         $scope.trial.cal_bg = $rootScope.calibration.bg_color;
+        $scope.trial.app_bg = $rootScope.calibration.bg_color;
+    }
     else
         $location.path("/calibrate/system");
 

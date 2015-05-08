@@ -3,8 +3,8 @@
 	65cm eyetribe-eyes
 
 1) Math  - static	|	7/3	|
-2) Math - brighter	|	7/3	|
-3) Math - obscure	|	7/3	|
+2) Math - obscure	|	7/3	|
+3) Math - brighter	|	7/3	|
 4) Memory 3-digits	|	2/1	|
 5) Memory 5-digits	|	2/1	|
 6) Memory 7-digits	|	2/1	|

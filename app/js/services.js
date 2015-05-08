@@ -343,11 +343,13 @@ serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($t
             if( bgColor.counter < bgColor.iterations ){
 
                 if( bgColor.mode == BRIGHT_MODE )
-                    bgColor.currentHSVColor.v = parseFloat(bgColor.colorInterval) + parseFloat(bgColor.currentHSVColor.v);
+                    bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v) + parseFloat(bgColor.colorInterval);
                 else if( bgColor.mode == OBSCURE_MODE )
-                    bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v) -  parseFloat(bgColor.colorInterval);
+                    bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v) - parseFloat(bgColor.colorInterval);
 
-                if (parseFloat(bgColor.currentHSVColor.v) < 100 ){
+
+
+                if ((parseFloat(bgColor.currentHSVColor.v) < 100 && bgColor.mode == BRIGHT_MODE) || (parseFloat(bgColor.currentHSVColor.v) > 0 && bgColor.mode == OBSCURE_MODE)){
                     var color = tinycolor(bgColor.currentHSVColor);
                     var rgb = color.toRgb();
 
@@ -432,12 +434,12 @@ serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($t
 
             var value = bgColor.initialHSVColor.v;
             if( bgColor.mode == BRIGHT_MODE ){
-                bgColor.colorInterval = (100-parseFloat(value) * 100) / bgColor.iterations;    
+                bgColor.colorInterval = (100- (parseFloat(value)* 100)) / bgColor.iterations;    
             }else if( bgColor.mode == OBSCURE_MODE ){
                 bgColor.colorInterval = (parseFloat(value) *100) / bgColor.iterations;    
             }
 
-            bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v) * 100;
+            bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v*100);
         },
         getPublicFunctions : function(){
             return publicFunctions;
