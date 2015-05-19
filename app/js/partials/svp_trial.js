@@ -16,7 +16,7 @@ var PARAM_EYES = "eyes";
 var PARAM_VALUE = "value";
 var MARKER_IMG_RED = "url(" + defaults.marker_url_red + ")";
 var MARKER_IMG_BLUE = "url(" + defaults.marker_url_blue + ")";
-var Y_AXIS_RATIO_ORIGINAL = 6;
+var Y_AXIS_RATIO_ORIGINAL = 8;
 var Y_AXIS_RATIO_PROCESSED = 2;
 
 var scp;

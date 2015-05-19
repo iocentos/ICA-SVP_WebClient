@@ -8,6 +8,6 @@
   {"type":"word" , "value":"R=!(!false);"},
   
   {"type":"word" , "value":"R=256<<1;"},
-  {"type":"word" , "value":"a=0,R=(a++ + --a);"},
+  {"type":"word" , "value":"a=0;R=(a++ + --a);"},
   {"type":"word" , "value":"R=!(true&&false) || !false;"}
 ]
