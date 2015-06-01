@@ -92,7 +92,7 @@ HARDWARE
 COLLABORATORS
 --------------
 
-Daniel Garcia <dgac@itu.dk>, Ioannis Sintos <isin@itu.dk>, John Paulin Hansen <paulin@itu.dk>
+[Daniel Garcia] (https://github.com/danielgg88) <dgac@itu.dk>, [Ioannis Sintos] (https://github.com/centosGit) <isin@itu.dk>, John Paulin Hansen <paulin@itu.dk>
 
 [IT University of Copenhagen](http://www.itu.dk/en)
 
