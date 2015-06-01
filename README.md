@@ -73,7 +73,7 @@ SOFTWARE ARCHITECTURE
 
 The SVP web client is the graphical user interface (GUI) through which a user can interact in order to calibrate both, the eye tracker, and the system before an experiment; conduct an experiment; list results from previously recorded experiments and analyze each separately. The web client is implemented based on the Model View Controller (MVC) architectural framework.
 
-<img src="Images/ICA-SVP_Software_Architecture.png?raw=true" height="200"/>
+<img src="Images/ICA-SVP_Software_Architecture.png?raw=true" height="300"/>
 
 SOFTWARE DEPENDENCIES
 ---------
@@ -89,8 +89,14 @@ HARDWARE
 
 <img src="Images/ICA-SVP_Hardware_Architecture.png?raw=true" height="200"/>
 
-Collaborators:
+COLLABORATORS
 --------------
+
 Daniel Garcia <dgac@itu.dk>, Ioannis Sintos <isin@itu.dk>, John Paulin Hansen <paulin@itu.dk>
 
 [IT University of Copenhagen](http://www.itu.dk/en)
+
+DISCLAIMER
+--------------
+
+The software is an experimental tool built for research and educational purposes. The reliability of the of the results cannot be guaranteed. 
