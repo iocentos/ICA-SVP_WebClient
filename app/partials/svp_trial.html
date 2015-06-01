@@ -9,33 +9,33 @@
 </br>
 
 <div class="panel panel-default">
-  <div class="panel-body">
-    <div ng-repeat="(key, value) in trial.configuration" class="col-md-3">
-		<div class="input-group">
-			<strong>{{key}}: </strong>{{value}}
+	<div class="panel-body">
+		<div ng-repeat="(key, value) in trial.configuration" class="col-md-3">
+			<div class="input-group">
+				<strong>{{key}}: </strong>{{value}}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="input-group">
+				<strong>sampling_rate (hz): </strong>{{trial.sampling_rate}}
+			</div>
 		</div>
 	</div>
-	<div class="col-md-3">
-		<div class="input-group">
-			<strong>sampling_rate (hz): </strong>{{trial.sampling_rate}}
-		</div>
-	</div>
-  </div>
 </div>
 
 <div class="panel panel-default">
-  	<div class="panel-body">
-	<!--Container for graph-->
+	<div class="panel-body">
+		<!--Container for graph-->
 		<div id="original"></div>
 	</div>
 </div>
 
 <div id="middle_div" class="pull-left">
 	<div id="y_axis" class="text-center pull-left">
-		<input type="text" id="original_y"/> 
+		<input type="text" id="original_y" />
 		<span class="glyphicon glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
 		<span class="glyphicon glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-		<input type="text" id="processed_y"/>
+		<input type="text" id="processed_y" />
 	</div>
 
 	<div id="gradient" class="text-center pull-right">
@@ -44,23 +44,23 @@
 </div>
 
 <div class="panel panel-default secong_graph">
-  	<div class="panel-body">
-	<!--Container for graph-->
+	<div class="panel-body">
+		<!--Container for graph-->
 		<div id="processed"></div>
 	</div>
 </div>
 
 <div class="panel panel-default">
-  	<div class="panel-body text-center">
-  		<h4>Summary</h4>
-  		<!--Draw summary items-->
-  		<table class="table table-striped">
-  			<tr ng-repeat="(key, displayItemAndEyes) in trial.data">
-  				<td>
-  					<strong>{{displayItemAndEyes.item.value}}</strong>
-  				</td>
+	<div class="panel-body text-center">
+		<h4>Summary</h4>
+		<!--Draw summary items-->
+		<table class="table table-striped">
+			<tr ng-repeat="(key, displayItemAndEyes) in trial.data">
+				<td>
+					<strong>{{displayItemAndEyes.item.value}}</strong>
+				</td>
 				<td ng-repeat="(key, value) in displayItemAndEyes.summary">
-					 <strong>{{key}}: </strong>{{value}}
+					<strong>{{key}}: </strong>{{value}}
 				</td>
 			</tr>
 		</table>

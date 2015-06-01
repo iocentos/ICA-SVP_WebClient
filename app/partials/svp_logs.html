@@ -15,25 +15,25 @@
 <div class="panel panel-default logs_container">
 	<div class="panel-body logs_body">
 		<div class="list-group">
-		    	<a href="#/logs/{{trial.file_name}}" ng-repeat="trial in list_of_trials | filter:searchText" class="list-group-item">
+			<a href="#/logs/{{trial.file_name}}" ng-repeat="trial in list_of_trials | filter:searchText" class="list-group-item">
 		    		{{trial.file_name}}
 		    		<h5 class="pull-right">
 		    			<small>Click to see more detail</small>&nbsp;
 		    			<span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
 		    		</h5>
 		    	</a>
-		    <div ng-show="!list_of_trials.length" class="centered">
-		    	<h1> 
+			<div ng-show="!list_of_trials.length" class="centered">
+				<h1> 
 		    		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 		    		No logs available
 		    	</h1>
-		    </div>
+			</div>
 		</div>
 	</div>
 </div>
 
 <script>
-	$(document).ready(function(){
-		$('body').css("background-color","#FFFFFF");
+	$(document).ready(function() {
+		$('body').css("background-color", "#FFFFFF");
 	});
 </script>

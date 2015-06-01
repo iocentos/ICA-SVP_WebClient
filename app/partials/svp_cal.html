@@ -1,6 +1,7 @@
 <div class="cal_wrapper centered">
 	<div id="div_point" class="calibration_point_transparent">&nbsp;</div>
-	<div id="div_text" class="text-center"><h1><span id="text">Look at the target!</span></h1></div>
+	<div id="div_text" class="text-center">
+		<h1><span id="text">Look at the target!</span></h1></div>
 </div>
 
 <!--Config modal-->
@@ -9,24 +10,23 @@
 	<div class="form-horizontal">
 
 		<h3>Click start to begin the calibration process</h3>
-		
+
 		<!-- Background -->
-		
+
 		<span class="col-sm-12 label label-info">Background</span></br>
 		<br/>
 		<div class="form-group">
-   			<div class="col-sm-3">
-   				Pick a color &nbsp;
-      			<input id="cal_color" type="text" placeholder="Background color" ng-model="calibration.bg_color">
-    		</div>
-    		<div class="col-sm-9">
-    			<button type="button"  class="btn btn-primary pull-right close-reveal-modal">Start</button>
-
-    			<button type="button" onclick="window.history.back()" class="btn btn-danger pull-right cancel">Cancel</button>
-    		</div>
-		</div>	
+			<div class="col-sm-3">
+				Pick a color &nbsp;
+				<input id="cal_color" type="text" placeholder="Background color" ng-model="calibration.bg_color">
+			</div>
+			<div class="col-sm-9">
+				<button type="button" class="btn btn-primary pull-right close-reveal-modal">Start</button>
+				<button type="button" onclick="window.history.back()" class="btn btn-danger pull-right cancel">Cancel</button>
+			</div>
+		</div>
 	</div>
-	
+
 </div>
 
 <!-- View script-->

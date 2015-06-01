@@ -1,6 +1,5 @@
 'use strict';
 
-
 var DSPL_ITEM_WORD = 'word';
 var DSPL_ITEM_IMG = 'img';
 
@@ -10,190 +9,188 @@ var serviceModule = angular.module('svp.services', []);
  *  Service that will handle all the timing of the words. It will have
  *  several kinds of callbacks that the called need to provide.
  */
-serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval' , function($rootScope, $timeout , $interval){
+serviceModule.factory('MainWordService', ['$rootScope', '$timeout', '$interval', function($rootScope, $timeout, $interval) {
 
-    var functions = {};
-    functions.callbacks = {};
-    var parameters = {};
-    var privateFunctions = {};
+	var functions = {};
+	functions.callbacks = {};
+	var parameters = {};
+	var privateFunctions = {};
 
-    functions.callbacks.onWordDisplayed = function(){};
-    functions.callbacks.onWordDissapeard = function(){};
-    functions.callbacks.onServiceStarted = function(){};
-    functions.callbacks.onServiceStopped = function(){};
-    functions.callbacks.onServicePaused = function(){};
-    functions.callbacks.onServiceResumed = function(){};
+	functions.callbacks.onWordDisplayed = function() {};
+	functions.callbacks.onWordDissapeard = function() {};
+	functions.callbacks.onServiceStarted = function() {};
+	functions.callbacks.onServiceStopped = function() {};
+	functions.callbacks.onServicePaused = function() {};
+	functions.callbacks.onServiceResumed = function() {};
 
+	parameters.delayBtnWords = 0;
+	parameters.wordDisplayTimeMs = 0;
+	parameters.words = [];
+	parameters.index = 0;
+	parameters.isRunning = false;
+	parameters.isPaused = false;
+	parameters.promise = {};
 
-    parameters.delayBtnWords = 0;
-    parameters.wordDisplayTimeMs = 0;
-    parameters.words = [];
-    parameters.index = 0;
-    parameters.isRunning = false;
-    parameters.isPaused = false;
-    parameters.promise = {};
+	/*****************************
+	 * PUBLIC METHODS
+	 * **************************/
 
+	functions.start = function() {
+		if (!functions.isFinished() && !functions.isRunning()) {
+			console.log('Starting main service... ');
+			functions.callbacks.onServiceStarted();
+			functions.setRunningState(true);
+			functions.setPausedState(false);
+			privateFunctions.tick();
+		}
+	}
 
-    /*****************************
-     * PUBLIC METHODS
-     * **************************/
+	functions.stop = function() {
+		if (!functions.isFinished() && functions.isRunning() || functions.isPaused()) {
+			console.log('Stopping main service... ');
+			functions.callbacks.onServiceStopped();
+			$interval.cancel(parameters.promise);
+			functions.setRunningState(false);
+			parameters.index = 0;
+		}
+	}
 
-    functions.start = function(){
-        if( !functions.isFinished() && !functions.isRunning() ){
-            console.log('Starting main service... ');
-            functions.callbacks.onServiceStarted();
-            functions.setRunningState(true);
-            functions.setPausedState(false);
-            privateFunctions.tick();
-        }
-    }
+	functions.pause = function() {
+		if (!functions.isFinished() && functions.isRunning()) {
+			console.log('Calling pause on main service...');
+			functions.callbacks.onServicePaused();
+			$interval.cancel(parameters.promise);
+			functions.setRunningState(false);
+			functions.setPausedState(true);
+		}
+	}
 
-    functions.stop = function(){
-        if( !functions.isFinished() && functions.isRunning() || functions.isPaused()){
-            console.log('Stopping main service... ');
-            functions.callbacks.onServiceStopped();
-            $interval.cancel(parameters.promise);
-            functions.setRunningState(false);
-            parameters.index = 0;
-        }
-    }
+	functions.resume = function() {
+		if (!functions.isFinished() && !functions.isRunning()) {
+			console.log('Calling resume on main service...')
+			functions.callbacks.onServiceResumed();
+			functions.setRunningState(true);
+			functions.setPausedState(false);
+			privateFunctions.tick();
+		}
+	}
 
-    functions.pause = function(){
-        if( !functions.isFinished() && functions.isRunning() ){
-            console.log('Calling pause on main service...');
-            functions.callbacks.onServicePaused();
-            $interval.cancel(parameters.promise);
-            functions.setRunningState(false);
-            functions.setPausedState(true);
-        }
-    }
+	functions.restart = function() {
+		functions.stop();
+		functions.start();
+	}
 
-    functions.resume = function(){
-        if( !functions.isFinished() && !functions.isRunning() ){
-            console.log('Calling resume on main service...')
-            functions.callbacks.onServiceResumed();
-            functions.setRunningState(true);
-            functions.setPausedState(false);
-            privateFunctions.tick();
-        }
-    }
+	functions.isFinished = function() {
+		return parameters.index == parameters.words.length;
+	}
 
-    functions.restart = function(){
-        functions.stop();
-        functions.start();
-    }
+	functions.isRunning = function() {
+		return parameters.isRunning;
+	}
 
-    functions.isFinished = function(){
-        return parameters.index == parameters.words.length;
-    }
+	functions.isPaused = function() {
+		return parameters.isPaused;
+	}
 
-    functions.isRunning = function(){
-        return parameters.isRunning;
-    }
+	functions.setRunningState = function(state) {
+		parameters.isRunning = state;
+	}
 
-    functions.isPaused = function(){
-        return parameters.isPaused;
-    }
+	functions.setPausedState = function(state) {
+		parameters.isPaused = state;
+	}
 
-    functions.setRunningState = function(state){
-        parameters.isRunning = state;
-    }
+	/*****************************
+	 * PRIVATE METHODS
+	 * **************************/
 
-    functions.setPausedState = function(state){
-        parameters.isPaused = state;
-    }
+	//this and the next method are calling each other in a recursive way,
+	privateFunctions.tick = function() {
 
-    /*****************************
-     * PRIVATE METHODS
-     * **************************/
+		if (functions.isFinished()) {
+			functions.callbacks.onServiceStopped();
+			return;
+		}
 
-    //this and the next method are calling each other in a recursive way,
-    privateFunctions.tick = function(){
-        
-        if( functions.isFinished() ){
-            functions.callbacks.onServiceStopped();
-            return ;
-        }
+		//odd number is contetnt. even numbers are blanks
+		if (!functions.isFinished() && functions.isRunning()) {
+			var delay = 0;
+			if (parameters.index % 2) { //blank
+				delay = parameters.delayBtnWords;
+				//subtract one because the index has already been incremented
+				functions.callbacks.onWordDissapeard(parameters.words[parameters.index - 1]);
+			} else { //content
+				//make the callback and update also
+				functions.callbacks.onWordDisplayed(parameters.words[parameters.index]);
+				delay = parameters.wordDisplayTimeMs;
+			}
 
-        //odd number is contetnt. even numbers are blanks
-        if( !functions.isFinished() && functions.isRunning() ){
-            var delay = 0;
-            if( parameters.index % 2 ){//blank
-                delay = parameters.delayBtnWords;
-                //subtract one because the index has already been incremented
-                functions.callbacks.onWordDissapeard(parameters.words[parameters.index - 1]);
-            }else{//content
-                //make the callback and update also
-                functions.callbacks.onWordDisplayed(parameters.words[parameters.index]);
-                delay = parameters.wordDisplayTimeMs;
-            }
+			parameters.index++;
+			privateFunctions.startTimer(delay);
+		}
+	}
 
-            parameters.index++;
+	privateFunctions.startTimer = function(delay) {
+		parameters.promise = $interval(function() {
+			privateFunctions.tick();
+		}, delay, 1);
+	}
 
-            privateFunctions.startTimer(delay);
-        }
-    }
+	privateFunctions.shuffle = function(array) {
+		var currentIndex = array.length,
+			temporaryValue, randomIndex;
 
-    privateFunctions.startTimer = function(delay){
-        parameters.promise = $interval(function(){
-                privateFunctions.tick();
-        }, delay, 1);
-    }
+		// While there remain elements to shuffle...
+		while (0 !== currentIndex) {
 
-    privateFunctions.shuffle = function(array){
-          var currentIndex = array.length, temporaryValue, randomIndex ;
+			// Pick a remaining element...
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex -= 1;
 
-      // While there remain elements to shuffle...
-          while (0 !== currentIndex) {
+			// And swap it with the current element.
+			temporaryValue = array[currentIndex];
+			array[currentIndex] = array[randomIndex];
+			array[randomIndex] = temporaryValue;
+		}
+		return array;
+	}
 
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
+	/*
+	 * Initialization method.
+	 * Params 
+	 *      delayBtnWords : Time in ms between each word is displayed (without time for displaying the word itself)
+	 *      wordDisplayTimeMs : Time in ms that each word should be displayd
+	 *      words : The array containing all the words
+	 */
+	return {
+		init: function(delayBtnWords, wordDisplayTimeMs, words) {
+			parameters.delayBtnWords = delayBtnWords;
+			parameters.wordDisplayTimeMs = wordDisplayTimeMs;
+			parameters.words = privateFunctions.shuffle(words);
+			parameters.index = 0;
+			parameters.isRunning = false;
 
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-        return array;
-    }
+			var newContent = [];
 
+			//copy all words to a new array. odd numbers will be blanks. even numbers are content
+			var j = 0;
+			for (var i = 0; i < parameters.words.length; i++) {
+				newContent[j++] = parameters.words[i];
+				newContent[j++] = {
+					'type': 'blank',
+					'value': 'blank'
+				};
+			}
 
-
-    
-    /*
-     * Initialization method.
-     * Params 
-     *      delayBtnWords : Time in ms between each word is displayed (without time for displaying the word itself)
-     *      wordDisplayTimeMs : Time in ms that each word should be displayd
-     *      words : The array containing all the words
-     */
-    return {
-        init : function(delayBtnWords , wordDisplayTimeMs , words){
-            parameters.delayBtnWords = delayBtnWords;
-            parameters.wordDisplayTimeMs = wordDisplayTimeMs;
-            parameters.words = privateFunctions.shuffle(words);
-            parameters.index = 0;
-            parameters.isRunning = false;
-
-            var newContent = [];
-
-            //copy all words to a new array. odd numbers will be blanks. even numbers are content
-            var j = 0;
-            for( var i = 0 ; i < parameters.words.length ; i++){
-                newContent[j++] = parameters.words[i];
-                newContent[j++] = {'type':'blank' , 'value':'blank'};
-            }
-
-            parameters.words = newContent;
-        },
-        getPramaters : function(){
-            return parameters;
-        },
-        getFunctions : function(){
-            return functions;
-        }
-    }
+			parameters.words = newContent;
+		},
+		getPramaters: function() {
+			return parameters;
+		},
+		getFunctions: function() {
+			return functions;
+		}
+	}
 
 }]);
 
@@ -203,246 +200,238 @@ serviceModule.factory('MainWordService', ['$rootScope' , '$timeout' , '$interval
  */
 serviceModule.factory('NetworkService', ['$rootScope', function($rootScope) {
 
-    var netParams = {};
-    var netFunctions = {};
+	var netParams = {};
+	var netFunctions = {};
 
+	netParams.port = 0;
+	netParams.host = "";
+	netParams.path = "";
+	netParams.webSocket = null;
+	netParams.log = true;
+	netParams.isConnected = false;
 
-    netParams.port = 0;
-    netParams.host = "";
-    netParams.path = "";
-    netParams.webSocket = null;
-    netParams.log = true;
-    netParams.isConnected = false;
+	//Network functions
 
-    //Network functions
+	netFunctions.log = function(data) {
+		if (netParams.log) {
+			console.log("NetworkService : " + data);
+		}
+	};
 
-    netFunctions.log =  function(data){
-        if(netParams.log){
-            console.log("NetworkService : " + data);
-        }
-    };
+	netFunctions.getFullUrl = function() {
 
-    netFunctions.getFullUrl = function(){
+		if (netParams.host.endsWith('/')) {
+			netParams.host = netParams.host.substring(0, netParams.host.length - 1);
+		}
 
-        if( netParams.host.endsWith('/') ){
-            netParams.host = netParams.host.substring(0 , netParams.host.length -1 );
-        }
+		if (!netParams.host.startsWith('ws://')) {
+			var prot = 'ws://';
+			netParams.host = prot.concat(netParams.host);
+		}
 
-        if( !netParams.host.startsWith('ws://')){
-            var prot = 'ws://';
-        netParams.host = prot.concat(netParams.host);
-        }
+		if (netParams.path.startsWith('/'))
+			netParams.path = netParams.path.substring(1, netParams.path.length);
 
-        if( netParams.path.startsWith('/') )
-            netParams.path = netParams.path.substring(1 , netParams.path.length );
+		return netParams.host + ":" + netParams.port + "/" + netParams.path;
+	};
 
+	netFunctions.onNetWorkReceive = function(event) {
+		if (netFunctions.onReceive)
+			netFunctions.onReceive(JSON.parse(event.data));
+	};
 
-        return netParams.host + ":" + netParams.port + "/" + netParams.path;
-    };
+	netFunctions.sendData = function(data) {
+		netParams.webSocket.send(JSON.stringify(data));
+	};
 
-    netFunctions.onNetWorkReceive = function (event){
-        if( netFunctions.onReceive )
-            netFunctions.onReceive(JSON.parse(event.data));
-    };
+	netFunctions.onReceive = function(obj) {
+		netFunctions.log("Received : " + obj.Timestamp + "   Word : " + obj.Value);
+	};
 
-    netFunctions.sendData = function(data){
-        netParams.webSocket.send(JSON.stringify(data));
-    };
+	netFunctions.connect = function(onConnected, onConnectionFailed) {
+		netFunctions.log("Connecting to the server at " + netFunctions.getFullUrl());
+		netParams.webSocket = new WebSocket(netFunctions.getFullUrl());
+		netParams.webSocket.onopen = onConnected;
+		netParams.webSocket.onerror = onConnectionFailed;
+		netParams.webSocket.onmessage = netFunctions.onNetWorkReceive;
+	};
 
-    netFunctions.onReceive = function(obj){
-        netFunctions.log("Received : " + obj.Timestamp + "   Word : " + obj.Value);
-    };
+	/*
+	 * netFunctions.close = function(){
+	 * 	netParams.webSocket.close();
+	 * };
+	 */
 
-    netFunctions.connect = function(onConnected , onConnectionFailed){
-        netFunctions.log("Connecting to the server at " + netFunctions.getFullUrl());
-        netParams.webSocket = new WebSocket(netFunctions.getFullUrl());
-        netParams.webSocket.onopen = onConnected;
-        netParams.webSocket.onerror = onConnectionFailed;
-        netParams.webSocket.onmessage = netFunctions.onNetWorkReceive;
-    };
-
-    /*
-     * netFunctions.close = function(){
-     * 	netParams.webSocket.close();
-     * };
-     */
-
-    return {
-        init : function(port , serverUrl , path){
-            netFunctions.log("Init");
-            netParams.port = port;
-            netParams.path = path;
-            netParams.host = serverUrl;
-
-        },
-        getNetworkParams : function(){
-            return netParams;
-        },
-        getNetworkFunctions : function(){
-            return netFunctions;
-        }
-    }
-
+	return {
+		init: function(port, serverUrl, path) {
+			netFunctions.log("Init");
+			netParams.port = port;
+			netParams.path = path;
+			netParams.host = serverUrl;
+		},
+		getNetworkParams: function() {
+			return netParams;
+		},
+		getNetworkFunctions: function() {
+			return netFunctions;
+		}
+	}
 }]);
 
-serviceModule.factory('BgColorService' , ['$timeout' , '$interval' , function($timeout, $interval) {
+serviceModule.factory('BgColorService', ['$timeout', '$interval', function($timeout, $interval) {
 
-    var BRIGHT_MODE = 1;
-    var OBSCURE_MODE = 2;
+	var BRIGHT_MODE = 1;
+	var OBSCURE_MODE = 2;
+	var CONSTANT_INTERVAL = 100; //update color every 100ms
+	var bgColor = {};
 
-    var CONSTANT_INTERVAL = 100; //update color every 100ms
+	// bgColor.initialRGBColor = 0;
+	// bgColor.currentRGBColor = 0;
+	// bgColor.initialHSVColor = 0;
+	// bgColor.currentHSVColor = 0;
+	//
+	// bgColor.mode = BRIGHT_MODE;
+	// bgColor.totalTime = 0;
+	// bgColor.elapsedTime = 0;
+	// bgColor.iterations = 0;
+	// bgColor.promise = {};
+	// bgColor.counter = 0;
+	// bgColor.colorInterval = 0;
 
-    var bgColor = {};
+	var privateFunctions = {};
+	var publicFunctions = {};
 
-    // bgColor.initialRGBColor = 0;
-    // bgColor.currentRGBColor = 0;
-    // bgColor.initialHSVColor = 0;
-    // bgColor.currentHSVColor = 0;
-    //
-    // bgColor.mode = BRIGHT_MODE;
-    // bgColor.totalTime = 0;
-    // bgColor.elapsedTime = 0;
-    // bgColor.iterations = 0;
-    // bgColor.promise = {};
-    // bgColor.counter = 0;
-    // bgColor.colorInterval = 0;
+	// publicFunctions.isRunning = false;
+	// publicFunctions.isFinished = false;
 
-    var privateFunctions = {};
-    var publicFunctions = {};
+	/*
+	 * Public functions
+	 */
+	publicFunctions.onUpdate = function(color) {
+		console.log(color);
+	}
 
-    // publicFunctions.isRunning = false;
-    // publicFunctions.isFinished = false;
+	publicFunctions.start = function() {
+		if (!publicFunctions.isRunning && !publicFunctions.isFinished) {
+			publicFunctions.isRunning = true;
+			privateFunctions.start(CONSTANT_INTERVAL);
+		}
+	}
 
-    /*
-     * Public functions
-     */
-    publicFunctions.onUpdate = function(color){
-        console.log(color);
-    }
+	publicFunctions.stop = function() {
+		if (publicFunctions.isRunning) {
+			publicFunctions.isRunning = false;
+			$interval.cancel(bgColor.promise);
+		}
+	}
 
-    publicFunctions.start = function(){
-        if( !publicFunctions.isRunning && !publicFunctions.isFinished ){
-            publicFunctions.isRunning = true;
-            privateFunctions.start(CONSTANT_INTERVAL);
-        }
-    }
+	/*
+	 * Private functions
+	 */
+	privateFunctions.tick = function() {
+		if (publicFunctions.isRunning && !publicFunctions.isFinished) {
 
-    publicFunctions.stop = function(){
-        if( publicFunctions.isRunning ){
-            publicFunctions.isRunning = false;
-            $interval.cancel(bgColor.promise);
-        }
-    }
+			if (bgColor.counter < bgColor.iterations) {
 
-    /*
-     * Private functions
-     */
-    privateFunctions.tick = function(){
-        if(publicFunctions.isRunning && !publicFunctions.isFinished){
+				if (bgColor.mode == BRIGHT_MODE)
+					bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v) + parseFloat(bgColor.colorInterval);
+				else if (bgColor.mode == OBSCURE_MODE)
+					bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v) - parseFloat(bgColor.colorInterval);
 
-            if( bgColor.counter < bgColor.iterations ){
+				if ((parseFloat(bgColor.currentHSVColor.v) < 100 && bgColor.mode == BRIGHT_MODE) || (parseFloat(bgColor.currentHSVColor.v) > 0 && bgColor.mode == OBSCURE_MODE)) {
+					var color = tinycolor(bgColor.currentHSVColor);
+					var rgb = color.toRgb();
 
-                if( bgColor.mode == BRIGHT_MODE )
-                    bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v) + parseFloat(bgColor.colorInterval);
-                else if( bgColor.mode == OBSCURE_MODE )
-                    bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v) - parseFloat(bgColor.colorInterval);
+					bgColor.currentRGBColor = rgb;
 
+					var redHex = baseToBase(10, 16, rgb.r);
+					if (rgb.r < 16)
+						redHex = '0' + redHex;
 
+					var greenHex = baseToBase(10, 16, rgb.g);
+					if (rgb.g < 16)
+						greenHex = '0' + greenHex;
 
-                if ((parseFloat(bgColor.currentHSVColor.v) < 100 && bgColor.mode == BRIGHT_MODE) || (parseFloat(bgColor.currentHSVColor.v) > 0 && bgColor.mode == OBSCURE_MODE)){
-                    var color = tinycolor(bgColor.currentHSVColor);
-                    var rgb = color.toRgb();
+					var blueHex = baseToBase(10, 16, rgb.b);
+					if (rgb.b < 16)
+						blueHex = '0' + blueHex;
 
-                    bgColor.currentRGBColor = rgb;
+					var newColor = '#' + redHex + greenHex + blueHex;
 
-                    var redHex = baseToBase(10,16, rgb.r);
-                    if( rgb.r < 16 )
-                        redHex = '0' + redHex;
+					publicFunctions.onUpdate(newColor);
 
-                    var greenHex = baseToBase(10,16, rgb.g);
-                    if( rgb.g < 16 )
-                        greenHex = '0' + greenHex;
+					bgColor.counter++;
+					privateFunctions.start(CONSTANT_INTERVAL);
+				} else {
+					publicFunctions.isFinished = true;
+					publicFunctions.stop();
+				}
+			} else {
+				publicFunctions.isFinished = true;
+				publicFunctions.stop();
+			}
+		}
+	}
 
-                    var blueHex = baseToBase(10,16, rgb.b);
-                    if( rgb.b < 16 )
-                        blueHex = '0' + blueHex;
+	privateFunctions.start = function(delay) {
+		bgColor.promise = $interval(function() {
+			privateFunctions.tick();
+		}, delay, 1);
+	}
 
-                    var newColor = '#' + redHex + greenHex + blueHex;
+	privateFunctions.setUpService = function() {
+		bgColor.initialRGBColor = 0;
+		bgColor.currentRGBColor = 0;
+		bgColor.initialHSVColor = 0;
+		bgColor.currentHSVColor = 0;
 
-                    publicFunctions.onUpdate(newColor);
+		bgColor.mode = BRIGHT_MODE;
+		bgColor.totalTime = 0;
+		bgColor.elapsedTime = 0;
+		bgColor.iterations = 0;
+		bgColor.promise = {};
+		bgColor.counter = 0;
+		bgColor.colorInterval = 0;
 
-                    bgColor.counter++;
-                    privateFunctions.start(CONSTANT_INTERVAL);
-                }else{
-                    publicFunctions.isFinished = true;
-                    publicFunctions.stop();
-                }
-            }else{
-                publicFunctions.isFinished = true;
-                publicFunctions.stop();
-            }
-        }
-    }
-
-    privateFunctions.start = function(delay){
-        bgColor.promise = $interval(function(){
-            privateFunctions.tick();
-        },delay, 1 );
-    }
-
-    privateFunctions.setUpService = function(){
-        bgColor.initialRGBColor = 0;
-        bgColor.currentRGBColor = 0;
-        bgColor.initialHSVColor = 0;
-        bgColor.currentHSVColor = 0;
-
-        bgColor.mode = BRIGHT_MODE;
-        bgColor.totalTime = 0;
-        bgColor.elapsedTime = 0;
-        bgColor.iterations = 0;
-        bgColor.promise = {};
-        bgColor.counter = 0;
-        bgColor.colorInterval = 0;
-
-        publicFunctions.isRunning = false;
-        publicFunctions.isFinished = false;
-    }
+		publicFunctions.isRunning = false;
+		publicFunctions.isFinished = false;
+	}
 
 
-    function baseToBase (fromBase, toBase, value) {;
-        if(value=="")
-            value = 0;
-        value = parseInt(value, fromBase);
-        return Number(value).toString(toBase).toUpperCase();	
-    }
+	function baseToBase(fromBase, toBase, value) {;
+		if (value == "")
+			value = 0;
+		value = parseInt(value, fromBase);
+		return Number(value).toString(toBase).toUpperCase();
+	}
 
-    return {
-        init : function(stimuliCount, stimuliTime, delayTime, initialColor, mode){
-            privateFunctions.setUpService();
+	return {
+		init: function(stimuliCount, stimuliTime, delayTime, initialColor, mode) {
+			privateFunctions.setUpService();
 
-            bgColor.initialRGBColor = initialColor;
-            bgColor.currentRGBColor = initialColor;
-            var rgbColor = tinycolor(initialColor);
-            bgColor.initialHSVColor = rgbColor.toHsv();
-            bgColor.currentHSVColor = bgColor.initialHSVColor;
+			bgColor.initialRGBColor = initialColor;
+			bgColor.currentRGBColor = initialColor;
+			var rgbColor = tinycolor(initialColor);
+			bgColor.initialHSVColor = rgbColor.toHsv();
+			bgColor.currentHSVColor = bgColor.initialHSVColor;
 
-            bgColor.mode = mode;
+			bgColor.mode = mode;
 
-            bgColor.totalTime = (stimuliCount * stimuliTime) + (stimuliCount * delayTime);
+			bgColor.totalTime = (stimuliCount * stimuliTime) + (stimuliCount * delayTime);
 
-            bgColor.iterations = bgColor.totalTime / CONSTANT_INTERVAL;
+			bgColor.iterations = bgColor.totalTime / CONSTANT_INTERVAL;
 
-            var value = bgColor.initialHSVColor.v;
-            if( bgColor.mode == BRIGHT_MODE ){
-                bgColor.colorInterval = (100- (parseFloat(value)* 100)) / bgColor.iterations;    
-            }else if( bgColor.mode == OBSCURE_MODE ){
-                bgColor.colorInterval = (parseFloat(value) *100) / bgColor.iterations;    
-            }
+			var value = bgColor.initialHSVColor.v;
+			if (bgColor.mode == BRIGHT_MODE) {
+				bgColor.colorInterval = (100 - (parseFloat(value) * 100)) / bgColor.iterations;
+			} else if (bgColor.mode == OBSCURE_MODE) {
+				bgColor.colorInterval = (parseFloat(value) * 100) / bgColor.iterations;
+			}
 
-            bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v*100);
-        },
-        getPublicFunctions : function(){
-            return publicFunctions;
-        }
-    }
+			bgColor.currentHSVColor.v = parseFloat(bgColor.currentHSVColor.v * 100);
+		},
+		getPublicFunctions: function() {
+			return publicFunctions;
+		}
+	}
 }]);

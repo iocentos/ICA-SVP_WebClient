@@ -11,10 +11,10 @@
 
 <div id="div_cursor" class="centered">
 	<div id="div_word" class="visual_item" ng-show="word && !delay">
-		<span ng-bind="word"/> 
+		<span ng-bind="word" />
 	</div>
 	<div id="div_image" class="visual_item" ng-show="image && !delay">
-        <img ng-src="{{image}}"/>
+		<img ng-src="{{image}}" />
 	</div>
 	<div id="div_target" ng-show="delay" class="visual_item calibration_point_transparent">
 		&nbsp;
@@ -31,28 +31,28 @@
 		<span class="col-sm-12 label label-info">Experiment trial</span></br>
 
 		<div class="form-group">
- 			<label class="col-sm-4 control-label">Trial name</label>
-   			<div class="col-sm-8">
-      			<input type="text" class="form-control" placeholder="Result file name" ng-model="trial.trial">
-    		</div>
+			<label class="col-sm-4 control-label">Trial name</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" placeholder="Result file name" ng-model="trial.trial">
+			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">File name (json)</label>
-   			<div class="col-sm-8">
-      			<input id="file_name" type="text" class="form-control"  placeholder="Trial content" ng-model="trial.file_name">
-    		</div>
+			<div class="col-sm-8">
+				<input id="file_name" type="text" class="form-control" placeholder="Trial content" ng-model="trial.file_name">
+			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Item time (ms)</label>
-   			<div class="col-sm-8">
-      			<input id="item_time" type="text" class="form-control"  placeholder="Item exposure duration" ng-model="trial.item_time">
-    		</div>
+			<div class="col-sm-8">
+				<input id="item_time" type="text" class="form-control" placeholder="Item exposure duration" ng-model="trial.item_time">
+			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Delay time (ms)</label>
-   			<div class="col-sm-8">
-      			<input id="delay_time" type="text" class="form-control"  placeholder="Delay between items" ng-model="trial.delay_time">
-    		</div>
+			<div class="col-sm-8">
+				<input id="delay_time" type="text" class="form-control" placeholder="Delay between items" ng-model="trial.delay_time">
+			</div>
 		</div>
 
 		<!-- Participant information -->
@@ -61,15 +61,15 @@
 
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Name</label>
-   			<div class="col-sm-8">
-      			<input type="text" class="form-control" placeholder="Insert subject's name" ng-model="trial.user_name">
-    		</div>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" placeholder="Insert subject's name" ng-model="trial.user_name">
+			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Age</label>
-   			<div class="col-sm-8">
-      			<input type="text" class="form-control"  placeholder="Insert subjet's age" ng-model="trial.user_age">
-    		</div>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" placeholder="Insert subjet's age" ng-model="trial.user_age">
+			</div>
 		</div>
 
 		<!-- Font -->
@@ -78,15 +78,15 @@
 
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Size (pt)</label>
-   			<div class="col-sm-8">
-      			<input id="font_size" type="text" class="form-control"  placeholder="Text size" ng-model="trial.font_size">
-    		</div>
+			<div class="col-sm-8">
+				<input id="font_size" type="text" class="form-control" placeholder="Text size" ng-model="trial.font_size">
+			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Color (#)</label>
-   			<div class="col-sm-8">
-      			<input id="font_color" type="text" class="form-control"  placeholder="Font color" ng-model="trial.font_color">
-    		</div>
+			<div class="col-sm-8">
+				<input id="font_color" type="text" class="form-control" placeholder="Font color" ng-model="trial.font_color">
+			</div>
 		</div>
 
 		<!-- Background -->
@@ -95,18 +95,18 @@
 
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Color (#)</label>
-   			<div class="col-sm-2">
-      			<input id="app_color" type="text" class="form-control"  placeholder="Experiment background" ng-model="trial.app_bg">
-    		</div>
-    		<div class="col-sm-2">
-    			<input type="radio" name="modality" ng-model="trial.bg_modality" value="0"/> Static
-    		</div>
-    		 <div class="col-sm-2">
-    		 	<input type="radio" name="modality" ng-model="trial.bg_modality" value="1" /> Bright
-    		</div>
-    		 <div class="col-sm-2">
-    		 	<input type="radio" name="modality" ng-model="trial.bg_modality" value="2" /> Obscure
-    		</div>
+			<div class="col-sm-2">
+				<input id="app_color" type="text" class="form-control" placeholder="Experiment background" ng-model="trial.app_bg">
+			</div>
+			<div class="col-sm-2">
+				<input type="radio" name="modality" ng-model="trial.bg_modality" value="0" /> Static
+			</div>
+			<div class="col-sm-2">
+				<input type="radio" name="modality" ng-model="trial.bg_modality" value="1" /> Bright
+			</div>
+			<div class="col-sm-2">
+				<input type="radio" name="modality" ng-model="trial.bg_modality" value="2" /> Obscure
+			</div>
 		</div>
 
 		<!-- Eye tracker -->
@@ -114,37 +114,37 @@
 
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Window (ms)</label>
-   			<div class="col-sm-8">
-      			<input id="window" type="text" class="form-control"  placeholder="Allowed leave/enter box" ng-model="trial.window">
-    		</div>
+			<div class="col-sm-8">
+				<input id="window" type="text" class="form-control" placeholder="Allowed leave/enter box" ng-model="trial.window">
+			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Padding (px)</label>
-	   			<div class="col-sm-8">
-	      			<input id="padding" type="text" class="form-control"  placeholder="Box for pointer" ng-model="trial.padding">
-	    		</div>
+			<div class="col-sm-8">
+				<input id="padding" type="text" class="form-control" placeholder="Box for pointer" ng-model="trial.padding">
+			</div>
 		</div>
 
 		<!-- Save results-->
 
 		<div class="checkbox">
-      		<label>
-        		<input type="checkbox" ng-model="trial.save_log"> Save results
-      		</label>
-    	</div>
+			<label>
+				<input type="checkbox" ng-model="trial.save_log"> Save results
+			</label>
+		</div>
 
-    	<!-- Show controls on experiment-->
-    	<div class="checkbox">
-      		<label>
-        		<input id="cb_controls" type="checkbox"> Show controls
-      		</label>
-    	</div>
+		<!-- Show controls on experiment-->
+		<div class="checkbox">
+			<label>
+				<input id="cb_controls" type="checkbox"> Show controls
+			</label>
+		</div>
 
-    	<button type="button" class="btn btn-primary pull-right close-reveal-modal">Start</button> &nbsp;
-    	<button type="button" onclick="window.history.back()" class="btn btn-danger pull-right cancel">Cancel</button>
+		<button type="button" class="btn btn-primary pull-right close-reveal-modal">Start</button> &nbsp;
+		<button type="button" onclick="window.history.back()" class="btn btn-danger pull-right cancel">Cancel</button>
 
 	</div>
-	
+
 </div>
 
 <!-- View script-->
