@@ -33,11 +33,15 @@ The home screen offers navigation through the whole experimentation process. Pri
 
 ### 1. Calibrate the EyeTribe.
 
-### 2. Calibrate the System. Since it is possible to set different background colors for experiment trials, this option is also offered for calibration in order to simulate the lighting conditions of subsequent experiments. In case dynamic background color mode (described further) is selected, we suggest to set the calibration background color to the desired base color value to be used in further experiment executions.
+### 2. Calibrate the System. 
+
+Since it is possible to set different background colors for experiment trials, this option is also offered for calibration in order to simulate the lighting conditions of subsequent experiments. In case dynamic background color mode (described further) is selected, we suggest to set the calibration background color to the desired base color value to be used in further experiment executions.
 
 <img src="Images/Screen_Calibration.png?raw=true" height="200"/>
 
-### 3. Configure the desired experiment. The content to be shown has to be defined in a JSON format file and put it into the \app\content\ directory. Visual stimuli can be of two types, text, and/or images. [Read more](README_Experiment_configuration.txt).
+### 3. Configure the desired experiment. 
+
+The content to be shown has to be defined in a JSON format file and put it into the \app\content\ directory. Visual stimuli can be of two types, text, and/or images. [Read more](README_Experiment_configuration.txt).
 
 <img src="Images/Screen_Configuration.PNG?raw=true" height="400"/>
 
@@ -50,7 +54,7 @@ The home screen offers navigation through the whole experimentation process. Pri
 
 This application provides a list of all previously conducted experiments and allows you to analyze each trial independently in a graphical environment where pre-processed and processed (after cleaning, removing blinks and applying a wavelet transformation) data is presented as line chart graphs. Red and green markers point out the moment when stimuli and resting periods started respectively. 
 
-<img src="Images/Result_List.png?raw=true" height="150"/>
+<img src="Images/Result_List.png?raw=true" height="150"/> <br/>
 <img src="Images/Result_Analysis.jpg?raw=true" height="600"/>
 
 Results are presented for every 1 second of eye data stream at the time in the format of [Left_eye, Right_eye] or [[Left_eye_1,Left_eye_2,...],[Right_eye_1, Right_eye_2,...]].
