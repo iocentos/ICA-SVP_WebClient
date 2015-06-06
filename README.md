@@ -99,4 +99,4 @@ COLLABORATORS
 DISCLAIMER
 --------------
 
-The software is an experimental tool built for research and educational purposes. The reliability of the of the results cannot be guaranteed. 
+The software is an experimental tool built for research and educational purposes. The reliability of the results cannot be guaranteed. 
